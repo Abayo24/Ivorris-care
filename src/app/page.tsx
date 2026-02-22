@@ -2,21 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SETUP INSTRUCTIONS
-//
-// 1. Copy tailwind.config.ts into your project root (extends colors, fonts,
-//    animations, backgroundImage with brand tokens).
-//
-// 2. Add to app/layout.tsx <head>:
-//    <link rel="preconnect" href="https://fonts.googleapis.com" />
-//    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
-//
-// 3. Add to globals.css:
-//    html { scroll-behavior: smooth; }
-//    body { font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
-// ─────────────────────────────────────────────────────────────────────────────
-
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface Service {
@@ -1134,9 +1119,18 @@ function AIAssistant() {
 	const [val, setVal] = useState('');
 	const [idx, setIdx] = useState(0);
 	const bottom = useRef<HTMLDivElement>(null);
+	const isFirstRender = useRef(true);
+	
 	useEffect(() => {
-		bottom.current?.scrollIntoView({ behavior: 'smooth' });
-	}, [msgs]);
+    // Prevent scrolling when the page first loads
+    if (isFirstRender.current) {
+        isFirstRender.current = false;
+        return;
+    }
+    
+    // Only scroll when new messages are sent
+    bottom.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}, [msgs]);
 
 	const send = () => {
 		if (!val.trim()) return;
