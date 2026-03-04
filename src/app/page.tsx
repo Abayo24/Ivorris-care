@@ -555,7 +555,7 @@ function Navbar() {
 			{/* Desktop */}
 			<ul className='hidden md:flex items-center gap-10 list-none'>
 				{links.map((l) => (
-					<li key={l.href}> 
+					<li key={l.href}>
 						<a
 							href={l.href}
 							className='relative group text-sm tracking-wide text-[#4A5E4C] hover:text-[#2C3B2D] transition-colors duration-300 no-underline'
@@ -567,8 +567,10 @@ function Navbar() {
 				))}
 				<li>
 					<a
-						href='tel:+254705819115'
-						className='px-5 py-2.5 text-sm font-medium tracking-wide bg-[#2C3B2D] text-[#F7F3ED] rounded-sm hover:-translate-y-0.5 transition-all duration-300 block'
+						href='https://wa.me/254705819115?text=Hello,%20I%20would%20like%20to%20inquire%20about%20your%20care%20services.%20Please%20let%20me%20know%20the%20available%20options.'
+						target='_blank'
+						rel='noopener noreferrer'
+						className='text-sm font-medium py-2.5 px-3 text-center mt-2 bg-[#2C3B2D] text-[#F7F3ED] rounded-sm block'
 					>
 						Book Care
 					</a>
@@ -600,8 +602,10 @@ function Navbar() {
 						</a>
 					))}
 					<a
-						href='tel:+254705819115'
-						className='text-sm font-medium py-2.5 text-center mt-2 bg-[#2C3B2D] text-[#F7F3ED] rounded-sm'
+						href='https://wa.me/254705819115?text=Hello,%20I%20would%20like%20to%20inquire%20about%20your%20care%20services.%20Please%20let%20me%20know%20the%20available%20options.'
+						target='_blank'
+						rel='noopener noreferrer'
+						className='text-sm font-medium py-2.5 text-center mt-2 bg-[#2C3B2D] text-[#F7F3ED] rounded-sm block'
 					>
 						Book Care
 					</a>
@@ -854,9 +858,9 @@ function Services() {
 						<p className='text-sm leading-relaxed font-light text-[#4A5E4C]'>
 							{s.desc}
 						</p>
-						<div className='mt-6 text-xl text-[#A8BFA9] group-hover:translate-x-1 group-hover:text-[#2C3B2D] transition-all duration-300'>
+						{/* <div className='mt-6 text-xl text-[#A8BFA9] group-hover:translate-x-1 group-hover:text-[#2C3B2D] transition-all duration-300'>
 							→
-						</div>
+						</div> */}
 					</Reveal>
 				))}
 			</div>
@@ -964,7 +968,9 @@ function Packages() {
 					Team: {pkg.team}
 				</p>
 				<a
-					href='tel:+254705819115'
+					href={`https://wa.me/254705819115?text=Hello.%20I'm%20interested%20in%20the%20${encodeURIComponent(pkg.name)}%20package.%20Could%20you%20please%20assist%20me%20with%20the%20next%20steps?`}
+					target='_blank'
+					rel='noopener noreferrer'
 					className={`block text-center py-3.5 text-xs font-medium tracking-widest uppercase rounded-sm hover:opacity-90 transition-opacity duration-300 ${PKG_CTA[pkg.variant]}`}
 				>
 					Book {pkg.name}
@@ -1120,17 +1126,20 @@ function AIAssistant() {
 	const [idx, setIdx] = useState(0);
 	const bottom = useRef<HTMLDivElement>(null);
 	const isFirstRender = useRef(true);
-	
+
 	useEffect(() => {
-    // Prevent scrolling when the page first loads
-    if (isFirstRender.current) {
-        isFirstRender.current = false;
-        return;
-    }
-    
-    // Only scroll when new messages are sent
-    bottom.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}, [msgs]);
+		// Prevent scrolling when the page first loads
+		if (isFirstRender.current) {
+			isFirstRender.current = false;
+			return;
+		}
+
+		// Only scroll when new messages are sent
+		bottom.current?.scrollIntoView({
+			behavior: 'smooth',
+			block: 'nearest',
+		});
+	}, [msgs]);
 
 	const send = () => {
 		if (!val.trim()) return;
@@ -1432,6 +1441,7 @@ function Footer() {
 				'Palliative Care',
 				'Post-Operative Care',
 			],
+			id: 'services',
 		},
 		{
 			title: 'Packages',
@@ -1442,6 +1452,7 @@ function Footer() {
 				'Platinum Care',
 				'Ante-natal & Post-natal',
 			],
+			id: 'packages',
 		},
 		{
 			title: 'Contact',
@@ -1450,6 +1461,7 @@ function Footer() {
 				'carewithivorris@gmail.com',
 				'Nairobi, Kenya',
 			],
+			id: 'contact',
 		},
 	];
 	return (
@@ -1472,7 +1484,7 @@ function Footer() {
 						healthcare in Nairobi, Kenya — delivered with love.
 					</p>
 				</div>
-				{cols.map(({ title, links }) => (
+				{cols.map(({ title, links, id }) => (
 					<div key={title}>
 						<h5 className='text-[11px] tracking-[0.15em] uppercase text-[#F7F3ED]/30 mb-5'>
 							{title}
@@ -1481,7 +1493,7 @@ function Footer() {
 							{links.map((l) => (
 								<li key={l}>
 									<a
-										href='#'
+										href={`#${id}`}
 										className='text-sm text-[#F7F3ED]/50 no-underline hover:text-[#D4B483] transition-colors duration-300'
 									>
 										{l}
