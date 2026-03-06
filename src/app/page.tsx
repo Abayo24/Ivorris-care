@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -541,9 +542,11 @@ function Navbar() {
 		>
 			{/* Logo */}
 			<a href='#' className='flex items-center gap-2.5 no-underline'>
-				<img
-					src='/logos.png' // replace with your actual image path
+				<Image
+					src='/logo-dark.svg'
 					alt='Ivorris Care Logo'
+					width={160}
+					height={160}
 					className='w-40 h-40 object-contain'
 				/>
 
@@ -1470,14 +1473,19 @@ function Footer() {
 				<div>
 					<a
 						href='#'
-						className='flex items-center gap-2.5 no-underline mb-5'
+						className='flex items-center gap-2.5 no-underline'
 					>
-						<div className='w-8 h-8 rounded-full bg-[#2C3B2D] flex items-center justify-center'>
-							<HeartIcon c='w-4 h-4 text-[#F7F3ED]' />
-						</div>
-						<span className='font-serif text-[1.25rem] font-medium text-[#F7F3ED]'>
-							Ivorris Care
-						</span>
+						<Image
+							src='/logo-light.svg'
+							alt='Ivorris Care Logo'
+							width={160}
+							height={34.8}
+							className='mb-6 object-contain'
+						/>
+
+						{/* <span className='font-serif text-xl font-semibold tracking-wide text-[#2C3B2D]'>
+					Ivorris Care
+				</span> */}
 					</a>
 					<p className='text-sm leading-relaxed font-light text-[#F7F3ED]/40 max-w-xs'>
 						Where Healing Meets the Comfort of Home. Premium home
