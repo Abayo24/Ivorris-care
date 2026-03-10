@@ -36,6 +36,12 @@ interface ChatMsg {
 	role: 'bot' | 'user';
 	text: string;
 }
+interface Equipment {
+	icon: React.ReactNode;
+	name: string;
+	items: string[];
+	tag?: string;
+}
 
 // ─── Icons ───────────────────────────────────────────────────────────────────
 
@@ -237,6 +243,105 @@ const BabyIcon = ({ c = '' }: { c?: string }) => (
 	</svg>
 );
 
+// ─── Equipment Icons ──────────────────────────────────────────────────────────
+
+const BedIcon = ({ c = '' }: { c?: string }) => (
+	<svg
+		viewBox='0 0 24 24'
+		fill='none'
+		stroke='currentColor'
+		strokeWidth={1.5}
+		className={c}
+	>
+		<path d='M2 20v-8a2 2 0 012-2h16a2 2 0 012 2v8M2 10V6a2 2 0 012-2h4M22 10V6a2 2 0 00-2-2h-4M2 20h20' />
+	</svg>
+);
+const WheelchairIcon = ({ c = '' }: { c?: string }) => (
+	<svg
+		viewBox='0 0 24 24'
+		fill='none'
+		stroke='currentColor'
+		strokeWidth={1.5}
+		className={c}
+	>
+		<circle cx='12' cy='4' r='2' />
+		<path d='M10 7L8 22M8 11h8' />
+		<circle cx='16' cy='19' r='3' />
+		<path d='M11 19h2' />
+	</svg>
+);
+const OxygenIcon = ({ c = '' }: { c?: string }) => (
+	<svg
+		viewBox='0 0 24 24'
+		fill='none'
+		stroke='currentColor'
+		strokeWidth={1.5}
+		className={c}
+	>
+		<path d='M12 2a4 4 0 014 4v2h1a2 2 0 012 2v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8a2 2 0 012-2h1V6a4 4 0 014-4z' />
+		<path d='M9 13h6M12 10v6' />
+	</svg>
+);
+const MonitorHrIcon = ({ c = '' }: { c?: string }) => (
+	<svg
+		viewBox='0 0 24 24'
+		fill='none'
+		stroke='currentColor'
+		strokeWidth={1.5}
+		className={c}
+	>
+		<polyline points='2 12 6 12 8 4 10 20 12 11 14 15 16 12 22 12' />
+	</svg>
+);
+const TruckIcon = ({ c = '' }: { c?: string }) => (
+	<svg
+		viewBox='0 0 24 24'
+		fill='none'
+		stroke='currentColor'
+		strokeWidth={1.5}
+		className={c}
+	>
+		<rect x='1' y='3' width='15' height='13' />
+		<path d='M16 8h4l3 5v3h-7z' />
+		<circle cx='5.5' cy='18.5' r='2.5' />
+		<circle cx='18.5' cy='18.5' r='2.5' />
+	</svg>
+);
+const WrenchIcon = ({ c = '' }: { c?: string }) => (
+	<svg
+		viewBox='0 0 24 24'
+		fill='none'
+		stroke='currentColor'
+		strokeWidth={1.5}
+		className={c}
+	>
+		<path d='M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z' />
+	</svg>
+);
+const RotateIcon = ({ c = '' }: { c?: string }) => (
+	<svg
+		viewBox='0 0 24 24'
+		fill='none'
+		stroke='currentColor'
+		strokeWidth={1.5}
+		className={c}
+	>
+		<path d='M23 4v6h-6M20.49 15a9 9 0 11-2.12-9.36L23 10' />
+	</svg>
+);
+const CheckCircleIcon = ({ c = '' }: { c?: string }) => (
+	<svg
+		viewBox='0 0 24 24'
+		fill='none'
+		stroke='currentColor'
+		strokeWidth={1.5}
+		className={c}
+	>
+		<path d='M22 11.08V12a10 10 0 11-5.93-9.14' />
+		<polyline points='22 4 12 14.01 9 11.01' />
+	</svg>
+);
+
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const SERVICES: Service[] = [
@@ -432,6 +537,128 @@ const BOT_RESPONSES = [
 	'Our Platinum Care package includes IV monitoring and injection administration by registered nurses. Would you like to speak with our clinical team?',
 ];
 
+// ─── Equipment Leasing Data ───────────────────────────────────────────────────
+
+const EQUIPMENT_CATS: Equipment[] = [
+	{
+		icon: <BedIcon c='w-6 h-6' />,
+		name: 'Hospital Beds',
+		tag: 'Most leased',
+		items: [
+			'Electric adjustable beds',
+			'Manual fowler beds',
+			'Paediatric cot beds',
+			'Pressure-relief mattresses',
+			'Bed rails & cot sides',
+		],
+	},
+	{
+		icon: <WheelchairIcon c='w-6 h-6' />,
+		name: 'Mobility Aids',
+		items: [
+			'Standard wheelchairs',
+			'Transport & commode chairs',
+			'Zimmer walking frames',
+			'Elbow crutches & axillary crutches',
+			'Quad canes & walking sticks',
+		],
+	},
+	{
+		icon: <OxygenIcon c='w-6 h-6' />,
+		name: 'Oxygen Equipment',
+		tag: 'Clinical',
+		items: [
+			'Home oxygen concentrators',
+			'Portable oxygen cylinders',
+			'Nebulizer machines',
+			'Suction machines',
+			'CPAP/BiPAP devices',
+		],
+	},
+	{
+		icon: <MonitorHrIcon c='w-6 h-6' />,
+		name: 'Monitoring Devices',
+		items: [
+			'Digital blood pressure monitors',
+			'Glucometers & test strips',
+			'Pulse oximeters',
+			'Digital thermometers',
+			'Weighing scales (adult & infant)',
+		],
+	},
+	{
+		icon: <BabyIcon c='w-6 h-6' />,
+		name: 'Maternity & Baby',
+		tag: 'New',
+		items: [
+			'Doppler foetal monitors',
+			'Electric breast pumps',
+			'Infant & neonatal weighing scales',
+			'Baby phototherapy lamps',
+			'Post-natal support cushions',
+		],
+	},
+	{
+		icon: <ActivityIcon c='w-6 h-6' />,
+		name: 'Rehab & Physio',
+		items: [
+			'Parallel bars for gait training',
+			'Tens machines',
+			'Infrared heat lamps',
+			'Arm & leg exercise bands',
+			'Transfer belts & slide sheets',
+		],
+	},
+];
+
+const LEASE_TERMS = [
+	{
+		label: 'Short-Term',
+		period: '1–4 Weeks',
+		desc: 'Perfect for post-surgical recovery or temporary care needs.',
+		highlight: false,
+	},
+	{
+		label: 'Monthly',
+		period: '1–11 Months',
+		desc: 'Ideal for ongoing chronic care management at home.',
+		highlight: true,
+	},
+	{
+		label: 'Long-Term',
+		period: '12+ Months',
+		desc: 'Best value for extended care. Locked-in rates with priority service.',
+		highlight: false,
+	},
+];
+
+const HOW_IT_WORKS = [
+	{
+		icon: <PhoneIcon c='w-5 h-5' />,
+		step: '01',
+		title: 'Request a Quote',
+		desc: 'Call or WhatsApp us with your equipment needs. Our team will advise on the right specifications.',
+	},
+	{
+		icon: <TruckIcon c='w-5 h-5' />,
+		step: '02',
+		title: 'Delivery & Setup',
+		desc: 'We deliver to your home and set up all equipment safely, with a full briefing for the patient and family.',
+	},
+	{
+		icon: <WrenchIcon c='w-5 h-5' />,
+		step: '03',
+		title: 'Maintenance Included',
+		desc: 'Routine servicing and technical support are covered throughout your lease — no hidden charges.',
+	},
+	{
+		icon: <RotateIcon c='w-5 h-5' />,
+		step: '04',
+		title: 'Hassle-Free Collection',
+		desc: 'When you no longer need it, we collect at a time convenient for you. No penalties, no fuss.',
+	},
+];
+
 // ─── Scroll Reveal ────────────────────────────────────────────────────────────
 
 function useReveal() {
@@ -465,7 +692,6 @@ function Reveal({
 	delay?: number;
 }) {
 	const { ref, visible } = useReveal();
-	// Map numeric delay to Tailwind delay classes
 	const delayMap: Record<number, string> = {
 		0: '',
 		100: 'delay-100',
@@ -514,7 +740,7 @@ const Heading = ({
 );
 
 const Forest = ({ children }: { children: React.ReactNode }) => (
-	<em className='not-italic italic text-[#2C3B2D]'>{children}</em>
+	<em className='not-italic text-[#2C3B2D]'>{children}</em>
 );
 
 // ─── NAVBAR ───────────────────────────────────────────────────────────────────
@@ -522,6 +748,7 @@ const Forest = ({ children }: { children: React.ReactNode }) => (
 function Navbar() {
 	const [scrolled, setScrolled] = useState(false);
 	const [open, setOpen] = useState(false);
+
 	useEffect(() => {
 		const h = () => setScrolled(window.scrollY > 60);
 		window.addEventListener('scroll', h, { passive: true });
@@ -538,82 +765,88 @@ function Navbar() {
 
 	return (
 		<nav
-			className={`fixed top-0 inset-x-0 z-50 flex items-center justify-between px-8 md:px-16 bg-[#FDFAF6]/95 backdrop-blur-md border-b border-[#2C3B2D]/[0.08] transition-all duration-300 ${scrolled ? 'h-16 shadow-lg' : 'h-20'}`}
+			className={`fixed top-0 inset-x-0 z-50 bg-[#FDFAF6]/95 backdrop-blur-md border-b border-[#2C3B2D]/8 transition-all duration-300 ${scrolled ? 'shadow-lg' : ''}`}
 		>
-			{/* Logo */}
-			<a href='#' className='flex items-center gap-2.5 no-underline'>
-				<Image
-					src='/logo-dark.svg'
-					alt='Ivorris Care Logo'
-					width={160}
-					height={160}
-					className='w-40 h-40 object-contain'
-				/>
-
-				{/* <span className='font-serif text-xl font-semibold tracking-wide text-[#2C3B2D]'>
-					Ivorris Care
-				</span> */}
-			</a>
-
-			{/* Desktop */}
-			<ul className='hidden md:flex items-center gap-10 list-none'>
-				{links.map((l) => (
-					<li key={l.href}>
-						<a
-							href={l.href}
-							className='relative group text-sm tracking-wide text-[#4A5E4C] hover:text-[#2C3B2D] transition-colors duration-300 no-underline'
-						>
-							{l.label}
-							<span className='absolute -bottom-1 inset-x-0 h-px bg-[#B8965A] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left' />
-						</a>
-					</li>
-				))}
-				<li>
-					<a
-						href='https://wa.me/254705819115?text=Hello,%20I%20would%20like%20to%20inquire%20about%20your%20care%20services.%20Please%20let%20me%20know%20the%20available%20options.'
-						target='_blank'
-						rel='noopener noreferrer'
-						className='text-sm font-medium py-2.5 px-3 text-center mt-2 bg-[#2C3B2D] text-[#F7F3ED] rounded-sm block'
-					>
-						Book Care
-					</a>
-				</li>
-			</ul>
-
-			{/* Hamburger */}
-			<button
-				className='md:hidden flex flex-col gap-1.5 p-1 bg-transparent border-none cursor-pointer'
-				onClick={() => setOpen(!open)}
-				aria-label='Toggle menu'
+			{/* ── Main bar ── */}
+			<div
+				className={`flex items-center justify-between px-5 md:px-16 transition-all duration-300 ${scrolled ? 'h-16' : 'h-20'}`}
 			>
-				<span className='block w-5 h-px bg-[#2C3B2D]' />
-				<span className='block w-5 h-px bg-[#2C3B2D]' />
-				<span className='block w-5 h-px bg-[#2C3B2D]' />
-			</button>
+				{/* Logo — always visible and responsive */}
+				<a
+					href='#'
+					className='flex items-center gap-2.5 no-underline shrink-0'
+				>
+					<Image
+						src='/logo-dark.svg'
+						alt='Ivorris Care Logo'
+						width={160}
+						height={160}
+						className='w-32 h-32 md:w-40 md:h-40 object-contain'
+						priority
+					/>
+				</a>
 
-			{/* Mobile menu */}
-			{open && (
-				<div className='absolute top-full inset-x-0 py-4 px-8 flex flex-col gap-4 md:hidden bg-[#FDFAF6]/98 border-b border-[#2C3B2D]/10'>
+				{/* Desktop nav links */}
+				<ul className='hidden md:flex items-center gap-8 list-none'>
+					{links.map((l) => (
+						<li key={l.href}>
+							<a
+								href={l.href}
+								className='relative group text-sm tracking-wide text-[#4A5E4C] hover:text-[#2C3B2D] transition-colors duration-300 no-underline'
+							>
+								{l.label}
+								<span className='absolute -bottom-1 inset-x-0 h-px bg-[#B8965A] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left' />
+							</a>
+						</li>
+					))}
+				</ul>
+
+				{/* CTA cluster — always visible on ALL screen sizes */}
+				<div className='flex items-center gap-2 shrink-0'>
+					{/* Equipment Leasing CTA — outlined gold */}
+					<a
+						href='#equipment'
+						className='flex items-center gap-1.5 px-3 md:px-5 py-2 md:py-2.5 text-xs md:text-sm font-medium tracking-wide text-[#1E2820] rounded-sm bg-[#B8965A] hover:-translate-y-0.5 transition-all duration-300 whitespace-nowrap'
+					>
+						<span>Lease Equipment</span>
+					</a>
+
+					{/* Hamburger — mobile only, controls nav links */}
+					<button
+						className='md:hidden flex flex-col justify-center gap-1.25 w-9 h-9 ml-1 bg-transparent border-none cursor-pointer shrink-0'
+						onClick={() => setOpen(!open)}
+						aria-label='Toggle menu'
+					>
+						<span
+							className={`block h-px bg-[#2C3B2D] transition-all duration-300 origin-center ${open ? 'rotate-45 translate-y-1.75 w-5' : 'w-5'}`}
+						/>
+						<span
+							className={`block h-px bg-[#2C3B2D] transition-all duration-300 ${open ? 'opacity-0 w-4' : 'w-4'}`}
+						/>
+						<span
+							className={`block h-px bg-[#2C3B2D] transition-all duration-300 origin-center ${open ? '-rotate-45 -translate-y-1.75 w-5' : 'w-5'}`}
+						/>
+					</button>
+				</div>
+			</div>
+
+			{/* ── Mobile drawer — nav links only (CTAs always visible above) ── */}
+			<div
+				className={`md:hidden overflow-hidden transition-all duration-300 ${open ? 'max-h-80 border-b border-[#2C3B2D]/10' : 'max-h-0'}`}
+			>
+				<div className='px-5 py-4 flex flex-col gap-1 bg-[#FDFAF6]'>
 					{links.map((l) => (
 						<a
 							key={l.href}
 							href={l.href}
-							className='text-sm py-2 text-[#4A5E4C] no-underline'
+							className='text-sm py-2.5 px-3 text-[#4A5E4C] no-underline rounded-sm hover:bg-[#2C3B2D]/4 hover:text-[#2C3B2D] transition-colors duration-200'
 							onClick={() => setOpen(false)}
 						>
 							{l.label}
 						</a>
 					))}
-					<a
-						href='https://wa.me/254705819115?text=Hello,%20I%20would%20like%20to%20inquire%20about%20your%20care%20services.%20Please%20let%20me%20know%20the%20available%20options.'
-						target='_blank'
-						rel='noopener noreferrer'
-						className='text-sm font-medium py-2.5 text-center mt-2 bg-[#2C3B2D] text-[#F7F3ED] rounded-sm block'
-					>
-						Book Care
-					</a>
 				</div>
-			)}
+			</div>
 		</nav>
 	);
 }
@@ -627,21 +860,19 @@ function Hero() {
 		return () => clearTimeout(t);
 	}, []);
 
-	// Stagger helpers
-	const up = (ms: number) =>
+	const up = () =>
 		`transition-all duration-700 ease-out ${on ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-7'}`;
 	const delay = (ms: number) => ({ transitionDelay: `${ms}ms` });
 
 	return (
 		<section className='min-h-screen grid md:grid-cols-2 pt-20 relative overflow-hidden bg-[#FDFAF6]'>
 			{/* Blush diagonal background */}
-			<div className='absolute top-0 right-0 bottom-0 w-full md:w-[55%] hidden md:block bg-[#F2E8DE] [clip-path:polygon(8%_0,100%_0,100%_100%,0%_100%)] -z-0' />
+			<div className='absolute top-0 right-0 bottom-0 w-full md:w-[55%] hidden md:block bg-[#F2E8DE] [clip-path:polygon(8%_0,100%_0,100%_100%,0%_100%)] z-0' />
 
 			{/* Left column */}
 			<div className='relative z-10 flex flex-col justify-center px-8 md:px-16 py-20 md:py-24'>
-				{/* Eyebrow */}
 				<div
-					className={`flex items-center gap-3 mb-8 ${up(200)}`}
+					className={`flex items-center gap-3 mb-8 ${up}`}
 					style={delay(200)}
 				>
 					<div className='w-10 h-px bg-[#B8965A]' />
@@ -650,13 +881,12 @@ function Hero() {
 					</span>
 				</div>
 
-				{/* H1 */}
 				<h1
-					className={`font-serif text-5xl md:text-6xl lg:text-[5.5rem] font-light leading-[1.05] text-[#1E2820] mb-6 ${up(350)}`}
+					className={`font-serif text-5xl md:text-6xl lg:text-[5.5rem] font-light leading-[1.05] text-[#1E2820] mb-6 ${up}`}
 					style={delay(350)}
 				>
 					Where{' '}
-					<em className='not-italic italic font-medium text-[#2C3B2D]'>
+					<em className='not-italic font-medium text-[#2C3B2D]'>
 						Healing
 					</em>
 					<br />
@@ -665,9 +895,8 @@ function Hero() {
 					of Home.
 				</h1>
 
-				{/* Subhead */}
 				<p
-					className={`text-lg leading-relaxed font-light text-[#4A5E4C] max-w-md mb-10 ${up(500)}`}
+					className={`text-lg leading-relaxed font-light text-[#4A5E4C] max-w-md mb-10 ${up}`}
 					style={delay(500)}
 				>
 					Expert nursing, physiotherapy, elderly care, and specialist
@@ -675,9 +904,8 @@ function Hero() {
 					doorstep.
 				</p>
 
-				{/* CTAs */}
 				<div
-					className={`flex flex-wrap items-center gap-6 ${up(650)}`}
+					className={`flex flex-wrap items-center gap-6 ${up}`}
 					style={delay(650)}
 				>
 					<a
@@ -685,7 +913,7 @@ function Hero() {
 						className='inline-flex items-center gap-2 px-7 py-4 text-sm font-medium tracking-wide bg-[#2C3B2D] text-[#F7F3ED] border border-[#2C3B2D] rounded-sm hover:-translate-y-0.5 hover:shadow-xl transition-all duration-300'
 					>
 						<PhoneIcon c='w-4 h-4' />
-						Call +254 705 819 115
+						Book Home Care
 					</a>
 					<a
 						href='#packages'
@@ -696,9 +924,8 @@ function Hero() {
 					</a>
 				</div>
 
-				{/* Stats */}
 				<div
-					className={`flex gap-10 mt-14 pt-10 border-t border-[#2C3B2D]/[0.12] ${up(800)}`}
+					className={`flex gap-10 mt-14 pt-10 border-t border-[#2C3B2D]/12 ${up}`}
 					style={delay(800)}
 				>
 					{[
@@ -720,11 +947,10 @@ function Hero() {
 
 			{/* Right — image mosaic */}
 			<div
-				className={`relative hidden md:block transition-opacity duration-[1200ms] ${on ? 'opacity-100' : 'opacity-0'}`}
+				className={`relative hidden md:block transition-opacity duration-1200 ${on ? 'opacity-100' : 'opacity-0'}`}
 				style={delay(400)}
 			>
 				<div className='absolute inset-0 grid grid-cols-2 grid-rows-2 gap-px'>
-					{' '}
 					{[
 						'/care1.jpg',
 						'/care2.jpg',
@@ -732,19 +958,18 @@ function Hero() {
 						'/care.jpg',
 					].map((src, i) => (
 						<div key={i} className='overflow-hidden relative'>
-							{' '}
 							<div
 								className='w-full h-full bg-cover bg-center'
 								style={{ backgroundImage: `url(${src})` }}
-							/>{' '}
-							<div className='absolute inset-0 bg-gradient-to-br from-[#2C3B2D]/15 to-transparent' />{' '}
+							/>
+							<div className='absolute inset-0 bg-linear-to-br from-[#2C3B2D]/15 to-transparent' />
 						</div>
-					))}{' '}
+					))}
 				</div>
 
 				{/* Floating trust badge */}
-				<div className='absolute bottom-8 -left-6 z-10 flex items-center gap-4 px-5 py-4 bg-[#FDFAF6] rounded-[4px] shadow-2xl min-w-[220px] animate-[float_4s_ease-in-out_infinite]'>
-					<div className='w-11 h-11 rounded-full bg-gradient-to-br from-[#2C3B2D] to-[#6B8A6E] flex items-center justify-center flex-shrink-0'>
+				<div className='absolute bottom-8 -left-6 z-10 flex items-center gap-4 px-5 py-4 bg-[#FDFAF6] rounded-sm shadow-2xl min-w-55 animate-[float_4s_ease-in-out_infinite]'>
+					<div className='w-11 h-11 rounded-full bg-linear-to-br from-[#2C3B2D] to-[#6B8A6E] flex items-center justify-center shrink-0'>
 						<ShieldIcon c='w-5 h-5 text-[#F7F3ED]' />
 					</div>
 					<div>
@@ -771,11 +996,10 @@ function AboutStrip() {
 		>
 			<div className='absolute top-0 right-0 w-80 h-80 rounded-full bg-[#6B8A6E]/10 translate-x-[30%] -translate-y-[30%] pointer-events-none' />
 
-			{/* Ghost text */}
-			<div className='font-serif text-[clamp(3rem,6vw,5rem)] font-light text-[#F7F3ED]/[0.12] leading-none select-none'>
+			<div className='font-serif text-[clamp(3rem,6vw,5rem)] font-light text-[#F7F3ED]/12 leading-none select-none'>
 				Care
 				<br />
-				<em className='not-italic italic text-[#B8965A]/40'>with</em>
+				<em className='not-italic text-[#B8965A]/40'>with</em>
 				<br />
 				Love
 			</div>
@@ -799,7 +1023,7 @@ function AboutStrip() {
 						['Comfort', 'Care in your own home'],
 					].map(([t, s]) => (
 						<div key={t} className='flex items-start gap-2.5'>
-							<div className='w-1.5 h-1.5 rounded-full bg-[#B8965A] mt-1.5 flex-shrink-0' />
+							<div className='w-1.5 h-1.5 rounded-full bg-[#B8965A] mt-1.5 shrink-0' />
 							<div>
 								<div className='text-sm font-medium text-[#F7F3ED]'>
 									{t}
@@ -838,32 +1062,26 @@ function Services() {
 				</a>
 			</div>
 
-			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[#2C3B2D]/[0.06]'>
+			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[#2C3B2D]/6'>
 				{SERVICES.map((s, i) => (
 					<Reveal
 						key={s.title}
 						delay={(i % 4) * 100}
 						className='group relative p-10 bg-[#FDFAF6] cursor-pointer overflow-hidden'
 					>
-						{/* Bottom accent */}
 						<div className='absolute bottom-0 inset-x-0 h-0.5 bg-[#2C3B2D] scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300' />
-						{/* Number */}
 						<span className='absolute top-8 right-8 text-xs tracking-wide text-[#7A8E7C] font-serif'>
 							{s.num}
 						</span>
-						{/* Icon box */}
-						<div className='w-12 h-12 flex items-center justify-center mb-6 bg-[#F7F3ED] border border-[#2C3B2D]/10 rounded-[4px] text-[#2C3B2D] group-hover:bg-[#2C3B2D] group-hover:text-[#F7F3ED] group-hover:border-[#2C3B2D] transition-all duration-300'>
+						<div className='w-12 h-12 flex items-center justify-center mb-6 bg-[#F7F3ED] border border-[#2C3B2D]/10 rounded-sm text-[#2C3B2D] group-hover:bg-[#2C3B2D] group-hover:text-[#F7F3ED] group-hover:border-[#2C3B2D] transition-all duration-300'>
 							{s.icon}
 						</div>
-						<h3 className='font-serif text-[1.35rem] font-medium text-[#1E2820] leading-[1.25] mb-3'>
+						<h3 className='font-serif text-[1.35rem] font-medium text-[#1E2820] leading-tight mb-3'>
 							{s.title}
 						</h3>
 						<p className='text-sm leading-relaxed font-light text-[#4A5E4C]'>
 							{s.desc}
 						</p>
-						{/* <div className='mt-6 text-xl text-[#A8BFA9] group-hover:translate-x-1 group-hover:text-[#2C3B2D] transition-all duration-300'>
-							→
-						</div> */}
 					</Reveal>
 				))}
 			</div>
@@ -958,9 +1176,9 @@ function Packages() {
 					{pkg.features.map((f) => (
 						<li
 							key={f}
-							className='flex items-start gap-2 text-xs leading-relaxed text-[#4A5E4C] py-1.5 border-b border-[#2C3B2D]/[0.06]'
+							className='flex items-start gap-2 text-xs leading-relaxed text-[#4A5E4C] py-1.5 border-b border-[#2C3B2D]/6'
 						>
-							<span className='text-[#6B8A6E] flex-shrink-0 mt-0.5'>
+							<span className='text-[#6B8A6E] shrink-0 mt-0.5'>
 								✓
 							</span>
 							{f}
@@ -999,14 +1217,14 @@ function Packages() {
 				</a>
 			</div>
 
-			{/* Core Care Packages — 4 columns */}
+			{/* Core tiers — 4 columns */}
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10'>
 				{corePackages.map((pkg, i) => (
 					<PackageCard key={pkg.name} pkg={pkg} i={i} />
 				))}
 			</div>
 
-			{/* Maternal & Women's Health — divider + 3 columns */}
+			{/* Maternal & Women's Health divider */}
 			<div className='flex items-center gap-4 my-10'>
 				<div className='flex-1 h-px bg-[#2C3B2D]/10' />
 				<span className='text-xs tracking-[0.18em] uppercase text-[#B8965A] whitespace-nowrap px-2'>
@@ -1019,6 +1237,222 @@ function Packages() {
 				{maternalPackages.map((pkg, i) => (
 					<PackageCard key={pkg.name} pkg={pkg} i={i} />
 				))}
+			</div>
+		</section>
+	);
+}
+
+// ─── EQUIPMENT LEASING ────────────────────────────────────────────────────────
+
+function EquipmentLeasing() {
+	const [activeTab, setActiveTab] = useState(0);
+
+	return (
+		<section id='equipment' className='bg-[#1E2820] overflow-hidden'>
+			{/* ── Header band ── */}
+			<div className='relative px-8 md:px-16 pt-24 pb-16'>
+				{/* Subtle grid texture */}
+				<div
+					className='absolute inset-0 opacity-[0.035]'
+					style={{
+						backgroundImage:
+							'repeating-linear-gradient(0deg,#B8965A 0,#B8965A 1px,transparent 0,transparent 40px),repeating-linear-gradient(90deg,#B8965A 0,#B8965A 1px,transparent 0,transparent 40px)',
+					}}
+				/>
+				<div className='relative flex flex-col md:flex-row md:items-end md:justify-between gap-6'>
+					<div>
+						<span className='block text-[0.7rem] tracking-[0.18em] uppercase mb-3 text-[#D4B483]'>
+							Equipment Leasing
+						</span>
+						<h2 className='font-serif text-4xl md:text-[3.5rem] font-light leading-[1.1] text-[#F7F3ED]'>
+							The right tools,
+							<br />
+							<em className='not-italic text-[#B8965A]'>
+								at home
+							</em>
+						</h2>
+						<p className='mt-5 text-base font-light leading-relaxed text-[#F7F3ED]/55 max-w-xl'>
+							Equip your home for recovery without the burden of
+							purchasing. Lease hospital-grade medical equipment,
+							delivered and set up by our team — so your loved one
+							heals in comfort.
+						</p>
+					</div>
+
+					{/* Trust badges */}
+					<div className='flex gap-3 shrink-0 flex-wrap md:flex-nowrap'>
+						{[
+							['Delivery & Setup', 'Included'],
+							['Maintenance', 'Covered'],
+							['Nairobi-wide', 'Service'],
+						].map(([l, v]) => (
+							<div
+								key={l}
+								className='px-4 py-3 rounded-sm border border-white/8 bg-white/3 text-center min-w-22.5'
+							>
+								<div className='text-[#D4B483] font-serif text-sm font-medium'>
+									{v}
+								</div>
+								<div className='text-[10px] text-[#F7F3ED]/35 uppercase tracking-widest mt-0.5'>
+									{l}
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+			</div>
+
+			{/* ── Category tabs + detail card ── */}
+			<div className='px-8 md:px-16 pb-16'>
+				{/* Tab pills */}
+				<div className='flex gap-2 flex-wrap mb-8'>
+					{EQUIPMENT_CATS.map((cat, i) => (
+						<button
+							key={cat.name}
+							onClick={() => setActiveTab(i)}
+							className={`flex items-center gap-2 px-4 py-2 rounded-sm text-xs font-medium transition-all duration-200 ${activeTab === i ? 'bg-[#B8965A] text-[#1E2820]' : 'border border-white/10 text-[#F7F3ED]/50 hover:text-[#F7F3ED]/80 hover:border-white/20'}`}
+						>
+							<span
+								className={
+									activeTab === i
+										? 'text-[#1E2820]'
+										: 'text-[#F7F3ED]/40'
+								}
+							>
+								{cat.icon}
+							</span>
+							{cat.name}
+							{cat.tag && (
+								<span
+									className={`text-[9px] px-1.5 py-0.5 rounded-sm uppercase tracking-wide font-semibold ${activeTab === i ? 'bg-[#1E2820]/20 text-[#1E2820]' : 'bg-[#B8965A]/20 text-[#D4B483]'}`}
+								>
+									{cat.tag}
+								</span>
+							)}
+						</button>
+					))}
+				</div>
+
+				{/* Full-width detail card */}
+				<Reveal>
+					<div className='rounded-sm border border-white/8 bg-white/3 overflow-hidden'>
+						{/* Card header */}
+						<div className='bg-[#B8965A]/10 border-b border-white/7 px-7 py-6 flex items-center gap-4'>
+							<div className='w-12 h-12 rounded-sm bg-[#B8965A]/20 flex items-center justify-center text-[#D4B483] shrink-0'>
+								{EQUIPMENT_CATS[activeTab].icon}
+							</div>
+							<div>
+								<div className='font-serif text-lg font-medium text-[#F7F3ED]'>
+									{EQUIPMENT_CATS[activeTab].name}
+								</div>
+								<div className='text-[11px] text-[#F7F3ED]/40 mt-0.5'>
+									Available for short & long-term lease
+								</div>
+							</div>
+						</div>
+
+						{/* Items + CTA in a single row on desktop */}
+						<div className='px-7 py-6 flex flex-col md:flex-row md:items-end gap-8'>
+							<ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-3 flex-1'>
+								{EQUIPMENT_CATS[activeTab].items.map((item) => (
+									<li
+										key={item}
+										className='flex items-center gap-3 text-sm text-[#F7F3ED]/70'
+									>
+										<CheckCircleIcon c='w-4 h-4 text-[#B8965A] flex-shrink-0' />
+										{item}
+									</li>
+								))}
+							</ul>
+							<a
+								href='https://wa.me/254705819115?text=Hello,%20I%20would%20like%20to%20enquire%20about%20equipment%20leasing.%20Please%20assist%20me.'
+								target='_blank'
+								rel='noopener noreferrer'
+								className='flex items-center justify-center gap-2 px-7 py-3.5 text-xs font-medium tracking-widest uppercase rounded-sm bg-[#B8965A] text-[#1E2820] hover:bg-[#D4B483] transition-colors duration-300 whitespace-nowrap shrink-0'
+							>
+								<PhoneIcon c='w-3.5 h-3.5' />
+								Enquire Now
+							</a>
+						</div>
+					</div>
+				</Reveal>
+			</div>
+
+			{/* ── Lease terms ── */}
+			<div className='px-8 md:px-16 pb-16'>
+				<div className='flex items-center gap-4 mb-8'>
+					<div className='flex-1 h-px bg-white/[0.07]' />
+					<span className='text-[10px] tracking-[0.18em] uppercase text-[#D4B483]/60 whitespace-nowrap px-2'>
+						Lease Terms
+					</span>
+					<div className='flex-1 h-px bg-white/[0.07]' />
+				</div>
+				<div className='grid md:grid-cols-3 gap-5'>
+					{LEASE_TERMS.map((lt) => (
+						<Reveal key={lt.label}>
+							<div
+								className={`relative rounded-sm p-7 border overflow-hidden ${lt.highlight ? 'border-[#B8965A]/50 bg-[#B8965A]/8' : 'border-white/[0.07] bg-white/2'}`}
+							>
+								{lt.highlight && (
+									<div className='absolute top-4 right-4 px-2 py-0.5 text-[9px] tracking-widest uppercase font-semibold bg-[#B8965A] text-[#1E2820] rounded-sm'>
+										Most Popular
+									</div>
+								)}
+								<div
+									className={`text-[10px] tracking-[0.18em] uppercase mb-2 ${lt.highlight ? 'text-[#D4B483]' : 'text-[#F7F3ED]/35'}`}
+								>
+									{lt.label}
+								</div>
+								<div className='font-serif text-2xl font-light text-[#F7F3ED] mb-3'>
+									{lt.period}
+								</div>
+								<p className='text-sm font-light leading-relaxed text-[#F7F3ED]/50'>
+									{lt.desc}
+								</p>
+								<a
+									href='mailto:carewithivorris@gmail.com'
+									className={`mt-6 block text-center py-2.5 text-xs font-medium tracking-widest uppercase rounded-sm transition-colors duration-300 ${lt.highlight ? 'bg-[#B8965A] text-[#1E2820] hover:bg-[#D4B483]' : 'border border-white/12 text-[#F7F3ED]/50 hover:border-white/30 hover:text-[#F7F3ED]/80'}`}
+								>
+									Get a Quote
+								</a>
+							</div>
+						</Reveal>
+					))}
+				</div>
+			</div>
+
+			{/* ── How it works ── */}
+			<div className='px-8 md:px-16 pb-24 border-t border-white/5 pt-14'>
+				<div className='mb-10'>
+					<span className='block text-[0.7rem] tracking-[0.18em] uppercase mb-3 text-[#D4B483]'>
+						Simple Process
+					</span>
+					<h3 className='font-serif text-3xl font-light text-[#F7F3ED]'>
+						How equipment leasing works
+					</h3>
+				</div>
+				<div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/5'>
+					{HOW_IT_WORKS.map((step, i) => (
+						<Reveal key={step.step} delay={i * 100}>
+							<div className='bg-[#1E2820] px-7 py-8 group hover:bg-[#2C3B2D] transition-colors duration-300'>
+								<div className='flex items-start justify-between mb-5'>
+									<div className='w-10 h-10 rounded-sm bg-[#B8965A]/15 flex items-center justify-center text-[#D4B483] group-hover:bg-[#B8965A]/25 transition-colors duration-300'>
+										{step.icon}
+									</div>
+									<span className='font-serif text-4xl font-light text-[#F7F3ED]/6 group-hover:text-[#F7F3ED]/10 transition-colors duration-300'>
+										{step.step}
+									</span>
+								</div>
+								<h4 className='font-serif text-base font-medium text-[#F7F3ED]/90 mb-2'>
+									{step.title}
+								</h4>
+								<p className='text-sm font-light leading-relaxed text-[#F7F3ED]/40'>
+									{step.desc}
+								</p>
+							</div>
+						</Reveal>
+					))}
+				</div>
 			</div>
 		</section>
 	);
@@ -1053,18 +1487,18 @@ function WhyUs() {
 	return (
 		<section className='py-24 px-8 md:px-16 grid md:grid-cols-2 gap-20 items-center bg-[#FDFAF6]'>
 			{/* Visual */}
-			<Reveal className='relative h-[480px] hidden md:block'>
-				<div className='absolute top-10 left-10 right-0 bottom-0 rounded-sm bg-gradient-to-br from-[#8FAE91] via-[#6B8A6E] to-[#3D5240]' />
+			<Reveal className='relative h-120 hidden md:block'>
+				<div className='absolute top-10 left-10 right-0 bottom-0 rounded-sm bg-linear-to-br from-[#8FAE91] via-[#6B8A6E] to-[#3D5240]' />
 				<div className='absolute top-0 left-0 right-10 bottom-10 rounded-sm overflow-hidden flex items-center justify-center'>
-					{' '}
-					<img
+					<Image
 						src='/report.jpg'
-						alt='Background'
+						alt='Care report'
+						fill
 						className='absolute inset-0 w-full h-full object-cover'
-					/>{' '}
-					<div className='absolute inset-0 bg-black/20' />{' '}
+					/>
+					<div className='absolute inset-0 bg-black/20' />
 				</div>
-				<div className='absolute bottom-0 right-0 z-10 p-5 rounded-sm shadow-2xl bg-[#FDFAF6] w-[190px] animate-[float_5s_ease-in-out_1s_infinite]'>
+				<div className='absolute bottom-0 right-0 z-10 p-5 rounded-sm shadow-2xl bg-[#FDFAF6] w-47.5 animate-[float_5s_ease-in-out_1s_infinite]'>
 					<p className='text-xs text-[#7A8E7C] mb-1'>
 						Family reports sent
 					</p>
@@ -1089,7 +1523,7 @@ function WhyUs() {
 							delay={i * 100}
 							className='flex gap-5'
 						>
-							<div className='w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-sm bg-[#F2E8DE] border border-[#B8965A]/20 text-[#2C3B2D]'>
+							<div className='w-12 h-12 shrink-0 flex items-center justify-center rounded-sm bg-[#F2E8DE] border border-[#B8965A]/20 text-[#2C3B2D]'>
 								<Icon c='w-5 h-5' />
 							</div>
 							<div>
@@ -1131,13 +1565,10 @@ function AIAssistant() {
 	const isFirstRender = useRef(true);
 
 	useEffect(() => {
-		// Prevent scrolling when the page first loads
 		if (isFirstRender.current) {
 			isFirstRender.current = false;
 			return;
 		}
-
-		// Only scroll when new messages are sent
 		bottom.current?.scrollIntoView({
 			behavior: 'smooth',
 			block: 'nearest',
@@ -1165,7 +1596,7 @@ function AIAssistant() {
 			id='ai-assistant'
 			className='relative py-24 px-8 md:px-16 grid md:grid-cols-2 gap-16 items-center overflow-hidden bg-[#2C3B2D]'
 		>
-			<div className='absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-[#6B8A6E]/[0.07] translate-x-[30%] -translate-y-[30%] pointer-events-none' />
+			<div className='absolute top-0 right-0 w-125 h-125 rounded-full bg-[#6B8A6E]/[0.07] translate-x-[30%] -translate-y-[30%] pointer-events-none' />
 
 			{/* Content */}
 			<div>
@@ -1188,9 +1619,9 @@ function AIAssistant() {
 					].map((f) => (
 						<div
 							key={f}
-							className='flex items-center gap-4 px-5 py-3.5 rounded-sm bg-white/[0.04] border border-white/[0.08]'
+							className='flex items-center gap-4 px-5 py-3.5 rounded-sm bg-white/4 border border-white/8'
 						>
-							<div className='w-2 h-2 rounded-full bg-[#B8965A] flex-shrink-0' />
+							<div className='w-2 h-2 rounded-full bg-[#B8965A] shrink-0' />
 							<span className='text-sm text-[#F7F3ED]/75'>
 								{f}
 							</span>
@@ -1201,21 +1632,21 @@ function AIAssistant() {
 
 			{/* Chat */}
 			<div className='rounded-lg overflow-hidden border border-white/10'>
-				<div className='flex items-center gap-3 px-6 py-4 bg-white/[0.05] border-b border-white/[0.08]'>
+				<div className='flex items-center gap-3 px-6 py-4 bg-white/5 border-b border-white/8'>
 					<div className='w-2 h-2 rounded-full bg-green-500' />
 					<span className='text-sm font-medium text-[#F7F3ED]/80'>
 						Ivorris Health Assistant — Online
 					</span>
 				</div>
 
-				<div className='flex flex-col gap-4 p-6 overflow-y-auto min-h-[280px] max-h-[320px]'>
+				<div className='flex flex-col gap-4 p-6 overflow-y-auto min-h-70 max-h-80'>
 					{msgs.map((m, i) => (
 						<div
 							key={i}
 							className={`max-w-[80%] ${m.role === 'user' ? 'self-end' : 'self-start'}`}
 						>
 							<div
-								className={`px-4 py-3 text-sm leading-relaxed rounded-md ${m.role === 'bot' ? 'bg-white/10 text-[#F7F3ED]/85 rounded-bl-[2px]' : 'bg-[#B8965A] text-[#1E2820] rounded-br-[2px]'}`}
+								className={`px-4 py-3 text-sm leading-relaxed rounded-md ${m.role === 'bot' ? 'bg-white/10 text-[#F7F3ED]/85 rounded-bl-xs' : 'bg-[#B8965A] text-[#1E2820] rounded-br-xs'}`}
 							>
 								{m.text}
 							</div>
@@ -1229,18 +1660,18 @@ function AIAssistant() {
 					<div ref={bottom} />
 				</div>
 
-				<div className='flex gap-3 items-center px-5 py-4 border-t border-white/[0.08]'>
+				<div className='flex gap-3 items-center px-5 py-4 border-t border-white/8'>
 					<input
 						value={val}
 						onChange={(e) => setVal(e.target.value)}
 						onKeyDown={(e) => e.key === 'Enter' && send()}
 						placeholder='Ask about symptoms or care...'
-						className='flex-1 px-3.5 py-2.5 text-sm font-sans rounded-sm outline-none bg-white/[0.06] border border-white/[0.12] text-[#F7F3ED]/85 placeholder:text-[#F7F3ED]/30 focus:border-[#B8965A] transition-all duration-300'
+						className='flex-1 px-3.5 py-2.5 text-sm font-sans rounded-sm outline-none bg-white/6 border border-white/12 text-[#F7F3ED]/85 placeholder:text-[#F7F3ED]/30 focus:border-[#B8965A] transition-all duration-300'
 					/>
 					<button
 						onClick={send}
 						aria-label='Send'
-						className='w-9 h-9 rounded-sm bg-[#B8965A] flex items-center justify-center flex-shrink-0 hover:scale-105 transition-transform duration-300'
+						className='w-9 h-9 rounded-sm bg-[#B8965A] flex items-center justify-center shrink-0 hover:scale-105 transition-transform duration-300'
 					>
 						<SendIcon c='w-4 h-4 text-[#1E2820]' />
 					</button>
@@ -1268,11 +1699,9 @@ function Payment() {
 					<Reveal
 						key={o.title}
 						delay={i * 100}
-						className='group relative p-10 text-center bg-[#FDFAF6] border border-[#2C3B2D]/[0.08] rounded-sm cursor-pointer overflow-hidden hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300'
+						className='group relative p-10 text-center bg-[#FDFAF6] border border-[#2C3B2D]/8 rounded-sm cursor-pointer overflow-hidden hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-300'
 					>
-						{/* Hover bg overlay */}
 						<div className='absolute inset-0 bg-[#2C3B2D] opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 rounded-sm' />
-						{/* Icon */}
 						<div className='w-16 h-16 rounded-full bg-[#F2E8DE] flex items-center justify-center mx-auto mb-6 text-[#2C3B2D] group-hover:bg-white/10 group-hover:text-[#F7F3ED] transition-all duration-300'>
 							{o.icon}
 						</div>
@@ -1334,7 +1763,7 @@ function Testimonials() {
 							</p>
 							<div className='flex items-center gap-3'>
 								<div
-									className={`w-10 h-10 rounded-full flex-shrink-0 ${r.avatar}`}
+									className={`w-10 h-10 rounded-full shrink-0 ${r.avatar}`}
 								/>
 								<div>
 									<div className='text-sm font-medium text-[#1E2820]'>
@@ -1361,12 +1790,12 @@ function CTA() {
 			id='contact'
 			className='relative py-32 px-8 md:px-16 text-center overflow-hidden bg-[#F2E8DE]'
 		>
-			<div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(184,150,90,0.07),transparent_60%)] pointer-events-none' />
+			<div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-175 rounded-full bg-[radial-gradient(circle,rgba(184,150,90,0.07),transparent_60%)] pointer-events-none' />
 
 			<Eyebrow>Get Started Today</Eyebrow>
 			<h2 className='font-serif text-[clamp(2.5rem,5vw,4.5rem)] font-light leading-[1.1] text-[#1E2820] mb-6'>
 				Ready to bring{' '}
-				<em className='not-italic italic text-[#2C3B2D]'>
+				<em className='not-italic text-[#2C3B2D]'>
 					expert care
 				</em>
 				<br />
@@ -1393,40 +1822,6 @@ function CTA() {
 					<ArrowRight c='w-4 h-4 group-hover:translate-x-1 transition-transform duration-300' />
 				</a>
 			</div>
-
-			<div className='flex flex-wrap items-center justify-center gap-12 pt-10 border-t border-[#2C3B2D]/[0.12]'>
-				{[
-					{
-						icon: '📞',
-						label: '+254 705 819 115',
-						href: 'tel:+254705819115',
-					},
-					{
-						icon: '✉️',
-						label: 'carewithivorris@gmail.com',
-						href: 'mailto:carewithivorris@gmail.com',
-					},
-					{
-						icon: '📍',
-						label: 'Nairobi, Kenya',
-						href: 'https://maps.google.com/?q=Nairobi,Kenya',
-					},
-				].map(({ icon, label, href }) => (
-					<div key={label} className='flex items-center gap-2.5'>
-						<span>{icon}</span>
-						<a
-							href={href}
-							target={
-								href.startsWith('http') ? '_blank' : undefined
-							}
-							rel='noopener noreferrer'
-							className='text-sm text-[#4A5E4C] hover:text-[#2C3B2D] no-underline transition-colors duration-300'
-						>
-							{label}
-						</a>
-					</div>
-				))}
-			</div>
 		</section>
 	);
 }
@@ -1437,6 +1832,7 @@ function Footer() {
 	const cols = [
 		{
 			title: 'Services',
+			id: 'services',
 			links: [
 				'Elderly Care',
 				'Wound Care',
@@ -1444,10 +1840,10 @@ function Footer() {
 				'Palliative Care',
 				'Post-Operative Care',
 			],
-			id: 'services',
 		},
 		{
 			title: 'Packages',
+			id: 'packages',
 			links: [
 				'Basic Care',
 				'Standard Care',
@@ -1455,21 +1851,33 @@ function Footer() {
 				'Platinum Care',
 				'Ante-natal & Post-natal',
 			],
-			id: 'packages',
+		},
+		{
+			title: 'Equipment',
+			id: 'equipment',
+			links: [
+				'Hospital Beds',
+				'Mobility Aids',
+				'Oxygen Equipment',
+				'Monitoring Devices',
+				'Maternity & Baby',
+				'Rehab & Physio',
+			],
 		},
 		{
 			title: 'Contact',
+			id: 'contact',
 			links: [
 				'+254 705 819 115',
 				'carewithivorris@gmail.com',
 				'Nairobi, Kenya',
 			],
-			id: 'contact',
 		},
 	];
+
 	return (
 		<>
-			<footer className='px-8 md:px-16 py-16 grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr] gap-12 bg-[#1E2820]'>
+			<footer className='px-8 md:px-16 py-16 grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-12 bg-[#1E2820]'>
 				<div>
 					<a
 						href='#'
@@ -1482,10 +1890,6 @@ function Footer() {
 							height={34.8}
 							className='mb-6 object-contain'
 						/>
-
-						{/* <span className='font-serif text-xl font-semibold tracking-wide text-[#2C3B2D]'>
-					Ivorris Care
-				</span> */}
 					</a>
 					<p className='text-sm leading-relaxed font-light text-[#F7F3ED]/40 max-w-xs'>
 						Where Healing Meets the Comfort of Home. Premium home
@@ -1512,7 +1916,7 @@ function Footer() {
 					</div>
 				))}
 			</footer>
-			<div className='px-8 md:px-16 py-5 flex flex-col md:flex-row items-center justify-between gap-2 bg-[#1E2820] border-t border-white/[0.05]'>
+			<div className='px-8 md:px-16 py-5 flex flex-col md:flex-row items-center justify-between gap-2 bg-[#1E2820] border-t border-white/5'>
 				<p className='text-xs text-[#F7F3ED]/25'>
 					© 2026 Ivorris Care. All rights reserved. We Offer Care with
 					Love.
@@ -1535,6 +1939,7 @@ export default function IvorrisCare() {
 			<AboutStrip />
 			<Services />
 			<Packages />
+			<EquipmentLeasing />
 			<WhyUs />
 			<AIAssistant />
 			<Payment />
