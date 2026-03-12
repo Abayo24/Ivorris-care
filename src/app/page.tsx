@@ -1249,53 +1249,32 @@ function EquipmentLeasing() {
 
 	return (
 		<section id='equipment' className='bg-[#1E2820] overflow-hidden'>
+
 			{/* ── Header band ── */}
 			<div className='relative px-8 md:px-16 pt-24 pb-16'>
 				{/* Subtle grid texture */}
 				<div
 					className='absolute inset-0 opacity-[0.035]'
-					style={{
-						backgroundImage:
-							'repeating-linear-gradient(0deg,#B8965A 0,#B8965A 1px,transparent 0,transparent 40px),repeating-linear-gradient(90deg,#B8965A 0,#B8965A 1px,transparent 0,transparent 40px)',
-					}}
+					style={{ backgroundImage: 'repeating-linear-gradient(0deg,#B8965A 0,#B8965A 1px,transparent 0,transparent 40px),repeating-linear-gradient(90deg,#B8965A 0,#B8965A 1px,transparent 0,transparent 40px)' }}
 				/>
 				<div className='relative flex flex-col md:flex-row md:items-end md:justify-between gap-6'>
 					<div>
-						<span className='block text-[0.7rem] tracking-[0.18em] uppercase mb-3 text-[#D4B483]'>
-							Equipment Leasing
-						</span>
+						<span className='block text-[0.7rem] tracking-[0.18em] uppercase mb-3 text-[#D4B483]'>Equipment Leasing</span>
 						<h2 className='font-serif text-4xl md:text-[3.5rem] font-light leading-[1.1] text-[#F7F3ED]'>
-							The right tools,
-							<br />
-							<em className='not-italic text-[#B8965A]'>
-								at home
-							</em>
+							The right tools,<br />
+							<em className='not-italic text-[#B8965A]'>at home</em>
 						</h2>
 						<p className='mt-5 text-base font-light leading-relaxed text-[#F7F3ED]/55 max-w-xl'>
-							Equip your home for recovery without the burden of
-							purchasing. Lease hospital-grade medical equipment,
-							delivered and set up by our team — so your loved one
-							heals in comfort.
+							Equip your home for recovery without the burden of purchasing. Lease hospital-grade medical equipment, delivered and set up by our team — so your loved one heals in comfort.
 						</p>
 					</div>
 
 					{/* Trust badges */}
 					<div className='flex gap-3 shrink-0 flex-wrap md:flex-nowrap'>
-						{[
-							['Delivery & Setup', 'Included'],
-							['Maintenance', 'Covered'],
-							['Nairobi-wide', 'Service'],
-						].map(([l, v]) => (
-							<div
-								key={l}
-								className='px-4 py-3 rounded-sm border border-white/8 bg-white/3 text-center min-w-22.5'
-							>
-								<div className='text-[#D4B483] font-serif text-sm font-medium'>
-									{v}
-								</div>
-								<div className='text-[10px] text-[#F7F3ED]/35 uppercase tracking-widest mt-0.5'>
-									{l}
-								</div>
+						{[['Delivery & Setup', 'Included'], ['Maintenance', 'Covered'], ['Nairobi-wide', 'Service']].map(([l, v]) => (
+							<div key={l} className='px-4 py-3 rounded-sm border border-white/8 bg-white/3 text-center min-w-22.5'>
+								<div className='text-[#D4B483] font-serif text-sm font-medium'>{v}</div>
+								<div className='text-[10px] text-[#F7F3ED]/35 uppercase tracking-widest mt-0.5'>{l}</div>
 							</div>
 						))}
 					</div>
@@ -1304,6 +1283,7 @@ function EquipmentLeasing() {
 
 			{/* ── Category tabs + detail card ── */}
 			<div className='px-8 md:px-16 pb-16'>
+
 				{/* Tab pills */}
 				<div className='flex gap-2 flex-wrap mb-8'>
 					{EQUIPMENT_CATS.map((cat, i) => (
@@ -1312,20 +1292,10 @@ function EquipmentLeasing() {
 							onClick={() => setActiveTab(i)}
 							className={`flex items-center gap-2 px-4 py-2 rounded-sm text-xs font-medium transition-all duration-200 ${activeTab === i ? 'bg-[#B8965A] text-[#1E2820]' : 'border border-white/10 text-[#F7F3ED]/50 hover:text-[#F7F3ED]/80 hover:border-white/20'}`}
 						>
-							<span
-								className={
-									activeTab === i
-										? 'text-[#1E2820]'
-										: 'text-[#F7F3ED]/40'
-								}
-							>
-								{cat.icon}
-							</span>
+							<span className={activeTab === i ? 'text-[#1E2820]' : 'text-[#F7F3ED]/40'}>{cat.icon}</span>
 							{cat.name}
 							{cat.tag && (
-								<span
-									className={`text-[9px] px-1.5 py-0.5 rounded-sm uppercase tracking-wide font-semibold ${activeTab === i ? 'bg-[#1E2820]/20 text-[#1E2820]' : 'bg-[#B8965A]/20 text-[#D4B483]'}`}
-								>
+								<span className={`text-[9px] px-1.5 py-0.5 rounded-sm uppercase tracking-wide font-semibold ${activeTab === i ? 'bg-[#1E2820]/20 text-[#1E2820]' : 'bg-[#B8965A]/20 text-[#D4B483]'}`}>
 									{cat.tag}
 								</span>
 							)}
@@ -1337,17 +1307,13 @@ function EquipmentLeasing() {
 				<Reveal>
 					<div className='rounded-sm border border-white/8 bg-white/3 overflow-hidden'>
 						{/* Card header */}
-						<div className='bg-[#B8965A]/10 border-b border-white/7 px-7 py-6 flex items-center gap-4'>
+						<div className='bg-[#B8965A]/10 border-b border-white/[0.07] px-7 py-6 flex items-center gap-4'>
 							<div className='w-12 h-12 rounded-sm bg-[#B8965A]/20 flex items-center justify-center text-[#D4B483] shrink-0'>
 								{EQUIPMENT_CATS[activeTab].icon}
 							</div>
 							<div>
-								<div className='font-serif text-lg font-medium text-[#F7F3ED]'>
-									{EQUIPMENT_CATS[activeTab].name}
-								</div>
-								<div className='text-[11px] text-[#F7F3ED]/40 mt-0.5'>
-									Available for short & long-term lease
-								</div>
+								<div className='font-serif text-lg font-medium text-[#F7F3ED]'>{EQUIPMENT_CATS[activeTab].name}</div>
+								<div className='text-[11px] text-[#F7F3ED]/40 mt-0.5'>Available for short & long-term lease</div>
 							</div>
 						</div>
 
@@ -1355,10 +1321,7 @@ function EquipmentLeasing() {
 						<div className='px-7 py-6 flex flex-col md:flex-row md:items-end gap-8'>
 							<ul className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-3 flex-1'>
 								{EQUIPMENT_CATS[activeTab].items.map((item) => (
-									<li
-										key={item}
-										className='flex items-center gap-3 text-sm text-[#F7F3ED]/70'
-									>
+									<li key={item} className='flex items-center gap-3 text-sm text-[#F7F3ED]/70'>
 										<CheckCircleIcon c='w-4 h-4 text-[#B8965A] flex-shrink-0' />
 										{item}
 									</li>
@@ -1382,33 +1345,19 @@ function EquipmentLeasing() {
 			<div className='px-8 md:px-16 pb-16'>
 				<div className='flex items-center gap-4 mb-8'>
 					<div className='flex-1 h-px bg-white/[0.07]' />
-					<span className='text-[10px] tracking-[0.18em] uppercase text-[#D4B483]/60 whitespace-nowrap px-2'>
-						Lease Terms
-					</span>
+					<span className='text-[10px] tracking-[0.18em] uppercase text-[#D4B483]/60 whitespace-nowrap px-2'>Lease Terms</span>
 					<div className='flex-1 h-px bg-white/[0.07]' />
 				</div>
 				<div className='grid md:grid-cols-3 gap-5'>
 					{LEASE_TERMS.map((lt) => (
 						<Reveal key={lt.label}>
-							<div
-								className={`relative rounded-sm p-7 border overflow-hidden ${lt.highlight ? 'border-[#B8965A]/50 bg-[#B8965A]/8' : 'border-white/[0.07] bg-white/2'}`}
-							>
+							<div className={`relative rounded-sm p-7 border overflow-hidden ${lt.highlight ? 'border-[#B8965A]/50 bg-[#B8965A]/8' : 'border-white/[0.07] bg-white/2'}`}>
 								{lt.highlight && (
-									<div className='absolute top-4 right-4 px-2 py-0.5 text-[9px] tracking-widest uppercase font-semibold bg-[#B8965A] text-[#1E2820] rounded-sm'>
-										Most Popular
-									</div>
+									<div className='absolute top-4 right-4 px-2 py-0.5 text-[9px] tracking-widest uppercase font-semibold bg-[#B8965A] text-[#1E2820] rounded-sm'>Most Popular</div>
 								)}
-								<div
-									className={`text-[10px] tracking-[0.18em] uppercase mb-2 ${lt.highlight ? 'text-[#D4B483]' : 'text-[#F7F3ED]/35'}`}
-								>
-									{lt.label}
-								</div>
-								<div className='font-serif text-2xl font-light text-[#F7F3ED] mb-3'>
-									{lt.period}
-								</div>
-								<p className='text-sm font-light leading-relaxed text-[#F7F3ED]/50'>
-									{lt.desc}
-								</p>
+								<div className={`text-[10px] tracking-[0.18em] uppercase mb-2 ${lt.highlight ? 'text-[#D4B483]' : 'text-[#F7F3ED]/35'}`}>{lt.label}</div>
+								<div className='font-serif text-2xl font-light text-[#F7F3ED] mb-3'>{lt.period}</div>
+								<p className='text-sm font-light leading-relaxed text-[#F7F3ED]/50'>{lt.desc}</p>
 								<a
 									href='mailto:carewithivorris@gmail.com'
 									className={`mt-6 block text-center py-2.5 text-xs font-medium tracking-widest uppercase rounded-sm transition-colors duration-300 ${lt.highlight ? 'bg-[#B8965A] text-[#1E2820] hover:bg-[#D4B483]' : 'border border-white/12 text-[#F7F3ED]/50 hover:border-white/30 hover:text-[#F7F3ED]/80'}`}
@@ -1421,15 +1370,97 @@ function EquipmentLeasing() {
 				</div>
 			</div>
 
+			{/* ── Rent to Own ── */}
+			<div className='px-8 md:px-16 pb-16'>
+				<Reveal>
+					<div className='relative rounded-sm overflow-hidden border border-[#B8965A]/30 bg-linear-to-br from-[#B8965A]/8 to-transparent'>
+
+						{/* Corner accent */}
+						<div className='absolute top-0 right-0 w-40 h-40 rounded-full bg-[#B8965A]/6 translate-x-1/2 -translate-y-1/2 pointer-events-none' />
+
+						<div className='relative grid md:grid-cols-[1fr_auto] gap-10 p-8 md:p-10'>
+
+							{/* Left — description + agreement terms */}
+							<div>
+								<div className='flex items-center gap-3 mb-5'>
+									<div className='px-2.5 py-1 rounded-sm bg-[#B8965A] text-[#1E2820] text-[9px] font-semibold tracking-widest uppercase'>
+										Rent to Own
+									</div>
+									<span className='text-[11px] text-[#F7F3ED]/40 tracking-wide'>Available on selected items</span>
+								</div>
+
+								<h3 className='font-serif text-2xl md:text-3xl font-light text-[#F7F3ED] mb-3'>
+									Lease it today,<br />
+									<em className='non-italic text-[#B8965A]'>own it in 3 months.</em>
+								</h3>
+								<p className='text-sm font-light leading-relaxed text-[#F7F3ED]/55 mb-6 max-w-lg'>
+									For everyday mobility and recovery aids, your monthly lease payments count toward full ownership. No lump sum, no surprises — just consistent payments that work for your family.
+								</p>
+
+								{/* Eligible items */}
+								<div className='mb-7'>
+									<div className='text-[10px] uppercase tracking-[0.18em] text-[#D4B483]/70 mb-3'>Eligible items</div>
+									<div className='flex flex-wrap gap-2'>
+										{['Crutches', 'Walking Sticks', 'Walkers & Rollators', 'Shower Chairs', 'Commode Chairs', 'Quad Canes'].map((item) => (
+											<span key={item} className='px-3 py-1 text-xs text-[#F7F3ED]/65 border border-white/10 rounded-sm bg-white/3'>
+												{item}
+											</span>
+										))}
+									</div>
+								</div>
+
+								{/* Agreement terms */}
+								<div>
+									<div className='text-[10px] uppercase tracking-[0.18em] text-[#D4B483]/70 mb-3'>Simple agreement terms</div>
+									<div className='grid sm:grid-cols-2 gap-2.5'>
+										{[
+											{ icon: '📅', term: '3-month minimum commitment required' },
+											{ icon: '🏷️', term: 'Ownership transfers after full payment is complete' },
+											{ icon: '⚠️', term: 'Missed payments cancel the ownership option' },
+											{ icon: '🔒', term: 'Equipment may not be resold before full payment' },
+										].map(({ icon, term }) => (
+											<div key={term} className='flex items-start gap-3 px-4 py-3 rounded-sm bg-white/3 border border-white/6'>
+												<span className='text-sm shrink-0 mt-0.5'>{icon}</span>
+												<span className='text-xs font-light leading-relaxed text-[#F7F3ED]/60'>{term}</span>
+											</div>
+										))}
+									</div>
+								</div>
+							</div>
+
+							{/* Right — CTA card */}
+							<div className='flex flex-col justify-between gap-6 md:min-w-55'>
+								<div className='p-6 rounded-sm bg-[#B8965A]/10 border border-[#B8965A]/20 text-center'>
+									<div className='font-serif text-4xl font-light text-[#D4B483] mb-1'>3</div>
+									<div className='text-[11px] uppercase tracking-widest text-[#F7F3ED]/40 mb-4'>months to own</div>
+									<div className='flex flex-col gap-2 text-xs text-[#F7F3ED]/55 text-left mb-5'>
+										<div className='flex items-center gap-2'><span className='text-[#B8965A]'>✓</span> Monthly payments only</div>
+										<div className='flex items-center gap-2'><span className='text-[#B8965A]'>✓</span> Simple 1-page agreement</div>
+										<div className='flex items-center gap-2'><span className='text-[#B8965A]'>✓</span> No hidden fees</div>
+									</div>
+									<a
+										href='https://wa.me/254705819115?text=Hello,%20I%20am%20interested%20in%20the%20Rent%20to%20Own%20option%20for%20equipment.%20Please%20assist%20me.'
+										target='_blank'
+										rel='noopener noreferrer'
+										className='block py-3 text-xs font-medium tracking-widest uppercase rounded-sm bg-[#B8965A] text-[#1E2820] hover:bg-[#D4B483] transition-colors duration-300 text-center'
+									>
+										Get Started
+									</a>
+								</div>
+								<p className='text-[11px] text-[#F7F3ED]/30 text-center leading-relaxed'>
+									A signed agreement is required before equipment is released on the rent-to-own plan.
+								</p>
+							</div>
+						</div>
+					</div>
+				</Reveal>
+			</div>
+
 			{/* ── How it works ── */}
 			<div className='px-8 md:px-16 pb-24 border-t border-white/5 pt-14'>
 				<div className='mb-10'>
-					<span className='block text-[0.7rem] tracking-[0.18em] uppercase mb-3 text-[#D4B483]'>
-						Simple Process
-					</span>
-					<h3 className='font-serif text-3xl font-light text-[#F7F3ED]'>
-						How equipment leasing works
-					</h3>
+					<span className='block text-[0.7rem] tracking-[0.18em] uppercase mb-3 text-[#D4B483]'>Simple Process</span>
+					<h3 className='font-serif text-3xl font-light text-[#F7F3ED]'>How equipment leasing works</h3>
 				</div>
 				<div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/5'>
 					{HOW_IT_WORKS.map((step, i) => (
@@ -1443,12 +1474,8 @@ function EquipmentLeasing() {
 										{step.step}
 									</span>
 								</div>
-								<h4 className='font-serif text-base font-medium text-[#F7F3ED]/90 mb-2'>
-									{step.title}
-								</h4>
-								<p className='text-sm font-light leading-relaxed text-[#F7F3ED]/40'>
-									{step.desc}
-								</p>
+								<h4 className='font-serif text-base font-medium text-[#F7F3ED]/90 mb-2'>{step.title}</h4>
+								<p className='text-sm font-light leading-relaxed text-[#F7F3ED]/40'>{step.desc}</p>
 							</div>
 						</Reveal>
 					))}
