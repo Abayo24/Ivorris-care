@@ -1,18 +1,21 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useRef, useState, useSyncExternalStore } from 'react';
+import { useRef, useState, useSyncExternalStore, type ReactNode } from 'react';
+
+import { WhatsAppGlyph } from '@/components/layout/WhatsAppFloat';
+import { whatsappLink } from '@/content/site';
 
 // The chat window's code only downloads when someone opens it.
 const AssistantPanel = dynamic(() => import('./AssistantPanel').then((m) => m.AssistantPanel), {
 	ssr: false,
 });
 
-function SparkleChat({ className = '' }: { className?: string }) {
+function ChatIcon({ className = '' }: { className?: string }) {
 	return (
 		<svg viewBox='0 0 24 24' className={className} fill='none' stroke='currentColor' strokeWidth={1.75} aria-hidden='true'>
 			<path d='M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z' strokeLinejoin='round' />
-			<path d='M12 7.5v2M12 13.5v2M8.5 11.5h2M13.5 11.5h2' strokeLinecap='round' />
+			<path d='M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01' strokeLinecap='round' strokeWidth={2.5} />
 		</svg>
 	);
 }
@@ -24,7 +27,7 @@ function MicIcon({ className = '' }: { className?: string }) {
 			className={className}
 			fill='none'
 			stroke='currentColor'
-			strokeWidth={1.8}
+			strokeWidth={1.75}
 			strokeLinecap='round'
 			strokeLinejoin='round'
 			aria-hidden='true'
@@ -35,17 +38,29 @@ function MicIcon({ className = '' }: { className?: string }) {
 	);
 }
 
-// Whether this browser can speak replies aloud (read once, on the client only).
+// Whether this browser can speak replies aloud (read on the client only).
 const noop = () => () => {};
 const canSpeakNow = () => 'speechSynthesis' in window;
 const canSpeakOnServer = () => false;
 
-const floating =
-	'fixed right-4 z-40 inline-flex h-14 w-14 items-center justify-center gap-2 rounded-pill text-white ring-2 ring-white shadow-[0_12px_30px_-10px_rgba(0,0,0,0.45)] transition-transform hover:-translate-y-0.5 sm:right-6 sm:w-auto sm:pr-4 sm:pl-3.5';
+const itemClass =
+	'group relative grid h-11 w-11 place-items-center rounded-full transition-colors duration-200 focus-visible:outline-offset-2';
+
+/** Label that appears beside a dock button on hover or keyboard focus. */
+function Tip({ children }: { children: ReactNode }) {
+	return (
+		<span
+			className='pointer-events-none absolute top-1/2 right-full mr-3 -translate-y-1/2 rounded-md bg-ink px-2.5 py-1 text-xs font-medium whitespace-nowrap text-white opacity-0 shadow-md transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100'
+			aria-hidden='true'
+		>
+			{children}
+		</span>
+	);
+}
 
 /**
- * Floating assistant buttons, stacked above the WhatsApp button:
- * the voice (microphone) button on top, the "Ask Ivorris" chat below it.
+ * Floating dock, bottom-right on every page: ask by voice, ask the assistant,
+ * and chat on WhatsApp.
  */
 export function AssistantLauncher() {
 	const [open, setOpen] = useState<false | 'chat' | 'voice'>(false);
@@ -69,33 +84,46 @@ export function AssistantLauncher() {
 
 	return (
 		<>
-			{!open && voiceAvailable && (
-				<button
-					ref={voiceRef}
-					type='button'
-					onClick={() => openAs('voice')}
-					aria-haspopup='dialog'
-					className={`${floating} bottom-[calc(max(1rem,env(safe-area-inset-bottom))+8.5rem)] bg-sun text-ink hover:bg-[#f2b400] sm:bottom-[10rem]`}
-				>
-					<MicIcon className='h-6 w-6' />
-					<span className='hidden text-sm font-semibold sm:inline'>Ask by voice</span>
-					<span className='sr-only sm:hidden'>Ask by voice</span>
-					<span className='sr-only'> — speak to the Ivorris assistant</span>
-				</button>
-			)}
 			{!open && (
-				<button
-					ref={chatRef}
-					type='button'
-					onClick={() => openAs('chat')}
-					aria-haspopup='dialog'
-					className={`${floating} bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.25rem)] bg-olive-deep hover:bg-ink sm:bottom-[5.75rem]`}
+				<nav
+					aria-label='Quick help'
+					className='fixed right-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 flex flex-col items-center gap-1 rounded-full border border-line bg-white/95 p-1.5 shadow-[0_10px_30px_-12px_rgba(35,37,31,0.35)] backdrop-blur sm:right-5 sm:bottom-5'
 				>
-					<SparkleChat className='h-7 w-7 text-sun' />
-					<span className='hidden text-sm font-semibold sm:inline'>Ask Ivorris</span>
-					<span className='sr-only sm:hidden'>Ask Ivorris</span>
-					<span className='sr-only'> — instant answers about Ivorris</span>
-				</button>
+					{voiceAvailable && (
+						<button
+							ref={voiceRef}
+							type='button'
+							onClick={() => openAs('voice')}
+							aria-haspopup='dialog'
+							className={`${itemClass} text-olive-deep hover:bg-cream`}
+						>
+							<MicIcon className='h-5 w-5' />
+							<span className='sr-only'>Ask by voice</span>
+							<Tip>Ask by voice</Tip>
+						</button>
+					)}
+					<button
+						ref={chatRef}
+						type='button'
+						onClick={() => openAs('chat')}
+						aria-haspopup='dialog'
+						className={`${itemClass} bg-olive text-white hover:bg-olive-deep`}
+					>
+						<ChatIcon className='h-5 w-5' />
+						<span className='sr-only'>Ask Ivorris — instant answers</span>
+						<Tip>Ask Ivorris</Tip>
+					</button>
+					<a
+						href={whatsappLink()}
+						target='_blank'
+						rel='noopener noreferrer'
+						className={`${itemClass} text-whatsapp hover:bg-cream`}
+					>
+						<WhatsAppGlyph className='h-[22px] w-[22px]' />
+						<span className='sr-only'>Chat with Ivorris on WhatsApp (opens in a new tab)</span>
+						<Tip>Chat on WhatsApp</Tip>
+					</a>
+				</nav>
 			)}
 			{loaded && open && <AssistantPanel onClose={close} startWithVoice={open === 'voice'} />}
 		</>
