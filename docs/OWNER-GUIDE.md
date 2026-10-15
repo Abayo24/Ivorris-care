@@ -33,7 +33,7 @@ Environment Variables**. After changing them, redeploy once
    - `NEXT_PUBLIC_SANITY_DATASET` = `production`
 3. In the Sanity project, open **API → CORS origins** and add, each with
    **Allow credentials** ticked:
-   - your live address, e.g. `https://ivorris-care.vercel.app` (and your own domain if you have one)
+   - your live address, e.g. `https://ivorriscare.vercel.app` (and your own domain if you have one)
    - `http://localhost:3000` (only needed for local development)
 4. **Preview tokens:** **API → Tokens → Add API token**, name it "Website preview",
    permission **Viewer**. Add it to Vercel as `SANITY_API_READ_TOKEN`.

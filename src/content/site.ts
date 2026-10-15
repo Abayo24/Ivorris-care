@@ -15,7 +15,7 @@ const whatsappNumber = env(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER, '25470581911
 
 export const site = {
 	name: 'Ivorris Care',
-	url: env(process.env.NEXT_PUBLIC_SITE_URL, 'https://ivorris-care.vercel.app').replace(/\/$/, ''),
+	url: env(process.env.NEXT_PUBLIC_SITE_URL, 'https://ivorriscare.vercel.app').replace(/\/$/, ''),
 	tagline: 'Connecting you to the right care, people and resources.',
 	description:
 		'Ivorris Care is a nurse-led healthcare navigation and care coordination service in Nairobi, Kenya. We help individuals and families make sense of their healthcare and care needs, understand their options, and connect with the right support.',
