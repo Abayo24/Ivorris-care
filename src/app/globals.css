@@ -1,22 +1,176 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────────────────────────────
+   Ivorris Care design tokens
+   Every brand colour lives here. Change a value once and it updates the whole
+   site; components only reference the semantic Tailwind names below
+   (bg-olive, text-ink, bg-cream, etc.).
+   ───────────────────────────────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+	/* Olive green — TEMPORARY approximation. The supplied code "#59604" is
+	   incomplete; replace these three values once the exact hex is confirmed. */
+	--brand-olive: #59604A; /* white text on it: 6.6:1 */
+	--brand-olive-deep: #434832; /* hover / pressed state */
+	--brand-olive-tint: #e6e8dc; /* soft icon backgrounds */
+
+	--brand-cream: #ebe5df;
+	--brand-cream-soft: #f5f1ec; /* warm off-white for alternating sections */
+	--brand-yellow: #febf00; /* highlights only — never body copy */
+
+	--surface: #ffffff;
+	--ink: #23251f; /* headings & body — 15.5:1 on white, 12.4:1 on cream, 9.3:1 on yellow */
+	--ink-muted: #51544b; /* secondary text — 7.7:1 on white, 6.2:1 on cream */
+	--line: #ddd5cb;
+
+	--radius-card: 1.25rem;
+	--radius-pill: 999px;
 }
 
+@theme inline {
+	--color-olive: var(--brand-olive);
+	--color-olive-deep: var(--brand-olive-deep);
+	--color-olive-tint: var(--brand-olive-tint);
+	--color-cream: var(--brand-cream);
+	--color-cream-soft: var(--brand-cream-soft);
+	--color-sun: var(--brand-yellow);
+	--color-surface: var(--surface);
+	--color-ink: var(--ink);
+	--color-ink-muted: var(--ink-muted);
+	--color-line: var(--line);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	--font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+	--font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
+
+	--radius-card: var(--radius-card);
+	--radius-pill: var(--radius-pill);
 }
 
-html { scroll-behavior: smooth; }
+@layer base {
+	html {
+		-webkit-text-size-adjust: 100%;
+		/* In-page links land below the fixed header. */
+		scroll-padding-top: 5.5rem;
+	}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'DM Sans', sans-serif; overflow-x: hidden;
+	body {
+		background: var(--surface);
+		color: var(--ink);
+		font-family: var(--font-sans);
+		font-size: 1rem;
+		line-height: 1.65;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	h1,
+	h2,
+	h3 {
+		font-family: var(--font-display);
+		font-weight: 500;
+		line-height: 1.12;
+		letter-spacing: -0.01em;
+		color: var(--ink);
+		text-wrap: balance;
+	}
+
+	h4,
+	h5,
+	h6 {
+		font-family: var(--font-sans);
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	p {
+		text-wrap: pretty;
+	}
+
+	:focus-visible {
+		outline: 3px solid var(--brand-olive);
+		outline-offset: 3px;
+		border-radius: 4px;
+	}
+
+	::selection {
+		background: var(--brand-yellow);
+		color: var(--ink);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+/* Long-form article typography (blog posts rendered from the CMS). */
+.prose-ivorris {
+	color: var(--ink);
+	font-size: 1.0625rem;
+	line-height: 1.8;
+}
+.prose-ivorris > * + * {
+	margin-top: 1.25em;
+}
+.prose-ivorris h2 {
+	font-size: 1.875rem;
+	margin-top: 2.2em;
+}
+.prose-ivorris h3 {
+	font-size: 1.5rem;
+	margin-top: 1.8em;
+}
+.prose-ivorris h4 {
+	font-size: 1.125rem;
+	margin-top: 1.6em;
+}
+.prose-ivorris a {
+	color: var(--brand-olive-deep);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+.prose-ivorris a:hover {
+	text-decoration-thickness: 2px;
+}
+.prose-ivorris ul,
+.prose-ivorris ol {
+	padding-left: 1.4em;
+}
+.prose-ivorris ul {
+	list-style: disc;
+}
+.prose-ivorris ol {
+	list-style: decimal;
+}
+.prose-ivorris li + li {
+	margin-top: 0.4em;
+}
+.prose-ivorris li::marker {
+	color: var(--brand-olive);
+}
+.prose-ivorris blockquote {
+	border-left: 3px solid var(--brand-yellow);
+	padding-left: 1.25em;
+	color: var(--ink-muted);
+	font-style: italic;
+}
+.prose-ivorris strong {
+	font-weight: 600;
+}
+.prose-ivorris figure img {
+	border-radius: var(--radius-card);
+}
+.prose-ivorris figcaption {
+	font-size: 0.875rem;
+	color: var(--ink-muted);
+	margin-top: 0.5em;
 }
