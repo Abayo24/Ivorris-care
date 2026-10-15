@@ -32,6 +32,32 @@ export const site = {
 	},
 } as const;
 
+/**
+ * Intro video shown on the home hero. Set NEXT_PUBLIC_INTRO_VIDEO_URL (with
+ * NEXT_PUBLIC_INTRO_VIDEO_TITLE) to use Ivorris's own YouTube video. Until
+ * then, a short public explainer on care navigation is shown, credited to its
+ * creator so it isn't mistaken for an Ivorris video.
+ */
+const ownVideoUrl = env(process.env.NEXT_PUBLIC_INTRO_VIDEO_URL, '');
+
+export const introVideo = ownVideoUrl
+	? {
+			youtubeId: parseYouTubeId(ownVideoUrl),
+			title: env(process.env.NEXT_PUBLIC_INTRO_VIDEO_TITLE, 'Ivorris Care in a minute'),
+			credit: '',
+		}
+	: {
+			youtubeId: 'n3BWkLLNqa0',
+			title: 'What is a care navigator? (1 min)',
+			credit: 'Video: Integrated Care Northamptonshire (NHS)',
+		};
+
+function parseYouTubeId(value: string) {
+	if (/^[\w-]{11}$/.test(value)) return value;
+	const match = value.match(/(?:youtu\.be\/|v=|embed\/|shorts\/|live\/)([\w-]{11})/);
+	return match?.[1] ?? '';
+}
+
 export function whatsappLink(message = "Hello Ivorris, I'd like to talk about some care support.") {
 	return `https://wa.me/${site.contact.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }

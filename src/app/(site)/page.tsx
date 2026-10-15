@@ -5,16 +5,17 @@ import Link from 'next/link';
 import { PostGrid } from '@/components/blog/PostCard';
 import { CtaSection } from '@/components/sections/CtaSection';
 import { FaqList } from '@/components/sections/FaqList';
+import { HeroVideo } from '@/components/sections/HeroVideo';
 import { ProcessSteps } from '@/components/sections/ProcessSteps';
 import { IconBadge, ServiceCard, SituationCard } from '@/components/sections/cards';
 import { JsonLd } from '@/components/seo/JsonLd';
-import { Chat, Check, Phone } from '@/components/ui/Icons';
+import { Check } from '@/components/ui/Icons';
 import { ButtonLink, Container, Eyebrow, SectionHeading, TextLink } from '@/components/ui/primitives';
 import { connectCategories } from '@/content/connect';
 import { homeFaqs, reasons, situations } from '@/content/home';
 import { photos } from '@/content/photos';
 import { services } from '@/content/services';
-import { primaryCta, site, whatsappLink } from '@/content/site';
+import { introVideo, primaryCta, site } from '@/content/site';
 import { faqJsonLd, pageMetadata } from '@/lib/seo';
 import { sanityFetch } from '@/sanity/fetch';
 import { latestPostsQuery } from '@/sanity/queries';
@@ -69,82 +70,72 @@ export default async function HomePage() {
 						/>
 
 						{/* Text lines up with the header's logo via the same container width. */}
-						<div className='mx-auto -mt-10 flex w-full max-w-7xl flex-1 flex-col px-4 pb-8 sm:-mt-16 sm:px-6 sm:pb-10 lg:mt-0 lg:justify-center lg:px-10 lg:pt-32'>
+						<div className='mx-auto -mt-10 flex w-full max-w-7xl flex-1 flex-col px-4 pb-8 sm:-mt-16 sm:px-6 sm:pb-10 lg:mt-0 lg:justify-center lg:px-10 lg:pt-32 lg:pb-20'>
 							<div className='max-w-2xl'>
-								<Eyebrow tone='light'>Nurse-led healthcare navigation · {site.contact.city}</Eyebrow>
-								<h1 className='mt-5 text-[2.5rem] leading-[1.05] text-white sm:text-6xl lg:text-[4.4rem]'>
-									Finding the right care starts with{' '}
+								<Eyebrow tone='light'>Nurse-led care navigation · {site.contact.city}</Eyebrow>
+								<h1 className='mt-5 text-[2.6rem] leading-[1.05] text-white sm:text-6xl lg:text-[4.4rem]'>
+									Not sure what care you need?{' '}
 									<span className='relative whitespace-nowrap'>
-										understanding.
+										Talk to a nurse.
 										<span
 											className='absolute -bottom-1 left-0 h-1.5 w-full rounded-full bg-sun'
 											aria-hidden='true'
 										/>
 									</span>
 								</h1>
-								<p className='mt-6 max-w-xl text-base text-white/90 sm:text-lg'>
-									When healthcare or caring for someone at home feels confusing, knowing where to begin
-									isn&apos;t always easy. Ivorris helps you understand your situation, explore your options,
-									and connect with the right care and support.
+								<p className='mt-6 max-w-lg text-lg text-white/90'>
+									We help families understand their options and connect with the right care.
 								</p>
-								<div className='mt-8 flex flex-col gap-3 sm:flex-row sm:items-center'>
+								<ul className='mt-6 flex flex-wrap gap-2 text-[0.8125rem] text-white sm:text-sm'>
+									{['Nurse-led assessments', 'Home nursing', 'Specialists & equipment'].map((item) => (
+										<li
+											key={item}
+											className='inline-flex items-center gap-1.5 rounded-pill border border-white/25 bg-white/10 px-2.5 py-1.5 backdrop-blur-sm sm:px-3'
+										>
+											<Check className='h-4 w-4 text-sun' /> {item}
+										</li>
+									))}
+								</ul>
+								<div className='mt-8 flex flex-wrap items-center gap-3'>
 									<ButtonLink href={primaryCta.href} variant='light'>
 										{primaryCta.label}
 									</ButtonLink>
 									<ButtonLink href='#situations' variant='ghost'>
-										Explore how we help
+										How we help
 									</ButtonLink>
+								</div>
+								{/* Floating video (or the "How we help" card until a video is set). */}
+								<div className='mt-10'>
+									{introVideo.youtubeId ? (
+										<HeroVideo youtubeId={introVideo.youtubeId} title={introVideo.title} credit={introVideo.credit} />
+									) : (
+										<Link
+											href='#how-it-works'
+											className='group hidden w-[22rem] items-center gap-4 rounded-2xl border border-white/20 bg-black/45 p-3 text-white backdrop-blur-md transition-colors hover:bg-black/60 lg:flex'
+										>
+											<span className='relative h-20 w-28 shrink-0 overflow-hidden rounded-xl'>
+												<Image
+													src={photos.heroInset.src}
+													alt=''
+													fill
+													sizes='112px'
+													className='object-cover transition-transform duration-500 group-hover:scale-105'
+												/>
+											</span>
+											<span>
+												<span className='block text-xs font-semibold tracking-[0.12em] text-sun uppercase'>
+													How we help
+												</span>
+												<span className='mt-1 block text-sm leading-snug'>
+													Assess · Connect · Coordinate · Follow up
+												</span>
+											</span>
+										</Link>
+									)}
 								</div>
 							</div>
 						</div>
 
-						{/* Bottom bar: contact links (left) and inset card (right), as in the reference. */}
-						<div className='mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 pb-6 sm:px-6 sm:pb-8 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:pb-12'>
-							<div className='text-sm text-white/90'>
-								<p className='font-semibold text-white'>Prefer to talk now?</p>
-								<ul className='mt-2 flex flex-wrap gap-x-5 gap-y-2'>
-									<li>
-										<a href={site.contact.phoneHref} className='inline-flex items-center gap-1.5 hover:text-white hover:underline'>
-											<Phone className='h-4 w-4 text-sun' /> {site.contact.phoneDisplay}
-										</a>
-									</li>
-									<li>
-										<a
-											href={whatsappLink()}
-											target='_blank'
-											rel='noopener noreferrer'
-											className='inline-flex items-center gap-1.5 hover:text-white hover:underline'
-										>
-											<Chat className='h-4 w-4 text-sun' /> WhatsApp
-											<span className='sr-only'>(opens in a new tab)</span>
-										</a>
-									</li>
-								</ul>
-							</div>
-
-							<Link
-								href='#how-it-works'
-								className='group hidden w-[22rem] items-center gap-4 rounded-2xl border border-white/20 bg-black/45 p-3 text-white backdrop-blur-md transition-colors hover:bg-black/60 lg:flex'
-							>
-								<span className='relative h-20 w-28 shrink-0 overflow-hidden rounded-xl'>
-									<Image
-										src={photos.heroInset.src}
-										alt=''
-										fill
-										sizes='112px'
-										className='object-cover transition-transform duration-500 group-hover:scale-105'
-									/>
-								</span>
-								<span>
-									<span className='block text-xs font-semibold tracking-[0.12em] text-sun uppercase'>
-										How we help
-									</span>
-									<span className='mt-1 block text-sm leading-snug'>
-										Assess · Connect · Coordinate · Follow up
-									</span>
-								</span>
-							</Link>
-						</div>
 					</div>
 				</div>
 			</section>
@@ -156,7 +147,7 @@ export default async function HomePage() {
 						id='situations-heading'
 						eyebrow='Where would you like to start?'
 						title="You don't need to know exactly what you need."
-						intro="Start with what's happening. Choose the situation that sounds closest to yours — or simply tell us what's going on."
+						intro='Pick what sounds closest — or just tell us.'
 					/>
 					<ul className='mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3'>
 						{situations.map((s) => (
@@ -171,8 +162,7 @@ export default async function HomePage() {
 										“I&apos;m not sure what to do.”
 									</p>
 									<p className='mt-3 text-[0.95rem] text-cream/90'>
-										That&apos;s a perfectly good place to start. Tell us what&apos;s going on and we&apos;ll help
-										you work out the next step.
+										That&apos;s a good place to start. Tell us what&apos;s going on.
 									</p>
 								</div>
 								<div className='pt-6'>
@@ -194,7 +184,6 @@ export default async function HomePage() {
 							id='services-heading'
 							eyebrow='Provided directly by Ivorris'
 							title='Nurse-led services'
-							intro='Four services our nurses provide directly, each focused on helping you understand a situation and what could come next.'
 						/>
 						<TextLink href='/services'>See all nurse-led services</TextLink>
 					</div>
@@ -214,8 +203,7 @@ export default async function HomePage() {
 					<SectionHeading
 						id='process-heading'
 						eyebrow='How Ivorris works'
-						title='Four steps from uncertainty to the right support'
-						intro='Every situation is different, but our approach stays the same: understand first, then help bring the right care together.'
+						title='Four steps to the right support'
 						align='center'
 					/>
 					<div className='mt-12'>
@@ -234,9 +222,7 @@ export default async function HomePage() {
 								When you need more than we provide directly
 							</h2>
 							<p className='mt-4 text-ink-muted sm:text-lg'>
-								Not every need requires a service from Ivorris. Where someone needs another professional, service
-								or resource, we help them identify and connect with appropriate support — and, where several are
-								involved, help bring the pieces together.
+								Need a specialist, therapist or equipment? We help you find it and bring the pieces together.
 							</p>
 							<div className='mt-8 grid gap-4 sm:grid-cols-2'>
 								<div className='rounded-2xl bg-white p-5'>
@@ -311,7 +297,7 @@ export default async function HomePage() {
 								id='articles-heading'
 								eyebrow='Resources'
 								title='Helpful guides for families'
-								intro='Plain-language articles to help you understand care situations and ask better questions.'
+								intro='Plain-language guides to care at home.'
 							/>
 							<TextLink href='/blog'>Browse all articles</TextLink>
 						</div>

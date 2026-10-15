@@ -19,17 +19,18 @@ const securityHeaders = [
  * (fast, cacheable), so inline Next.js bootstrap scripts are allowed with
  * 'unsafe-inline' rather than per-request nonces, which would force every page
  * to render dynamically. Everything else is locked to this site, Sanity's
- * image CDN/API (images and draft previews) and Vercel's preview toolbar.
+ * image CDN/API (images and draft previews), the intro video (YouTube's
+ * privacy-enhanced player) and Vercel's preview toolbar.
  * Not applied in development, where hot reloading needs eval and websockets.
  */
 const siteCsp = [
 	"default-src 'self'",
 	"script-src 'self' 'unsafe-inline' https://vercel.live",
 	"style-src 'self' 'unsafe-inline'",
-	"img-src 'self' data: blob: https://cdn.sanity.io",
+	"img-src 'self' data: blob: https://cdn.sanity.io https://i.ytimg.com",
 	"font-src 'self'",
 	"connect-src 'self' https://*.sanity.io wss://*.sanity.io https://vercel.live",
-	"frame-src 'self' https://vercel.live",
+	"frame-src 'self' https://www.youtube-nocookie.com https://vercel.live",
 	"frame-ancestors 'self'",
 	"form-action 'self'",
 	"base-uri 'self'",
@@ -47,7 +48,11 @@ const nextConfig: NextConfig = {
 	experimental: { inlineCss: true },
 	images: {
 		formats: ['image/avif', 'image/webp'],
-		remotePatterns: [{ protocol: 'https', hostname: 'cdn.sanity.io' }],
+		remotePatterns: [
+			{ protocol: 'https', hostname: 'cdn.sanity.io' },
+			// Intro video thumbnail.
+			{ protocol: 'https', hostname: 'i.ytimg.com', pathname: '/vi/**' },
+		],
 		// Optimised images are keyed by source, size and quality; cache them for 31 days.
 		minimumCacheTTL: 2678400,
 	},

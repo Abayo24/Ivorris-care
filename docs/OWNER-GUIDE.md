@@ -3,7 +3,7 @@
 This guide covers everything you need to run the website and publish articles
 without a developer. It has three parts:
 
-1. [One-time setup](#1-one-time-setup) — connect the blog and the contact form.
+1. [One-time setup](#1-one-time-setup) — connect the blog and add your intro video.
 2. [Writing and publishing articles](#2-writing-and-publishing-articles) — the everyday workflow.
 3. [Things to check and confirm](#3-things-to-check-and-confirm).
 
@@ -11,13 +11,12 @@ without a developer. It has three parts:
 
 ## 1. One-time setup
 
-You will need accounts with three services, all with free tiers:
+You will need accounts with these services:
 
 | Service | What it does | Sign up |
 | --- | --- | --- |
 | **Vercel** | Hosts the website (already in use) | vercel.com |
-| **Sanity** | Stores blog articles and runs the editor at `/studio` | sanity.io |
-| **Resend** | Sends contact form messages to your inbox | resend.com |
+| **Sanity** | Stores blog articles and runs the editor at `/studio` (free tier) | sanity.io |
 
 All settings below are entered in **Vercel → your project → Settings →
 Environment Variables**. After changing them, redeploy once
@@ -69,21 +68,38 @@ The samples are general, plain-language drafts marked **Demonstration
 content**. Have a qualified professional review them, add a featured image,
 switch off "Demonstration content", then publish. Delete any you don't want.
 
-### 1.3 Connect the contact form (Resend)
+### 1.3 Contact form and WhatsApp
 
-1. Create a Resend account and **verify your domain** (Resend → Domains). This
-   needs a domain you control. Free email addresses such as Gmail can't be
-   used as the sender.
-2. Create an API key (Resend → API Keys, "Sending access").
-3. Add to Vercel:
-   - `RESEND_API_KEY` = the key
-   - `CONTACT_TO_EMAIL` = the inbox that should receive enquiries
-   - `CONTACT_FROM_EMAIL` = e.g. `Ivorris Website <website@yourdomain.com>`
-4. Redeploy, then send yourself a test message from `/contact`.
+Nothing to set up. The contact form and the green WhatsApp button open WhatsApp
+with the visitor's message ready to send to **+254 705 819 115**. Messages arrive
+in that WhatsApp account, so make sure someone checks it. To use a different
+number, set `NEXT_PUBLIC_WHATSAPP_NUMBER` (country code, no `+` or spaces, e.g.
+`254705819115`) and `NEXT_PUBLIC_CONTACT_PHONE_DISPLAY`, then redeploy.
 
-Until this is done the form does **not** pretend to work. Visitors who submit
-it are told to call, WhatsApp or email instead. Enquiries are emailed only;
-nothing is stored in a database.
+### 1.4 The "Ask Ivorris" assistant
+
+Nothing to set up and nothing to pay. The olive "Ask Ivorris" button opens a
+chat that answers common questions about Ivorris instantly and hands visitors
+over to WhatsApp. It runs in the visitor's browser, so nothing they type is
+sent anywhere.
+
+It only gives the answers written in `src/content/assistant.ts`, all taken from
+the Ivorris information you supplied. Anything else — prices, availability,
+qualifications, medical questions — gets "I don't have that information" and
+a WhatsApp button. Emergencies are always directed to emergency services.
+
+To add or change an answer, edit that file: each topic has a short label,
+the words that trigger it, and the answer text.
+
+### 1.5 Add your intro video
+
+The home page currently shows a short public explainer, "What is a care
+navigator?", made by Integrated Care Northamptonshire (NHS) and credited on the
+card. To show your own video instead, upload it to YouTube (it can be
+"Unlisted"), then add these in Vercel and redeploy:
+
+- `NEXT_PUBLIC_INTRO_VIDEO_URL` = the YouTube link
+- `NEXT_PUBLIC_INTRO_VIDEO_TITLE` = the label shown on the card, e.g. "Ivorris Care in a minute"
 
 ---
 

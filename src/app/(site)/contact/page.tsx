@@ -31,8 +31,7 @@ export default async function ContactPage({ searchParams }: Props) {
 						<h1 className='mt-4 text-4xl leading-[1.08] sm:text-5xl'>{primaryCta.heading}</h1>
 						<p className='mt-5 text-lg text-ink-muted'>{primaryCta.body}</p>
 						<p className='mt-4 text-ink-muted'>
-							You don&apos;t need to know which service you need, or have the right words for it. Starting with
-							&ldquo;I&apos;m not sure what to do&rdquo; is perfectly fine.
+							Starting with &ldquo;I&apos;m not sure what to do&rdquo; is perfectly fine.
 						</p>
 
 						<h2 className='mt-10 font-sans text-base font-semibold'>Prefer to talk now?</h2>
@@ -102,8 +101,8 @@ export default async function ContactPage({ searchParams }: Props) {
 					</div>
 
 					<div className='rounded-[1.75rem] bg-white p-6 shadow-[0_24px_60px_-36px_rgba(35,37,31,0.45)] sm:p-10'>
-						<h2 className='text-3xl'>Send us a message</h2>
-						<p className='mt-2 mb-6 text-ink-muted'>We&apos;ll get back to you using your preferred method.</p>
+						<h2 className='text-3xl'>Message us on WhatsApp</h2>
+						<p className='mt-2 mb-6 text-ink-muted'>A few quick details, then send it from your own WhatsApp.</p>
 						<ContactForm defaultTopic={defaultTopic} />
 					</div>
 				</div>

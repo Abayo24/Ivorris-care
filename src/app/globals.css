@@ -17,6 +17,11 @@
 	--brand-cream-soft: #f5f1ec; /* warm off-white for alternating sections */
 	--brand-yellow: #febf00; /* highlights only — never body copy */
 
+	/* WhatsApp actions. A deeper shade of WhatsApp green so white text passes
+	   contrast (5.3:1); the brand's #25D366 is only 2:1 with white. */
+	--whatsapp: #1f7a46;
+	--whatsapp-deep: #17663a;
+
 	--surface: #ffffff;
 	--ink: #23251f; /* headings & body — 15.5:1 on white, 12.4:1 on cream, 9.3:1 on yellow */
 	--ink-muted: #51544b; /* secondary text — 7.7:1 on white, 6.2:1 on cream */
@@ -33,6 +38,8 @@
 	--color-cream: var(--brand-cream);
 	--color-cream-soft: var(--brand-cream-soft);
 	--color-sun: var(--brand-yellow);
+	--color-whatsapp: var(--whatsapp);
+	--color-whatsapp-deep: var(--whatsapp-deep);
 	--color-surface: var(--surface);
 	--color-ink: var(--ink);
 	--color-ink-muted: var(--ink-muted);

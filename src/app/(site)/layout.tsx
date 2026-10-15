@@ -4,6 +4,8 @@ import Link from 'next/link';
 
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
+import { WhatsAppFloat } from '@/components/layout/WhatsAppFloat';
+import { AssistantLauncher } from '@/components/assistant/AssistantLauncher';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 
@@ -30,6 +32,8 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
 				{children}
 			</main>
 			<Footer />
+			<WhatsAppFloat />
+			<AssistantLauncher />
 			<JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
 			{isDraft && <VisualEditing />}
 		</>

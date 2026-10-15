@@ -15,35 +15,35 @@ export type Situation = {
 export const situations: Situation[] = [
 	{
 		quote: "I'm not sure what kind of help my loved one needs.",
-		body: "You've noticed things changing, but it's hard to tell what would actually help. A nurse-led assessment can bring clarity.",
+		body: 'A nurse-led assessment brings clarity.',
 		href: '/services/care-needs-assessment',
 		linkLabel: 'Care Needs Assessment',
 		icon: 'compass',
 	},
 	{
 		quote: 'My family member has just come home from hospital.',
-		body: 'The move home can raise lots of questions. We help you understand the transition and what support may be needed.',
+		body: 'We help you understand the move home and what support may help.',
 		href: '/services/post-discharge-nursing-assessment',
 		linkLabel: 'Post-Discharge Nursing Assessment',
 		icon: 'hospital',
 	},
 	{
 		quote: 'We need nursing support at home.',
-		body: 'Professional, nurse-led care in familiar surroundings — within our professional scope.',
+		body: 'Nurse-led care at home, within our professional scope.',
 		href: '/services/home-nursing',
 		linkLabel: 'Nurse-Led Home Nursing',
 		icon: 'home',
 	},
 	{
 		quote: 'I need help finding the right specialist or equipment.',
-		body: 'When needs go beyond what we provide directly, we help you find and connect with appropriate people and resources.',
+		body: 'We help you find the right people and resources.',
 		href: '/connect-and-coordinate',
 		linkLabel: 'Connect & Coordinate',
 		icon: 'network',
 	},
 	{
 		quote: "I'm caring for someone and need guidance.",
-		body: 'Caring at home is a lot to carry. We offer a nurse’s perspective on care needs, safety and when to seek more support.',
+		body: "A nurse's guidance on care, safety and when to get more help.",
 		href: '/services/family-care-guidance',
 		linkLabel: 'Family Care Guidance',
 		icon: 'users',
@@ -55,25 +55,25 @@ export const processSteps = [
 		key: 'assess',
 		title: 'Assess',
 		lead: "Understand what's going on.",
-		body: 'We listen, ask the right questions and assess the situation to understand what kind of support may be appropriate.',
+		body: 'We listen and work out what support may be appropriate.',
 	},
 	{
 		key: 'connect',
 		title: 'Connect',
 		lead: 'Find the right people and resources.',
-		body: 'We help connect individuals and families with relevant healthcare professionals, services and resources.',
+		body: 'We link you with the right professionals and services.',
 	},
 	{
 		key: 'coordinate',
 		title: 'Coordinate',
 		lead: 'Bring the pieces together.',
-		body: 'Where multiple forms of support are involved, we help make the pathway easier to navigate.',
+		body: 'Where several kinds of support are involved, we help them fit together.',
 	},
 	{
 		key: 'follow-up',
 		title: 'Follow up',
 		lead: 'Stay connected to the care journey.',
-		body: 'Where appropriate, we check in, help families understand what comes next and identify whether further support may be needed.',
+		body: 'Where appropriate, we check in on what comes next.',
 	},
 ];
 
@@ -81,22 +81,22 @@ export const processSteps = [
 export const reasons = [
 	{
 		title: 'Nurse-led from the first conversation',
-		body: 'Ivorris combines nursing knowledge with practical care experience, so you are guided by someone who understands healthcare.',
+		body: 'Guided by someone who understands healthcare.',
 		icon: 'stethoscope',
 	},
 	{
 		title: "You don't need the answer first",
-		body: "Start with what's going on. We'll help you understand your situation and what your next step could be.",
+		body: "Start with what's going on — we'll help with the rest.",
 		icon: 'ear',
 	},
 	{
 		title: 'Clear about what we do — and don’t',
-		body: "We are open about which services we provide directly and when we're helping you connect with someone else.",
+		body: 'Clear about what we provide and what we connect you to.',
 		icon: 'shield',
 	},
 	{
 		title: 'A growing network of support',
-		body: 'A growing network of healthcare and support providers helps us point you towards appropriate options.',
+		body: 'A growing network of healthcare and support providers.',
 		icon: 'network',
 	},
 ] as const;

@@ -13,7 +13,8 @@ coordination service in Nairobi, Kenya:
 - **Next.js 16** (App Router, Turbopack) · **React 19** · **TypeScript**
 - **Tailwind CSS v4**, with design tokens as CSS variables in `src/app/globals.css`
 - **Sanity** CMS with the Studio embedded at `/studio` (`next-sanity`)
-- **Resend** (REST API) for contact form email
+- **WhatsApp** click-to-chat for enquiries (no backend or API keys)
+- **"Ask Ivorris" assistant**: a free, in-browser FAQ chat (no AI service or API key) — answers live in `src/content/assistant.ts`
 - Fonts: Cormorant Garamond (headings) and DM Sans (body), via `next/font`
 
 ## Getting started
@@ -25,8 +26,8 @@ npm run dev
 ```
 
 Without Sanity credentials the site works fully, and the blog shows an "articles
-on their way" state. Without Resend credentials the contact form returns an
-honest "not available — please call" message.
+on their way" state. The contact form needs no setup: it opens WhatsApp with the
+visitor's message ready to send to `NEXT_PUBLIC_WHATSAPP_NUMBER`.
 
 | Command | Purpose |
 | --- | --- |
@@ -49,7 +50,6 @@ src/
       blog/              Listing (search, category filter, pagination) + [slug] article
     studio/[[...tool]]/ Sanity Studio (noindex, disallowed in robots.txt)
     api/
-      contact/           Contact form → validation, spam checks → Resend
       revalidate/        Signed Sanity webhook → revalidateTag('sanity')
       draft-mode/        Enable (validated by Sanity) / disable preview
     sitemap.ts, robots.ts, opengraph-image.tsx, icon.png, apple-icon.png
@@ -116,8 +116,9 @@ needs to return with verified details.
 
 Security headers are set in `next.config.ts`: a Content-Security-Policy in production
 (a separate, looser one for `/studio`), HSTS, nosniff, frame options, COOP, and the
-referrer and permissions policies. The contact endpoint rejects cross-site origins and
-bodies over 8 KB. Secrets are server-only and never prefixed `NEXT_PUBLIC_`.
+referrer and permissions policies. The contact form has no server endpoint: it builds a
+WhatsApp message in the browser, so the site stores no enquiries. Secrets are
+server-only and never prefixed `NEXT_PUBLIC_`.
 
 `npm audit --omit=dev` still lists advisories inside Sanity's CLI and build tooling
 (`@sanity/cli` and its dependencies), not in code served to visitors. The only fix npm
