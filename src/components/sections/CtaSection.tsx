@@ -1,3 +1,4 @@
+import { ChatIllustration } from '@/components/illustrations/Illustrations';
 import { Chat, Phone } from '@/components/ui/Icons';
 import { ButtonLink, Container } from '@/components/ui/primitives';
 import { primaryCta, site, whatsappLink } from '@/content/site';
@@ -15,13 +16,14 @@ export function CtaSection({
 	return (
 		<section aria-labelledby='cta-heading' className='py-16 sm:py-20'>
 			<Container>
-				<div className='relative overflow-hidden rounded-[1.75rem] bg-olive px-6 py-12 text-cream sm:px-12 sm:py-16'>
+				<div className='reveal relative overflow-hidden rounded-[1.75rem] bg-olive px-6 py-12 text-cream sm:px-12 sm:py-16'>
 					<div
 						className='pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full border-[28px] border-sun/15'
 						aria-hidden='true'
 					/>
 					<div className='relative grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end'>
 						<div>
+							<ChatIllustration className='mb-6 h-24 w-auto text-olive-deep sm:h-28' />
 							<h2 id='cta-heading' className='text-3xl text-white sm:text-4xl lg:text-5xl'>
 								{heading}
 							</h2>

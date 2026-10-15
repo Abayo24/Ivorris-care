@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { HomeCareIllustration } from '@/components/illustrations/Illustrations';
 import Image from 'next/image';
 
 import { CtaSection } from '@/components/sections/CtaSection';
@@ -120,13 +121,16 @@ export default function AboutPage() {
 						title='A knowledgeable friend in healthcare'
 						intro='Someone who understands healthcare, but will also take the time to understand you — explaining things clearly, the way a nurse would explain them to a family member.'
 					/>
-					<ul className='flex flex-wrap gap-2.5'>
-						{personality.map((p) => (
-							<li key={p} className='rounded-pill bg-white px-5 py-2.5 font-medium'>
-								{p}
-							</li>
-						))}
-					</ul>
+					<div>
+						<HomeCareIllustration className='mb-6 h-40 w-auto text-olive' />
+						<ul className='flex flex-wrap gap-2.5'>
+							{personality.map((p) => (
+								<li key={p} className='rounded-pill bg-white px-5 py-2.5 font-medium'>
+									{p}
+								</li>
+							))}
+						</ul>
+					</div>
 				</Container>
 			</section>
 

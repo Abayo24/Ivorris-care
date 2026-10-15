@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { HomeCareIllustration, SignpostIllustration } from '@/components/illustrations/Illustrations';
 import Link from 'next/link';
 
 import { FeaturedPost, PostGrid } from '@/components/blog/PostCard';
@@ -103,6 +104,7 @@ export default async function BlogPage({ searchParams }: Props) {
 			<Container className='py-14 sm:py-16'>
 				{nothingPublished ? (
 					<div className='rounded-card border border-dashed border-line bg-cream-soft px-6 py-16 text-center'>
+						<HomeCareIllustration className='mx-auto mb-6 h-40 w-auto text-olive' />
 						<h2 className='text-3xl'>Articles are on their way</h2>
 						<p className='mx-auto mt-3 max-w-lg text-ink-muted'>
 							We&apos;re preparing helpful guides for families. In the meantime, you&apos;re welcome to ask us
@@ -194,6 +196,7 @@ export default async function BlogPage({ searchParams }: Props) {
 								<PostGrid posts={posts} />
 							) : (
 								<div className='rounded-card bg-cream-soft px-6 py-14 text-center'>
+									<SignpostIllustration className='mx-auto mb-4 h-32 w-auto text-olive' />
 									<p className='font-display text-2xl'>No articles found</p>
 									<p className='mt-2 text-ink-muted'>
 										Try a different search or{' '}

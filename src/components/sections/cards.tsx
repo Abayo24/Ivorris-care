@@ -58,7 +58,7 @@ export function SituationCard({ situation }: { situation: Situation }) {
 	return (
 		<Link
 			href={situation.href}
-			className='group flex h-full flex-col rounded-card border border-line bg-surface p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-olive hover:shadow-[0_12px_32px_-16px_rgba(35,37,31,0.25)] sm:p-7'
+			className='reveal group flex h-full flex-col rounded-card border border-line bg-surface p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-olive hover:shadow-[0_12px_32px_-16px_rgba(35,37,31,0.25)] sm:p-7'
 		>
 			<IconBadge name={situation.icon} />
 			<p className='mt-6 font-display text-[1.55rem] leading-snug text-ink'>“{situation.quote}”</p>
@@ -76,7 +76,7 @@ export function ServiceCard({ service, index }: { service: Service; index: numbe
 	return (
 		<Link
 			href={`/services/${service.slug}`}
-			className='group flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-shadow duration-200 hover:shadow-[0_16px_40px_-20px_rgba(35,37,31,0.35)]'
+			className='reveal group flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface transition-shadow duration-200 hover:shadow-[0_16px_40px_-20px_rgba(35,37,31,0.35)]'
 		>
 			<div className='relative aspect-[4/3] overflow-hidden bg-cream'>
 				<Image

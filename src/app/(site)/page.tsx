@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { ConnectIllustration } from '@/components/illustrations/Illustrations';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -71,7 +72,7 @@ export default async function HomePage() {
 
 						{/* Text lines up with the header's logo via the same container width. */}
 						<div className='mx-auto -mt-10 flex w-full max-w-7xl flex-1 flex-col px-4 pb-8 sm:-mt-16 sm:px-6 sm:pb-10 lg:mt-0 lg:justify-center lg:px-10 lg:pt-32 lg:pb-20'>
-							<div className='max-w-2xl'>
+							<div className='hero-in max-w-2xl'>
 								<Eyebrow tone='light'>Nurse-led care navigation · {site.contact.city}</Eyebrow>
 								<h1 className='mt-5 text-[2.6rem] leading-[1.05] text-white sm:text-6xl lg:text-[4.4rem]'>
 									Not sure what care you need?{' '}
@@ -242,14 +243,17 @@ export default async function HomePage() {
 								<TextLink href='/connect-and-coordinate'>How Connect &amp; Coordinate works</TextLink>
 							</div>
 						</div>
-						<ul className='grid content-start gap-3 sm:grid-cols-2'>
-							{connectCategories.slice(0, 8).map((c) => (
-								<li key={c.title} className='flex items-center gap-3 rounded-2xl bg-white p-3 pr-4'>
-									<IconBadge name={c.icon} />
-									<span className='text-[0.95rem] font-medium'>{c.title}</span>
-								</li>
-							))}
-						</ul>
+						<div>
+							<ConnectIllustration className='mx-auto mb-6 h-40 w-auto text-olive sm:h-48' />
+							<ul className='grid content-start gap-3 sm:grid-cols-2'>
+								{connectCategories.slice(0, 8).map((c) => (
+									<li key={c.title} className='flex items-center gap-3 rounded-2xl bg-white p-3 pr-4'>
+										<IconBadge name={c.icon} />
+										<span className='text-[0.95rem] font-medium'>{c.title}</span>
+									</li>
+								))}
+							</ul>
+						</div>
 					</div>
 				</Container>
 			</section>
@@ -273,7 +277,7 @@ export default async function HomePage() {
 						</h2>
 						<ul className='mt-10 grid gap-7 sm:grid-cols-2'>
 							{reasons.map((r) => (
-								<li key={r.title} className='flex gap-3'>
+								<li key={r.title} className='reveal flex gap-3'>
 									<span className='mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-sun text-ink'>
 										<Check className='h-3.5 w-3.5' />
 									</span>

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { ChatIllustration } from '@/components/illustrations/Illustrations';
 
 import { ContactForm } from '@/components/forms/ContactForm';
 import { Breadcrumbs } from '@/components/sections/Breadcrumbs';
@@ -34,7 +35,8 @@ export default async function ContactPage({ searchParams }: Props) {
 							Starting with &ldquo;I&apos;m not sure what to do&rdquo; is perfectly fine.
 						</p>
 
-						<h2 className='mt-10 font-sans text-base font-semibold'>Prefer to talk now?</h2>
+						<ChatIllustration className='mt-8 h-36 w-auto text-olive' />
+						<h2 className='mt-6 font-sans text-base font-semibold'>Prefer to talk now?</h2>
 						<ul className='mt-4 space-y-3'>
 							<li>
 								<a

@@ -27,7 +27,7 @@ export function PostCard({ post, headingLevel = 3 }: { post: PostCardType; headi
 	const src = urlForImage(post.mainImage, 800, 560);
 	const Heading = headingLevel === 2 ? 'h2' : 'h3';
 	return (
-		<article className='group relative flex flex-col'>
+		<article className='reveal group relative flex flex-col'>
 			<div className='relative aspect-[10/7] overflow-hidden rounded-card bg-cream'>
 				{src ? (
 					<Image

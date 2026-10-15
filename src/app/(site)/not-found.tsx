@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { SignpostIllustration } from '@/components/illustrations/Illustrations';
 
 import { ButtonLink, Container } from '@/components/ui/primitives';
 import { primaryCta } from '@/content/site';
@@ -6,7 +7,8 @@ import { primaryCta } from '@/content/site';
 export default function NotFound() {
 	return (
 		<Container className='pt-40 pb-24 text-center sm:pt-48 sm:pb-32'>
-			<p className='font-display text-7xl text-olive'>404</p>
+			<SignpostIllustration className='mx-auto mb-4 h-40 w-auto text-olive' />
+			<p className='font-display text-6xl text-olive'>404</p>
 			<h1 className='mt-4 text-4xl sm:text-5xl'>We couldn&apos;t find that page</h1>
 			<p className='mx-auto mt-4 max-w-lg text-lg text-ink-muted'>
 				It may have moved, or the link may be out of date. If you were looking for help, you&apos;re in the right

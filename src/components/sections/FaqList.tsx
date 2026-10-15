@@ -8,7 +8,7 @@ import { Plus } from '@/components/ui/Icons';
 export function FaqList({ faqs, headingLevel = 3 }: { faqs: Faq[]; headingLevel?: 3 | 4 }) {
 	const Heading = headingLevel === 3 ? 'h3' : 'h4';
 	return (
-		<div className='divide-y divide-line rounded-card border border-line bg-surface'>
+		<div className='reveal divide-y divide-line rounded-card border border-line bg-surface'>
 			{faqs.map((faq) => (
 				<details key={faq.question} className='group px-5 sm:px-7'>
 					<summary className='flex cursor-pointer list-none items-center justify-between gap-6 py-5 [&::-webkit-details-marker]:hidden'>

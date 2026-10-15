@@ -38,7 +38,7 @@ export function SectionHeading({
 }) {
 	const center = align === 'center';
 	return (
-		<div className={`max-w-2xl ${center ? 'mx-auto text-center' : ''}`}>
+		<div className={`reveal max-w-2xl ${center ? 'mx-auto text-center' : ''}`}>
 			{eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
 			<Tag id={id} className={`text-3xl sm:text-4xl lg:text-[2.75rem] ${eyebrow ? 'mt-4' : ''}`}>
 				{title}
