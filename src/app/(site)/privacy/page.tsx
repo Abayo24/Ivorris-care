@@ -45,6 +45,12 @@ export default function PrivacyPage() {
 						medical advice. If you choose &ldquo;Continue on WhatsApp&rdquo;, a short summary of what you asked
 						is prepared in WhatsApp for you to review and send.
 					</p>
+					<p>
+						If you switch on <strong>Voice</strong>, answers are read aloud by your own device&apos;s voice. If
+						you tap the microphone to ask a question, your browser turns your speech into text using its own
+						speech service (for example, Chrome uses Google&apos;s and Safari uses Apple&apos;s), under that
+						provider&apos;s privacy terms. Ivorris does not receive or store your voice.
+					</p>
 					<h2>When you message or call us</h2>
 					<p>
 						Messages you send on WhatsApp, and calls or emails, reach our team directly. We use them only to

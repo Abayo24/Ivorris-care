@@ -190,6 +190,22 @@
 	}
 }
 
+/* Assistant avatar: a soft ring while it speaks. Only animates while audio
+   the visitor started is playing; a static ring with reduced motion. */
+.avatar-glow.is-speaking {
+	box-shadow: 0 0 0 3px var(--brand-yellow);
+}
+@keyframes speak-ring {
+	50% {
+		box-shadow: 0 0 0 6px color-mix(in srgb, var(--brand-yellow) 45%, transparent);
+	}
+}
+@media (prefers-reduced-motion: no-preference) {
+	.avatar-glow.is-speaking {
+		animation: speak-ring 1.2s ease-in-out infinite;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,

@@ -23,7 +23,7 @@ export function WhatsAppFloat() {
 			href={whatsappLink()}
 			target='_blank'
 			rel='noopener noreferrer'
-			className='group fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 inline-flex h-14 w-14 items-center justify-center gap-2 rounded-pill bg-whatsapp text-white sm:w-auto sm:pr-4 sm:pl-3 shadow-[0_12px_30px_-10px_rgba(0,0,0,0.45)] transition-transform hover:-translate-y-0.5 hover:bg-whatsapp-deep sm:right-6 sm:bottom-6'
+			className='group fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 inline-flex h-14 w-14 items-center justify-center gap-2 rounded-pill bg-whatsapp text-white ring-2 ring-white sm:w-auto sm:pr-4 sm:pl-3 shadow-[0_12px_30px_-10px_rgba(0,0,0,0.45)] transition-transform hover:-translate-y-0.5 hover:bg-whatsapp-deep sm:right-6 sm:bottom-6'
 		>
 			<WhatsAppGlyph className='h-8 w-8' />
 			<span className='hidden text-sm font-semibold sm:inline'>Chat on WhatsApp</span>

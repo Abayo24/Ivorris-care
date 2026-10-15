@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { useRef, useState } from 'react';
+import { useRef, useState, useSyncExternalStore } from 'react';
 
 // The chat window's code only downloads when someone opens it.
 const AssistantPanel = dynamic(() => import('./AssistantPanel').then((m) => m.AssistantPanel), {
@@ -17,29 +17,79 @@ function SparkleChat({ className = '' }: { className?: string }) {
 	);
 }
 
-/** Floating "Ask Ivorris" button that opens the AI assistant, stacked above the WhatsApp button. */
+function MicIcon({ className = '' }: { className?: string }) {
+	return (
+		<svg
+			viewBox='0 0 24 24'
+			className={className}
+			fill='none'
+			stroke='currentColor'
+			strokeWidth={1.8}
+			strokeLinecap='round'
+			strokeLinejoin='round'
+			aria-hidden='true'
+		>
+			<rect x='9' y='3' width='6' height='11' rx='3' />
+			<path d='M5 11a7 7 0 0 0 14 0M12 18v3' />
+		</svg>
+	);
+}
+
+// Whether this browser can speak replies aloud (read once, on the client only).
+const noop = () => () => {};
+const canSpeakNow = () => 'speechSynthesis' in window;
+const canSpeakOnServer = () => false;
+
+const floating =
+	'fixed right-4 z-40 inline-flex h-14 w-14 items-center justify-center gap-2 rounded-pill text-white ring-2 ring-white shadow-[0_12px_30px_-10px_rgba(0,0,0,0.45)] transition-transform hover:-translate-y-0.5 sm:right-6 sm:w-auto sm:pr-4 sm:pl-3.5';
+
+/**
+ * Floating assistant buttons, stacked above the WhatsApp button:
+ * the voice (microphone) button on top, the "Ask Ivorris" chat below it.
+ */
 export function AssistantLauncher() {
-	const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState<false | 'chat' | 'voice'>(false);
 	const [loaded, setLoaded] = useState(false);
-	const buttonRef = useRef<HTMLButtonElement>(null);
+	const chatRef = useRef<HTMLButtonElement>(null);
+	const voiceRef = useRef<HTMLButtonElement>(null);
+	const lastOpened = useRef<'chat' | 'voice'>('chat');
+	const voiceAvailable = useSyncExternalStore(noop, canSpeakNow, canSpeakOnServer);
+
+	const openAs = (mode: 'chat' | 'voice') => {
+		lastOpened.current = mode;
+		setLoaded(true);
+		setOpen(mode);
+	};
 
 	const close = () => {
 		setOpen(false);
-		buttonRef.current?.focus();
+		// Return focus to the button that opened the assistant.
+		requestAnimationFrame(() => (lastOpened.current === 'voice' ? voiceRef : chatRef).current?.focus());
 	};
 
 	return (
 		<>
+			{!open && voiceAvailable && (
+				<button
+					ref={voiceRef}
+					type='button'
+					onClick={() => openAs('voice')}
+					aria-haspopup='dialog'
+					className={`${floating} bottom-[calc(max(1rem,env(safe-area-inset-bottom))+8.5rem)] bg-sun text-ink hover:bg-[#f2b400] sm:bottom-[10rem]`}
+				>
+					<MicIcon className='h-6 w-6' />
+					<span className='hidden text-sm font-semibold sm:inline'>Ask by voice</span>
+					<span className='sr-only sm:hidden'>Ask by voice</span>
+					<span className='sr-only'> — speak to the Ivorris assistant</span>
+				</button>
+			)}
 			{!open && (
 				<button
-					ref={buttonRef}
+					ref={chatRef}
 					type='button'
-					onClick={() => {
-						setLoaded(true);
-						setOpen(true);
-					}}
+					onClick={() => openAs('chat')}
 					aria-haspopup='dialog'
-					className='fixed right-4 bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.25rem)] z-40 inline-flex h-14 w-14 items-center justify-center gap-2 rounded-pill bg-olive-deep text-white shadow-[0_12px_30px_-10px_rgba(0,0,0,0.45)] transition-transform hover:-translate-y-0.5 hover:bg-ink sm:right-6 sm:bottom-[5.75rem] sm:w-auto sm:pr-4 sm:pl-3.5'
+					className={`${floating} bottom-[calc(max(1rem,env(safe-area-inset-bottom))+4.25rem)] bg-olive-deep hover:bg-ink sm:bottom-[5.75rem]`}
 				>
 					<SparkleChat className='h-7 w-7 text-sun' />
 					<span className='hidden text-sm font-semibold sm:inline'>Ask Ivorris</span>
@@ -47,7 +97,7 @@ export function AssistantLauncher() {
 					<span className='sr-only'> — instant answers about Ivorris</span>
 				</button>
 			)}
-			{loaded && open && <AssistantPanel onClose={close} />}
+			{loaded && open && <AssistantPanel onClose={close} startWithVoice={open === 'voice'} />}
 		</>
 	);
 }
