@@ -11,9 +11,9 @@ import { site } from '@/content/site';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-	title: 'About us — nurse-led care navigation',
+	title: 'About Us — Nurse-Led Home Care in Nairobi',
 	description:
-		'Ivorris Care is a nurse-led healthcare navigation and care coordination service in Nairobi, helping people move from confusion to understanding and the right support.',
+		'Ivorris Care is a nurse-led home care and care navigation service in Nairobi, helping families understand their options and find the right support.',
 	path: '/about',
 });
 

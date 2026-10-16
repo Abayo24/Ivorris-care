@@ -18,7 +18,7 @@ export const site = {
 	url: env(process.env.NEXT_PUBLIC_SITE_URL, 'https://ivorriscare.vercel.app').replace(/\/$/, ''),
 	tagline: 'Connecting you to the right care, people and resources.',
 	description:
-		'Ivorris Care is a nurse-led healthcare navigation and care coordination service in Nairobi, Kenya. We help individuals and families make sense of their healthcare and care needs, understand their options, and connect with the right support.',
+		'Ivorris Care is a nurse-led home-based care, healthcare navigation and care coordination service in Nairobi, Kenya. We help individuals and families make sense of their healthcare and care needs, understand their options, and connect with the right support.',
 	locale: 'en_KE',
 	contact: {
 		phoneDisplay: env(process.env.NEXT_PUBLIC_CONTACT_PHONE_DISPLAY, '+254 705 819 115'),

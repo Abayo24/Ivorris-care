@@ -114,9 +114,9 @@ export const services: Service[] = [
 		relatedCategory: 'understanding-care-needs',
 		image: photos.careNeedsAssessment,
 		seo: {
-			title: 'Care Needs Assessment in Nairobi',
+			title: 'Elderly Care Needs Assessment at Home, Nairobi',
 			description:
-				'A nurse-led care needs assessment helps families understand what support a loved one may need at home and what the next step could be.',
+				'Not sure what care an elderly parent or loved one needs? A nurse-led home assessment in Nairobi helps you understand their needs and the right next step.',
 		},
 	},
 	{
@@ -183,9 +183,9 @@ export const services: Service[] = [
 		relatedCategory: 'hospital-discharge-and-recovery',
 		image: photos.postDischarge,
 		seo: {
-			title: 'Post-Discharge Nursing Assessment',
+			title: 'Home Care After Hospital Discharge, Nairobi',
 			description:
-				'Nurse-led support for the transition home after hospital, surgery or illness — understand care needs and whether further support may help.',
+				'Coming home after hospital or surgery? A nurse-led post-discharge assessment helps families in Nairobi plan post-operative care at home and the right support.',
 		},
 	},
 	{
@@ -248,9 +248,9 @@ export const services: Service[] = [
 		relatedCategory: 'home-nursing',
 		image: photos.homeNursing,
 		seo: {
-			title: 'Nurse-Led Home Nursing in Nairobi',
+			title: 'Home Nursing & Home-Based Care in Nairobi',
 			description:
-				'Professional, nurse-led nursing support at home — including appropriate nursing care, monitoring and education, within our professional scope.',
+				'Nurse-led home nursing in Nairobi: professional nursing care, monitoring and education at home, within our professional scope. Talk to a nurse on WhatsApp.',
 		},
 	},
 	{
@@ -315,9 +315,9 @@ export const services: Service[] = [
 		relatedCategory: 'family-caregiving',
 		image: photos.familyGuidance,
 		seo: {
-			title: 'Family Care Guidance for Home Carers',
+			title: 'Guidance for Family Caregivers in Nairobi',
 			description:
-				'Nurse-led guidance for families caring for someone at home — understand care needs, caregiver responsibilities, safety and when to seek more support.',
+				'Caring for an elderly or bedridden loved one at home? Nurse-led guidance on care needs, safety and when to get more help, for families in Nairobi.',
 		},
 	},
 ];

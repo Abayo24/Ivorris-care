@@ -103,6 +103,31 @@ export const reasons = [
 
 export const homeFaqs: Faq[] = [
 	{
+		question: 'How do I get a home nurse in Nairobi?',
+		answer:
+			"Tell us what's going on — message Ivorris on WhatsApp or use the contact form. The team will help you understand what support is appropriate. Ivorris provides nurse-led home nursing within its professional scope, and helps you connect with other support where needed.",
+	},
+	{
+		question: 'How much does a home nurse cost in Nairobi?',
+		answer:
+			"It depends on the person's needs and the support involved, so there isn't a single price. Message the Ivorris team on WhatsApp and they'll explain the options for your situation.",
+	},
+	{
+		question: 'Do you provide home-based care for elderly parents?',
+		answer:
+			'Ivorris helps families caring for elderly parents through nurse-led care needs assessments, home nursing and family care guidance. Where a caregiver or other support is needed, we help you find and connect with it.',
+	},
+	{
+		question: 'Can you help after someone comes home from hospital or surgery?',
+		answer:
+			'Yes. Our post-discharge nursing assessment helps families understand the move home, identify nursing and care needs, and decide whether more support may help — including post-operative care at home.',
+	},
+	{
+		question: 'Can I hire a hospital bed or wheelchair in Nairobi?',
+		answer:
+			'Yes. Ivorris leases medical equipment for home, including hospital beds, wheelchairs and oxygen concentrators, for short or long periods. Stock and prices are confirmed by the team.',
+	},
+	{
 		question: 'What is healthcare navigation?',
 		answer:
 			'Healthcare navigation means helping someone understand their health or care situation, what options exist, and how to reach the right support. Ivorris does this as a nurse-led service — we listen, help clarify needs, and guide individuals and families towards appropriate next steps.',

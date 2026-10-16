@@ -24,12 +24,12 @@ import type { PostCard } from '@/sanity/types';
 
 export const metadata: Metadata = {
 	...pageMetadata({
-		title: 'Nurse-led healthcare navigation and care coordination in Nairobi',
+		title: 'Home-Based Care & Home Nursing in Nairobi',
 		description:
-			'Not sure what care a loved one needs? Ivorris is a nurse-led service in Nairobi helping families understand their options and connect with the right support.',
+			'Nurse-led home-based care in Nairobi. We help families with home nursing, elderly care and care after hospital discharge — talk to a nurse on WhatsApp.',
 		path: '/',
 	}),
-	title: { absolute: 'Ivorris Care — Nurse-led healthcare navigation in Nairobi' },
+	title: { absolute: 'Home-Based Care & Home Nursing in Nairobi | Ivorris Care' },
 };
 
 export default async function HomePage() {
@@ -85,10 +85,11 @@ export default async function HomePage() {
 									</span>
 								</h1>
 								<p className='mt-6 max-w-lg text-lg text-white/90'>
-									We help families understand their options and connect with the right care.
+									Nurse-led home-based care in Nairobi. We help families understand their options and
+									connect with the right care.
 								</p>
 								<ul className='mt-6 flex flex-wrap gap-2 text-[0.8125rem] text-white sm:text-sm'>
-									{['Nurse-led assessments', 'Home nursing', 'Specialists & equipment'].map((item) => (
+									{['Home nursing', 'Elderly care', 'After-hospital care', 'Equipment hire'].map((item) => (
 										<li
 											key={item}
 											className='inline-flex items-center gap-1.5 rounded-pill border border-white/25 bg-white/10 px-2.5 py-1.5 backdrop-blur-sm sm:px-3'

@@ -45,9 +45,9 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 					`Plain-language articles from Ivorris Care about ${current.title.toLowerCase()}.`,
 			}
 		: {
-				title: 'Resources and articles for families',
+				title: 'Home Care Guides for Families in Kenya',
 				description:
-					'Plain-language guides from Ivorris Care to help individuals and families understand care needs, home nursing, hospital discharge and finding the right support.',
+					'Plain-language guides on home-based care in Kenya: caring for elderly parents at home, home nursing, care after hospital discharge and finding the right support.',
 			};
 	return pageMetadata({
 		...base,

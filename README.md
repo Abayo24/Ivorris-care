@@ -6,6 +6,7 @@ coordination service in Nairobi, Kenya:
 
 - **Owners and editors:** see **[docs/OWNER-GUIDE.md](docs/OWNER-GUIDE.md)** for
   setup, publishing articles, and items awaiting confirmation.
+- **Search & AI visibility:** see **[docs/SEO-PLAN.md](docs/SEO-PLAN.md)** for keywords, the blog calendar and Google setup.
 - **Developers:** read on.
 
 ## Stack
@@ -61,6 +62,7 @@ src/
 sanity.config.ts       Studio configuration (structure + Presentation preview tool)
 seed/                  Starter categories and sample (draft) articles for import
 docs/OWNER-GUIDE.md    Owner and editor documentation
+docs/SEO-PLAN.md       Search keywords, AI visibility and next steps
 ```
 
 ## How content publishing works

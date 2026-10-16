@@ -31,6 +31,15 @@ export const metadata: Metadata = {
 	openGraph: { siteName: site.name, locale: site.locale, type: 'website' },
 	twitter: { card: 'summary_large_image' },
 	formatDetection: { telephone: false },
+	category: 'health',
+	// Ownership verification for Google Search Console and Bing Webmaster Tools.
+	// Paste only the code (content="…" value) into these environment variables.
+	verification: {
+		google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim() || undefined,
+		other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION?.trim()
+			? { 'msvalidate.01': process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION.trim() }
+			: undefined,
+	},
 };
 
 export const viewport: Viewport = {

@@ -10,9 +10,9 @@ import { primaryCta, site, whatsappLink } from '@/content/site';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-	title: 'Talk to Ivorris',
+	title: 'Contact Us — Talk to a Nurse on WhatsApp',
 	description:
-		"Not sure where to start? Tell Ivorris what's going on and we'll help you understand what kind of support may be appropriate and what your next step could be.",
+		"Not sure where to start? Message Ivorris's nurse-led team in Nairobi on WhatsApp — tell us what's going on and we'll help with your next step.",
 	path: '/contact',
 });
 

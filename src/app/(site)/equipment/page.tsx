@@ -7,12 +7,13 @@ import { Chat, Check } from '@/components/ui/Icons';
 import { Container, SectionHeading } from '@/components/ui/primitives';
 import { equipmentCategories, leaseSteps, leaseTerms, rentToOwn } from '@/content/equipment';
 import { whatsappLink } from '@/content/site';
-import { pageMetadata } from '@/lib/seo';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { equipmentCatalogJsonLd, pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-	title: 'Medical equipment for home — leasing and rent to own',
+	title: 'Hospital Bed & Wheelchair Hire in Nairobi',
 	description:
-		'Hospital beds, mobility aids, oxygen and monitoring equipment for recovery and care at home in Nairobi — lease short or long term, or rent to own selected items.',
+		'Hire hospital beds, wheelchairs, oxygen concentrators and other medical equipment for home in Nairobi. Short or long-term leasing, delivered and set up.',
 	path: '/equipment',
 });
 
@@ -27,10 +28,11 @@ export default function EquipmentPage() {
 					{ name: 'Medical equipment', href: '/equipment' },
 				]}
 				eyebrow='Medical equipment'
-				title='Equipment that makes home safer for recovery and care'
+				title='Medical equipment for hire in Nairobi'
 				intro={
 					<p>
-						Lease medical equipment for home instead of buying it. Not sure what you need? Equipment is often
+						Hire hospital beds, wheelchairs, oxygen concentrators and more for recovery and care at home, instead of
+						buying them. Not sure what you need? Equipment is often
 						best chosen alongside a{' '}
 						<Link href='/services/care-needs-assessment' className='text-olive-deep underline underline-offset-4'>
 							care needs assessment
@@ -147,6 +149,7 @@ export default function EquipmentPage() {
 			</section>
 
 			<CtaSection heading='Not sure which equipment is right?' whatsappMessage={enquiry} />
+			<JsonLd data={equipmentCatalogJsonLd(equipmentCategories)} />
 		</>
 	);
 }

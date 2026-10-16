@@ -12,9 +12,9 @@ import { primaryCta } from '@/content/site';
 import { pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-	title: 'How we help — nurse-led services',
+	title: 'Home Care Services in Nairobi',
 	description:
-		'Four nurse-led services provided directly by Ivorris — assessment, post-discharge support, home nursing and family care guidance — plus help connecting with other care.',
+		'Nurse-led home care services in Nairobi: care needs assessments, home nursing, care after hospital discharge and guidance for family caregivers.',
 	path: '/services',
 });
 

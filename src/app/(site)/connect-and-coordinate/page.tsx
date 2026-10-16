@@ -15,9 +15,9 @@ import { primaryCta } from '@/content/site';
 import { faqJsonLd, pageMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = pageMetadata({
-	title: 'Connect & Coordinate — finding the right care',
+	title: 'Find Caregivers, Physios & Specialists in Nairobi',
 	description:
-		'When needs go beyond our nurse-led services, Ivorris helps you identify and connect with appropriate doctors, therapists, caregivers, equipment and other support.',
+		'Need a caregiver, physiotherapist, specialist or medical equipment in Nairobi? Ivorris helps you find and connect with the right support and coordinate care.',
 	path: '/connect-and-coordinate',
 });
 

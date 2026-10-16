@@ -200,7 +200,12 @@ export default async function ServicePage({ params }: Props) {
 
 			<JsonLd
 				data={[
-					serviceJsonLd({ name: service.name, description: service.definition.answer, path }),
+					serviceJsonLd({
+						name: service.name,
+						description: service.definition.answer,
+						path,
+						serviceType: service.seo.title.replace(/,? (in )?Nairobi$/, ''),
+					}),
 					faqJsonLd(service.faqs),
 				]}
 			/>
