@@ -11,16 +11,16 @@ import type { StoredPost } from './types';
 /*
  * Where articles and their images live.
  *
- * - On the live site: Vercel Blob (connect a Blob store to the project, which
- *   sets BLOB_READ_WRITE_TOKEN). All articles are kept in one JSON file. Every
- *   save writes a new copy under an unguessable name and the newest copy wins,
- *   so drafts can't be read by guessing a URL and the last few saves are kept
- *   as backups.
- * - In local development without a token: files in .data/ and public/uploads/.
+ * - On the live site: Vercel Blob. Connecting a Blob store to the project sets
+ *   BLOB_STORE_ID (newer stores, signed in with Vercel's OIDC token) or
+ *   BLOB_READ_WRITE_TOKEN (older stores); the Blob SDK picks up either.
+ *   All articles are kept in one JSON file. Every save writes a new copy under
+ *   an unguessable name and the newest copy wins, so drafts can't be read by
+ *   guessing a URL and the last few saves are kept as backups.
+ * - In local development without a Blob store: files in .data/ and public/uploads/.
  */
 
-const blobToken = process.env.BLOB_READ_WRITE_TOKEN?.trim() || '';
-const isBlob = Boolean(blobToken);
+const isBlob = Boolean(process.env.BLOB_STORE_ID?.trim() || process.env.BLOB_READ_WRITE_TOKEN?.trim());
 const isProd = process.env.NODE_ENV === 'production';
 
 /** True when articles can be saved: Blob in production, the local disk in development. */
@@ -37,7 +37,7 @@ async function latestBlob() {
 	const blobs = [];
 	let cursor: string | undefined;
 	do {
-		const page = await list({ prefix: DATA_PREFIX, cursor, token: blobToken });
+		const page = await list({ prefix: DATA_PREFIX, cursor });
 		blobs.push(...page.blobs);
 		cursor = page.hasMore ? page.cursor : undefined;
 	} while (cursor);
@@ -71,10 +71,9 @@ async function writePosts(posts: StoredPost[]) {
 			access: 'public',
 			addRandomSuffix: true,
 			contentType: 'application/json',
-			token: blobToken,
 		});
 		const old = (await latestBlob()).slice(KEEP_BACKUPS);
-		if (old.length) await del(old.map((b) => b.url), { token: blobToken });
+		if (old.length) await del(old.map((b) => b.url));
 		return;
 	}
 	if (isProd) throw new Error('Article storage is not connected.');
@@ -110,7 +109,6 @@ export async function saveImage(data: Buffer, contentType: string, ext: string) 
 			addRandomSuffix: true,
 			contentType,
 			cacheControlMaxAge: 31536000,
-			token: blobToken,
 		});
 		return blob.url;
 	}

@@ -24,8 +24,8 @@ Redeploy**). The full list with explanations is in
 1. **Storage for articles and images.** In Vercel, open your project →
    **Storage** → **Create Database** → **Blob**. Name it (for example
    "ivorris-blog"), choose **Public** access, and **connect it to this
-   project** for all environments. Vercel adds the `BLOB_READ_WRITE_TOKEN`
-   setting for you.
+   project** for all environments. Vercel adds the connection setting
+   (`BLOB_STORE_ID`) for you. Redeploy afterwards so the site picks it up.
    "Public" only means published images can be shown on the website. Drafts are
    stored under unguessable names and are only shown in the dashboard.
 2. **Your dashboard password.** Add `ADMIN_PASSWORD` with a long password of at
