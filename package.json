@@ -9,15 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@portabletext/react": "^7.0.1",
-    "@sanity/image-url": "^2.1.1",
+    "@tiptap/extension-image": "^3.32.2",
+    "@tiptap/pm": "^3.32.2",
+    "@tiptap/react": "^3.32.2",
+    "@tiptap/starter-kit": "^3.32.2",
+    "@vercel/blob": "^2.8.2",
     "next": "^16.4.3",
-    "next-sanity": "^13.3.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "sanity": "^6.18.0",
-    "server-only": "^0.0.1",
-    "styled-components": "^6.6.0"
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -28,5 +28,10 @@
     "eslint-config-next": "^16.4.3",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@vercel/cli-config": {
+      "zod": "4.6.7"
+    }
   }
 }

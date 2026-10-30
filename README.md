@@ -13,7 +13,7 @@ coordination service in Nairobi, Kenya:
 
 - **Next.js 16** (App Router, Turbopack) · **React 19** · **TypeScript**
 - **Tailwind CSS v4**, with design tokens as CSS variables in `src/app/globals.css`
-- **Sanity** CMS with the Studio embedded at `/studio` (`next-sanity`)
+- **Built-in article dashboard** at `/admin` (password sign-in, Tiptap editor), storing articles and images in **Vercel Blob**
 - **WhatsApp** click-to-chat for enquiries (no backend or API keys)
 - **"Ask Ivorris" assistant**: a free, in-browser FAQ chat (no AI service or API key) — answers live in `src/content/assistant.ts`
 - Fonts: Cormorant Garamond (headings) and DM Sans (body), via `next/font`
@@ -26,8 +26,10 @@ cp .env.example .env.local   # fill in values; the site runs without them
 npm run dev
 ```
 
-Without Sanity credentials the site works fully, and the blog shows an "articles
-on their way" state. The contact form needs no setup: it opens WhatsApp with the
+In development the dashboard saves to `.data/` and `public/uploads/` (both
+git-ignored), so no Blob store is needed; set `ADMIN_PASSWORD` in `.env.local`
+to sign in at `/admin`. With no articles the blog shows an "articles on their
+way" state. The contact form needs no setup: it opens WhatsApp with the
 visitor's message ready to send to `NEXT_PUBLIC_WHATSAPP_NUMBER`.
 
 | Command | Purpose |
@@ -37,7 +39,6 @@ visitor's message ready to send to `NEXT_PUBLIC_WHATSAPP_NUMBER`.
 | `npm run start` | Serve the production build |
 | `npm run lint` | ESLint |
 | `npx tsc --noEmit` | Type check only |
-| `node seed/build-starter-content.mjs` | Regenerate `seed/starter-content.ndjson` |
 
 ## Structure
 
@@ -49,34 +50,39 @@ src/
       services/          Overview + [slug] service pages (content from src/content/services.ts)
       connect-and-coordinate/, equipment/, about/, contact/, privacy/
       blog/              Listing (search, category filter, pagination) + [slug] article
-    studio/[[...tool]]/ Sanity Studio (noindex, disallowed in robots.txt)
-    api/
-      revalidate/        Signed Sanity webhook → revalidateTag('sanity')
-      draft-mode/        Enable (validated by Sanity) / disable preview
+    admin/             Article dashboard (noindex, disallowed in robots.txt)
+      login/             Password sign-in
+      (dashboard)/       Article list, editor (posts/new, posts/[id]) and preview
+      actions.ts         Server actions: sign in/out, save, publish, delete, image upload
     sitemap.ts, robots.ts, opengraph-image.tsx, icon.png, apple-icon.png
-  components/          brand/, layout/, ui/, sections/, blog/, forms/, seo/
+  components/          brand/, layout/, ui/, sections/, blog/, forms/, seo/, admin/
   content/             Business copy and configuration (site, services, home, connect, equipment,
                        photos: every photo path + alt text, with Pexels credits)
   lib/                 seo.ts (metadata + JSON-LD), contact.ts (shared validation), format.ts
-  sanity/              env, client/fetch, GROQ queries, schema types, Studio structure
-sanity.config.ts       Studio configuration (structure + Presentation preview tool)
-seed/                  Starter categories and sample (draft) articles for import
+    blog/                types, storage (Blob or local disk), public queries, rich-text sanitising
+    admin/               session auth, slugs
 docs/OWNER-GUIDE.md    Owner and editor documentation
 docs/SEO-PLAN.md       Search keywords, AI visibility and next steps
 ```
 
 ## How content publishing works
 
-- Public pages read **published** content only (`perspective: 'published'`). Drafts
-  never reach visitors.
-- Fetches are cached with the tag `sanity` and revalidate every 60 seconds. The Sanity
-  webhook (`/api/revalidate`, HMAC-signed with `SANITY_REVALIDATE_SECRET`) expires
-  the tag immediately on publish, unpublish, edit or delete.
-- Previews: the Studio's Presentation tool calls `/api/draft-mode/enable`, which
-  validates a short-lived secret with Sanity using the server-only
-  `SANITY_API_READ_TOKEN`. Draft-mode requests read drafts uncached.
-- Editing permissions are handled by Sanity project membership and roles. No CMS
-  write token exists in this app.
+- All articles live in one JSON document in Vercel Blob. Every save writes a new
+  copy with a random suffix (so drafts can't be fetched by guessing a URL) and the
+  newest copy wins; the last 10 are kept as backups (`src/lib/blog/store.ts`).
+- Public pages read **published** articles only, through `unstable_cache` tagged
+  `blog` (hourly safety refresh). Every dashboard save calls `updateTag('blog')`, so
+  changes are live immediately.
+- The article body is a ProseMirror (Tiptap) document. It is rebuilt from an
+  allow-list of nodes, marks and attributes before saving (`sanitizeDoc`), and
+  rendered as React elements (`RichText.tsx`), never as raw HTML. Images must come
+  from the site's own uploads.
+- Sign-in: one password (`ADMIN_PASSWORD`, compared in constant time) and a signed,
+  HTTP-only, `SameSite=Strict`, `__Host-` session cookie (7 days). Failed attempts
+  are throttled. Every dashboard page and server action checks the session.
+- Uploads: photos are resized and re-encoded in the browser (dropping EXIF/GPS
+  data), then checked server-side by file signature (JPEG, PNG, WebP; 4 MB max).
+- Changing a published article's slug keeps the old URL as a permanent redirect.
 
 ## SEO, AEO and structured data
 
@@ -85,9 +91,8 @@ docs/SEO-PLAN.md       Search keywords, AI visibility and next steps
 - JSON-LD: `Organization` and `WebSite` (site-wide), `BreadcrumbList`, `Service` and
   `FAQPage` (service pages and FAQ sections), `BlogPosting` (articles). Only visible,
   verified information is included: no ratings, opening hours or street address.
-- The sitemap includes static pages and published, indexable, non-sample articles.
-  `robots.txt` disallows `/studio` and `/api/`. Search results and sample articles
-  are `noindex`.
+- The sitemap includes static pages and published, indexable articles.
+  `robots.txt` disallows `/admin` and `/api/`. Search results are `noindex`.
 - Old or guessed URLs redirect (see `redirects()` in `next.config.ts`).
 
 ## Decisions and changes from the previous site
@@ -114,17 +119,17 @@ needs to return with verified details.
 
 1. Add the environment variables from `.env.example` in Vercel project settings.
 2. Deploy as usual. The build command is `next build`.
-3. Complete the Sanity CORS and webhook steps in the owner guide.
+3. Connect a public Vercel Blob store and set `ADMIN_PASSWORD` (see the owner guide).
 
-Security headers are set in `next.config.ts`: a Content-Security-Policy in production
-(a separate, looser one for `/studio`), HSTS, nosniff, frame options, COOP, and the
-referrer and permissions policies. The contact form has no server endpoint: it builds a
+Security headers are set in `next.config.ts`: a Content-Security-Policy in production,
+HSTS, nosniff, frame options, COOP, and the referrer and permissions policies; `/admin`
+is also `no-store` and `noindex`. The contact form has no server endpoint: it builds a
 WhatsApp message in the browser, so the site stores no enquiries. Secrets are
 server-only and never prefixed `NEXT_PUBLIC_`.
 
-`npm audit --omit=dev` still lists advisories inside Sanity's CLI and build tooling
-(`@sanity/cli` and its dependencies), not in code served to visitors. The only fix npm
-offers is a major downgrade of Sanity, so update `sanity` when a patched release lands.
+`package.json` overrides `zod` to 4.6.7 inside `@vercel/cli-config` (a dependency of
+`@vercel/blob`), which pins a version with a known advisory. Remove the override once
+`@vercel/blob` ships the fix.
 
 Lighthouse (production build, 13.5): Accessibility, Best Practices and SEO score 100;
 Performance is 100 on desktop and 91–95 on simulated slow-4G mobile.

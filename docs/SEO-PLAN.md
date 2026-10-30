@@ -58,7 +58,7 @@ wrong visitors.
   explicitly allowed.
 - Consistent facts everywhere: same name, phone, email and city on every page.
 
-## 3. Blog calendar (publish one a week in the Studio)
+## 3. Blog calendar (publish one a week from the dashboard at /admin)
 
 Each title answers a real search. Keep them practical and general — no
 medical advice — and end each with a link to the matching service and

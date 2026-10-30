@@ -11,10 +11,8 @@ import { Check } from '@/components/ui/Icons';
 import { ButtonLink, Container, Eyebrow, SectionHeading, TextLink } from '@/components/ui/primitives';
 import { getService, services } from '@/content/services';
 import { primaryCta } from '@/content/site';
+import { getPostsByCategory } from '@/lib/blog/posts';
 import { faqJsonLd, pageMetadata, serviceJsonLd } from '@/lib/seo';
-import { sanityFetch } from '@/sanity/fetch';
-import { postsByCategoryQuery } from '@/sanity/queries';
-import type { PostCard } from '@/sanity/types';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -38,11 +36,7 @@ export default async function ServicePage({ params }: Props) {
 	const service = getService((await params).slug);
 	if (!service) notFound();
 
-	const related = await sanityFetch<PostCard[]>({
-		query: postsByCategoryQuery,
-		params: { category: service.relatedCategory, limit: 3 },
-		fallback: [],
-	});
+	const related = await getPostsByCategory(service.relatedCategory, 3);
 	const others = services.filter((s) => s.slug !== service.slug);
 	const path = `/services/${service.slug}`;
 

@@ -3,7 +3,7 @@
 This guide covers everything you need to run the website and publish articles
 without a developer. It has three parts:
 
-1. [One-time setup](#1-one-time-setup) — connect the blog and add your intro video.
+1. [One-time setup](#1-one-time-setup) — turn on the article dashboard and add your intro video.
 2. [Writing and publishing articles](#2-writing-and-publishing-articles) — the everyday workflow.
 3. [Things to check and confirm](#3-things-to-check-and-confirm).
 
@@ -11,64 +11,29 @@ without a developer. It has three parts:
 
 ## 1. One-time setup
 
-You will need accounts with these services:
+Everything runs on **Vercel**, which already hosts the website. There are no
+other accounts to create and nothing to pay on Vercel's free plan.
 
-| Service | What it does | Sign up |
-| --- | --- | --- |
-| **Vercel** | Hosts the website (already in use) | vercel.com |
-| **Sanity** | Stores blog articles and runs the editor at `/studio` (free tier) | sanity.io |
-
-All settings below are entered in **Vercel → your project → Settings →
-Environment Variables**. After changing them, redeploy once
-(**Deployments → … → Redeploy**). The full list with explanations is in
+Settings are entered in **Vercel → your project → Settings → Environment
+Variables**. After changing them, redeploy once (**Deployments → … →
+Redeploy**). The full list with explanations is in
 [`.env.example`](../.env.example).
 
-### 1.1 Connect the blog (Sanity)
+### 1.1 Turn on the article dashboard
 
-1. Go to **sanity.io/manage** and create a project (for example "Ivorris Care").
-   Choose the dataset name **production** and keep its visibility **Public**.
-   Public only means *published* articles can be read; drafts always stay private.
-2. Copy the **Project ID** and add to Vercel:
-   - `NEXT_PUBLIC_SANITY_PROJECT_ID` = your project ID
-   - `NEXT_PUBLIC_SANITY_DATASET` = `production`
-3. In the Sanity project, open **API → CORS origins** and add, each with
-   **Allow credentials** ticked:
-   - your live address, e.g. `https://ivorriscare.vercel.app` (and your own domain if you have one)
-   - `http://localhost:3000` (only needed for local development)
-4. **Preview tokens:** **API → Tokens → Add API token**, name it "Website preview",
-   permission **Viewer**. Add it to Vercel as `SANITY_API_READ_TOKEN`.
-   Keep it secret — never share it or put it in a `NEXT_PUBLIC_` variable.
-5. **Instant updates:** create a long random password (a password manager can
-   generate one) and add it to Vercel as `SANITY_REVALIDATE_SECRET`. Then in
-   Sanity open **API → Webhooks → Create webhook**:
-   - **URL:** `https://YOUR-SITE/api/revalidate`
-   - **Dataset:** `production`
-   - **Trigger on:** Create, Update, Delete
-   - **Filter:** `_type in ["post", "category", "author"]`
-   - **Projection:** `{_type, _id}`
-   - **HTTP method:** POST · **Drafts:** off
-   - **Secret:** the same random password as `SANITY_REVALIDATE_SECRET`
+1. **Storage for articles and images.** In Vercel, open your project →
+   **Storage** → **Create Database** → **Blob**. Name it (for example
+   "ivorris-blog"), choose **Public** access, and **connect it to this
+   project** for all environments. Vercel adds the `BLOB_READ_WRITE_TOKEN`
+   setting for you.
+   "Public" only means published images can be shown on the website. Drafts are
+   stored under unguessable names and are only shown in the dashboard.
+2. **Your dashboard password.** Add `ADMIN_PASSWORD` with a long password of at
+   least 12 characters (a password manager can generate one). Keep it private;
+   anyone with it can publish on the website. To sign everyone out, change it.
+3. Redeploy, then open **`https://YOUR-SITE/admin`** and sign in.
 
-   Without the webhook, changes still appear within about a minute.
-6. Redeploy on Vercel, then open `https://YOUR-SITE/studio` and sign in.
-7. **Invite editors:** sanity.io/manage → **Members → Invite**. Give writers the
-   **Editor** role. Only invited members can sign in to the Studio.
-
-### 1.2 Load the starter categories and sample articles (optional)
-
-From a computer with the project code and Node.js installed:
-
-```bash
-npx sanity login
-npx sanity dataset import seed/starter-content.ndjson production
-```
-
-This adds the six blog categories and three **sample articles saved as drafts**.
-The samples are general, plain-language drafts marked **Demonstration
-content**. Have a qualified professional review them, add a featured image,
-switch off "Demonstration content", then publish. Delete any you don't want.
-
-### 1.3 Contact form and WhatsApp
+### 1.2 Contact form and WhatsApp
 
 Nothing to set up. The contact form and the green WhatsApp button open WhatsApp
 with the visitor's message ready to send to **+254 705 819 115**. Messages arrive
@@ -76,7 +41,7 @@ in that WhatsApp account, so make sure someone checks it. To use a different
 number, set `NEXT_PUBLIC_WHATSAPP_NUMBER` (country code, no `+` or spaces, e.g.
 `254705819115`) and `NEXT_PUBLIC_CONTACT_PHONE_DISPLAY`, then redeploy.
 
-### 1.4 The "Ask Ivorris" assistant
+### 1.3 The "Ask Ivorris" assistant
 
 Nothing to set up and nothing to pay. The olive "Ask Ivorris" button opens a
 chat that answers common questions about Ivorris instantly and hands visitors
@@ -91,7 +56,7 @@ a WhatsApp button. Emergencies are always directed to emergency services.
 To add or change an answer, edit that file: each topic has a short label,
 the words that trigger it, and the answer text.
 
-### 1.5 Add your intro video
+### 1.4 Add your intro video
 
 The home page currently shows a short public explainer, "What is a care
 navigator?", made by Integrated Care Northamptonshire (NHS) and credited on the
@@ -105,64 +70,69 @@ card. To show your own video instead, upload it to YouTube (it can be
 
 ## 2. Writing and publishing articles
 
-Open **`https://YOUR-SITE/studio`** and sign in with your Sanity account.
+Open **`https://YOUR-SITE/admin`** and sign in with the dashboard password.
+The **Articles** page lists everything you've written. Filter it by
+**Published** or **Drafts**, and click any article to edit it.
 
 ### Create an article
 
-1. Click **Articles**, then the **+** (Create) button.
-2. **Content** tab:
-   - **Title** — a clear question or statement a family might search for.
-   - **URL slug** — click **Generate** to create it from the title; edit if you like.
-     Each article must have a unique slug.
-   - **Short excerpt** — one or two sentences shown on article cards.
-   - **Featured image** — upload a photo, then fill in **Alternative text**
-     (describe what's in the picture for people who can't see it).
-   - **Article content** — write and format with headings, lists, links, quotes
-     and images. For links to your own pages, use addresses starting with `/`,
-     such as `/services/care-needs-assessment`.
-   - **FAQ section** — optional questions and answers shown at the end.
-3. **Details** tab: choose a **Category**, add **Tags**, check the
-   **Publication date**, and optionally **Feature this article** (shown large at
-   the top of the blog) or choose up to three **Related articles**.
-4. **Review & sources** tab: list your **Sources**. Only set **Clinically
-   reviewed by** once a qualified professional has actually reviewed the article.
-5. **SEO & sharing** tab: optional custom search title and description. Leave
-   them empty to use the title and excerpt.
+1. Click **New article**.
+2. **Title** — a clear question or statement a family might search for. The
+   **web address** fills in from the title; you can edit it.
+3. **Summary** — one or two sentences shown on article cards and in Google.
+4. **Article** — write in the editor. The toolbar has headings (**H2** for
+   sections, **H3** for sub-sections), bold, italic, links, lists, quotes,
+   divider lines and images. For links to your own pages, use addresses that
+   start with `/`, such as `/services/care-needs-assessment`.
+   Every image needs a short description of what it shows.
+5. In the right-hand column:
+   - **Featured image** — upload a wide photo and describe it. Large photos are
+     resized automatically, and hidden photo data (such as phone GPS location)
+     is removed.
+   - **Details** — choose a **Category**, add **Tags**, set the
+     **Publication date** (leave it empty to use the day you publish), and
+     optionally **Feature this article** (shown large at the top of the blog).
+   - **Author & review** — who wrote it. Only fill in **Reviewed by** once a
+     qualified professional has actually reviewed the article, and only enter
+     qualifications people actually hold.
+   - **Google & sharing** — optional search title and description, with a
+     preview of how the article looks in Google results.
+6. Optional sections under the article: **Questions & answers** (shown at the
+   end, and they help the article appear in Google and AI answers) and
+   **Sources**.
 
-Changes save automatically as a **draft**. Drafts are never visible on the
-public website.
+Click **Save draft** as you go. Drafts are never visible on the website, and
+you'll be warned if you try to leave the page with unsaved changes.
 
 ### Preview
 
-Click **Preview** in the top bar of the Studio to see the article as it will
-appear on the site, including unpublished changes. A yellow "Preview mode" bar
-shows you are seeing drafts. Click **Exit preview** to return to the public view.
+After saving, click **Preview** to see the article exactly as it will appear on
+the website. Preview shows the last saved version.
 
 ### Publish
 
-Click **Publish** (bottom right). If something required is missing — title,
-slug, excerpt, featured image with alt text, content, category or date — the
-Studio lists what to fix. The article appears on the website straight away
-(or within about a minute if the webhook isn't set up).
+Click **Publish**. If something is missing — title, summary, category, the
+article itself, or a featured image description — the dashboard tells you
+what to fix. The article appears on the website straight away.
 
 ### Update a published article
 
-Open it, make your changes, and set **Last updated** in the Details tab for
-meaningful changes. Then click **Publish** again. Visitors keep seeing the
-previous version until you publish.
+Open it, make your changes, set **Last updated** for meaningful changes, and
+click **Update live article**. If you change the web address of a published
+article, the old address keeps working and forwards visitors to the new one.
 
 ### Unpublish or delete
 
-Open the article and use the **⋯** menu next to Publish:
+At the bottom of the publish box:
 
 - **Unpublish** takes it off the website but keeps it as a draft.
-- **Delete** removes it permanently, after you confirm.
+- **Delete article** removes it permanently, after you confirm.
 
-### Authors and reviewers
+### Backups
 
-Add people under **Authors & reviewers**. Professional credentials only appear
-on the site when **Credentials verified** is switched on. Only switch it on for
-qualifications you have confirmed.
+Each save keeps a copy, and the last 10 copies are kept in the Blob store
+(Vercel → Storage → your Blob store → `blog/data/`). If something goes
+wrong, a developer can restore an earlier copy.
 
 ### Writing guidance
 

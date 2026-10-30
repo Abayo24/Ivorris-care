@@ -18,9 +18,7 @@ import { photos } from '@/content/photos';
 import { services } from '@/content/services';
 import { introVideo, primaryCta, site } from '@/content/site';
 import { faqJsonLd, pageMetadata } from '@/lib/seo';
-import { sanityFetch } from '@/sanity/fetch';
-import { latestPostsQuery } from '@/sanity/queries';
-import type { PostCard } from '@/sanity/types';
+import { getLatestPosts } from '@/lib/blog/posts';
 
 export const metadata: Metadata = {
 	...pageMetadata({
@@ -33,7 +31,7 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-	const posts = await sanityFetch<PostCard[]>({ query: latestPostsQuery, params: { limit: 3 }, fallback: [] });
+	const posts = await getLatestPosts(3);
 
 	return (
 		<>

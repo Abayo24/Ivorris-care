@@ -18,18 +18,18 @@ const securityHeaders = [
  * Content-Security-Policy for the public site. Pages are statically rendered
  * (fast, cacheable), so inline Next.js bootstrap scripts are allowed with
  * 'unsafe-inline' rather than per-request nonces, which would force every page
- * to render dynamically. Everything else is locked to this site, Sanity's
- * image CDN/API (images and draft previews), the intro video (YouTube's
- * privacy-enhanced player) and Vercel's preview toolbar.
+ * to render dynamically. Everything else is locked to this site, uploaded
+ * article images (Vercel Blob), the intro video (YouTube's privacy-enhanced
+ * player) and Vercel's preview toolbar.
  * Not applied in development, where hot reloading needs eval and websockets.
  */
 const siteCsp = [
 	"default-src 'self'",
 	"script-src 'self' 'unsafe-inline' https://vercel.live",
 	"style-src 'self' 'unsafe-inline'",
-	"img-src 'self' data: blob: https://cdn.sanity.io https://i.ytimg.com",
+	"img-src 'self' data: blob: https://*.public.blob.vercel-storage.com https://i.ytimg.com",
 	"font-src 'self'",
-	"connect-src 'self' https://*.sanity.io wss://*.sanity.io https://vercel.live",
+	"connect-src 'self' https://vercel.live",
 	"frame-src 'self' https://www.youtube-nocookie.com https://vercel.live",
 	"frame-ancestors 'self'",
 	"form-action 'self'",
@@ -38,18 +38,20 @@ const siteCsp = [
 	'upgrade-insecure-requests',
 ].join('; ');
 
-// The Studio loads its own assets and talks to Sanity's APIs; keep it framed only by this site.
-const studioCsp = ["frame-ancestors 'self'", "base-uri 'self'", "object-src 'none'"].join('; ');
-
 const nextConfig: NextConfig = {
 	poweredByHeader: false,
 	turbopack: { root: process.cwd() },
 	// The whole stylesheet is ~11 KB, so inlining it avoids a render-blocking request.
-	experimental: { inlineCss: true },
+	experimental: {
+		inlineCss: true,
+		// Article images are resized in the browser first; this leaves room for a large photo.
+		serverActions: { bodySizeLimit: '5mb' },
+	},
 	images: {
 		formats: ['image/avif', 'image/webp'],
 		remotePatterns: [
-			{ protocol: 'https', hostname: 'cdn.sanity.io' },
+			// Article images uploaded from the dashboard.
+			{ protocol: 'https', hostname: '*.public.blob.vercel-storage.com' },
 			// Intro video thumbnail.
 			{ protocol: 'https', hostname: 'i.ytimg.com', pathname: '/vi/**' },
 		],
@@ -61,8 +63,7 @@ const nextConfig: NextConfig = {
 			{ source: '/:path*', headers: securityHeaders },
 			...(isProd
 				? [
-						{ source: '/((?!studio).*)', headers: [{ key: 'Content-Security-Policy', value: siteCsp }] },
-						{ source: '/studio/:path*', headers: [{ key: 'Content-Security-Policy', value: studioCsp }] },
+						{ source: '/:path*', headers: [{ key: 'Content-Security-Policy', value: siteCsp }] },
 					]
 				: []),
 			{
@@ -70,9 +71,12 @@ const nextConfig: NextConfig = {
 				headers: [{ key: 'Cache-Control', value: 'public, max-age=2592000, stale-while-revalidate=86400' }],
 			},
 			{
-				// The Studio and preview endpoints must never be indexed.
-				source: '/studio/:path*',
-				headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+				// The dashboard must never be indexed or cached.
+				source: '/admin/:path*',
+				headers: [
+					{ key: 'X-Robots-Tag', value: 'noindex, nofollow' },
+					{ key: 'Cache-Control', value: 'private, no-store' },
+				],
 			},
 			{ source: '/api/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] },
 		];

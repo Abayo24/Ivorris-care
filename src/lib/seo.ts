@@ -3,7 +3,8 @@ import type { Metadata } from 'next';
 import { site } from '@/content/site';
 import type { Faq } from '@/content/services';
 
-export const absoluteUrl = (path = '/') => `${site.url}${path.startsWith('/') ? path : `/${path}`}`;
+export const absoluteUrl = (path = '/') =>
+	/^https?:\/\//.test(path) ? path : `${site.url}${path.startsWith('/') ? path : `/${path}`}`;
 
 type PageMetaInput = {
 	title: string;

@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { urlForImage } from '@/sanity/image';
-import type { PostCard as PostCardType } from '@/sanity/types';
+import type { PostCard as PostCardType } from '@/lib/blog/types';
 import { formatDate } from '@/lib/format';
 
 function PostMeta({ post, tone = 'dark' }: { post: PostCardType; tone?: 'dark' | 'light' }) {
@@ -24,7 +23,7 @@ function PostMeta({ post, tone = 'dark' }: { post: PostCardType; tone?: 'dark' |
 
 /** Editorial article card: image, meta line, title. */
 export function PostCard({ post, headingLevel = 3 }: { post: PostCardType; headingLevel?: 2 | 3 }) {
-	const src = urlForImage(post.mainImage, 800, 560);
+	const src = post.mainImage?.src;
 	const Heading = headingLevel === 2 ? 'h2' : 'h3';
 	return (
 		<article className='reveal group relative flex flex-col'>
@@ -35,16 +34,9 @@ export function PostCard({ post, headingLevel = 3 }: { post: PostCardType; headi
 						alt={post.mainImage?.alt ?? ''}
 						fill
 						sizes='(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'
-						placeholder={post.mainImage?.lqip ? 'blur' : 'empty'}
-						blurDataURL={post.mainImage?.lqip}
 						className='object-cover transition-transform duration-500 group-hover:scale-[1.03]'
 					/>
 				) : null}
-				{post.isPlaceholder && (
-					<span className='absolute top-3 left-3 rounded-pill bg-sun px-2.5 py-0.5 text-xs font-semibold text-ink'>
-						Sample article
-					</span>
-				)}
 			</div>
 			<div className='mt-4'>
 				<PostMeta post={post} />
@@ -61,7 +53,7 @@ export function PostCard({ post, headingLevel = 3 }: { post: PostCardType; headi
 
 /** Large featured article with image and overlaid title, after the reference layout. */
 export function FeaturedPost({ post }: { post: PostCardType }) {
-	const src = urlForImage(post.mainImage, 1600, 900);
+	const src = post.mainImage?.src;
 	return (
 		<article className='group relative overflow-hidden rounded-[1.75rem] bg-olive-deep'>
 			<div className='relative aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9]'>
@@ -74,8 +66,6 @@ export function FeaturedPost({ post }: { post: PostCardType }) {
 						fetchPriority='high'
 						loading='eager'
 						sizes='(min-width: 1280px) 1200px, 100vw'
-						placeholder={post.mainImage?.lqip ? 'blur' : 'empty'}
-						blurDataURL={post.mainImage?.lqip}
 						className='object-cover transition-transform duration-700 group-hover:scale-[1.02]'
 					/>
 				)}
@@ -83,7 +73,7 @@ export function FeaturedPost({ post }: { post: PostCardType }) {
 			</div>
 			<div className='absolute inset-x-0 bottom-0 p-6 sm:p-10'>
 				<span className='inline-flex rounded-pill bg-sun px-3 py-1 text-xs font-semibold text-ink'>
-					{post.isPlaceholder ? 'Featured · Sample article' : 'Featured'}
+					Featured
 				</span>
 				<div className='mt-4'>
 					<PostMeta post={post} tone='light' />
@@ -103,7 +93,7 @@ export function PostGrid({ posts, headingLevel = 3 }: { posts: PostCardType[]; h
 	return (
 		<ul className='grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3'>
 			{posts.map((p) => (
-				<li key={p._id}>
+				<li key={p.id}>
 					<PostCard post={p} headingLevel={headingLevel} />
 				</li>
 			))}

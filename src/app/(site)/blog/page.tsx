@@ -7,10 +7,8 @@ import { CtaSection } from '@/components/sections/CtaSection';
 import { PageHero } from '@/components/sections/PageHero';
 import { ArrowRight, Search } from '@/components/ui/Icons';
 import { Container } from '@/components/ui/primitives';
+import { getCategoriesInUse, getFeaturedPost, listPosts } from '@/lib/blog/posts';
 import { pageMetadata } from '@/lib/seo';
-import { sanityFetch } from '@/sanity/fetch';
-import { categoriesQuery, featuredPostQuery, postCountQuery, postListQuery } from '@/sanity/queries';
-import type { CategoryRef, PostCard } from '@/sanity/types';
 
 const PAGE_SIZE = 9;
 
@@ -35,7 +33,7 @@ function blogHref({ category, q, page }: { category?: string; q?: string; page?:
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
 	const { category, q, page } = clean(await searchParams);
-	const categories = await sanityFetch<CategoryRef[]>({ query: categoriesQuery, fallback: [] });
+	const categories = await getCategoriesInUse();
 	const current = categories.find((c) => c.slug === category);
 	const base = current
 		? {
@@ -64,21 +62,18 @@ export default async function BlogPage({ searchParams }: Props) {
 	const showFeatured = !isFiltered && page === 1;
 
 	const [categories, featured] = await Promise.all([
-		sanityFetch<CategoryRef[]>({ query: categoriesQuery, fallback: [] }),
-		showFeatured ? sanityFetch<PostCard | null>({ query: featuredPostQuery, fallback: null }) : null,
+		getCategoriesInUse(),
+		showFeatured ? getFeaturedPost() : null,
 	]);
 
-	const exclude = isFiltered ? '' : (featured?._id ?? '');
-	const listParams = { category, q: q ? `${q}*` : '', exclude };
 	const start = (page - 1) * PAGE_SIZE;
-	const [posts, total] = await Promise.all([
-		sanityFetch<PostCard[]>({
-			query: postListQuery,
-			params: { ...listParams, start, end: start + PAGE_SIZE },
-			fallback: [],
-		}),
-		sanityFetch<number>({ query: postCountQuery, params: listParams, fallback: 0 }),
-	]);
+	const { posts, total } = await listPosts({
+		category,
+		q,
+		exclude: isFiltered ? '' : (featured?.id ?? ''),
+		start,
+		end: start + PAGE_SIZE,
+	});
 	const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
 	const currentCategory = categories.find((c) => c.slug === category);
 	const nothingPublished = !featured && posts.length === 0 && !isFiltered;

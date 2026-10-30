@@ -1,9 +1,8 @@
 import type { MetadataRoute } from 'next';
 
 import { services } from '@/content/services';
+import { getIndexablePosts } from '@/lib/blog/posts';
 import { absoluteUrl } from '@/lib/seo';
-import { sanityFetch } from '@/sanity/fetch';
-import { postSlugsQuery } from '@/sanity/queries';
 
 export const revalidate = 3600;
 
@@ -25,16 +24,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	];
 
 	// Published, indexable articles only (drafts are never returned).
-	const posts = await sanityFetch<{ slug: string; publishedAt: string; updatedAt?: string; _updatedAt: string }[]>({
-		query: postSlugsQuery,
-		fallback: [],
-	});
+	const posts = await getIndexablePosts();
 
 	return [
 		...staticPages,
 		...posts.map((p) => ({
 			url: absoluteUrl(`/blog/${p.slug}`),
-			lastModified: new Date(p.updatedAt || p._updatedAt || p.publishedAt),
+			lastModified: new Date(p.updatedAt || p.savedAt || p.publishedAt),
 			changeFrequency: 'monthly' as const,
 			priority: 0.7,
 		})),
