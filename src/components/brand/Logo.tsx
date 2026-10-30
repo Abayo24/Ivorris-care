@@ -10,9 +10,12 @@ export function LogoMark({ className = '' }: { className?: string }) {
 	);
 }
 
-/** Mark + wordmark, linking home. `tone="light"` is for dark backgrounds. */
-export function Logo({ tone = 'dark' }: { tone?: 'dark' | 'light' }) {
-	const color = tone === 'light' ? 'text-cream' : 'text-olive';
+/**
+ * Mark + wordmark, linking home. `tone="light"` is for dark backgrounds;
+ * `tone="header"` follows the site header's colour (see .site-header in globals.css).
+ */
+export function Logo({ tone = 'dark' }: { tone?: 'dark' | 'light' | 'header' }) {
+	const color = tone === 'light' ? 'text-cream' : tone === 'header' ? 'text-[color:var(--hdr-logo)]' : 'text-olive';
 	return (
 		<Link href='/' className={`inline-flex shrink-0 items-center gap-2.5 ${color}`} aria-label='Ivorris Care — home'>
 			<LogoMark className='h-8 w-auto' />

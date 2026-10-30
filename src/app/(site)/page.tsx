@@ -40,7 +40,7 @@ export default async function HomePage() {
 			{/* ── Hero: full photographic panel, after the reference design ── */}
 			<section>
 				<div>
-					<div className='relative isolate flex flex-col overflow-hidden bg-olive-deep pt-18 lg:min-h-[800px] lg:pt-0'>
+					<div data-dark-hero className='relative isolate flex flex-col overflow-hidden bg-olive-deep pt-18 lg:min-h-[800px] lg:pt-0'>
 						{/* Small screens: photo on top, fading into the olive panel below.
 						    Desktop: photo fills the right two-thirds and fades into olive
 						    behind the text. */}

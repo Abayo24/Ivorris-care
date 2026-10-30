@@ -16,9 +16,6 @@ function isActive(pathname: string, href: string) {
 
 const mobileNav = [{ label: 'Home', href: '/' }, ...mainNav, { label: 'Contact', href: '/contact' }];
 
-/** Pages whose first section is a dark photo, so the transparent header uses light text. */
-const darkHeroPaths = new Set(['/']);
-
 // Scroll position as an external store: no re-render on every scroll event,
 // only when the page crosses the threshold.
 function subscribeScroll(onChange: () => void) {
@@ -34,9 +31,10 @@ export function Header() {
 	const [lastPath, setLastPath] = useState(pathname);
 	const toggleRef = useRef<HTMLButtonElement>(null);
 	const panelRef = useRef<HTMLDivElement>(null);
-	const scrolled = useSyncExternalStore(subscribeScroll, isScrolled, isScrolledOnServer);
 	// Transparent over the top of the page; solid once content scrolls underneath.
-	const light = darkHeroPaths.has(pathname) && !scrolled;
+	// Colours come from CSS (.site-header in globals.css): light over a dark hero
+	// at the top, dark otherwise, so the server HTML and the browser always agree.
+	const scrolled = useSyncExternalStore(subscribeScroll, isScrolled, isScrolledOnServer);
 
 	// Close the mobile menu whenever the route changes.
 	if (pathname !== lastPath) {
@@ -87,12 +85,13 @@ export function Header() {
 	return (
 		<>
 			<header
-				className={`fixed inset-x-0 top-0 z-40 transition-[background-color,box-shadow] duration-300 ${
+				data-scrolled={scrolled ? 'true' : 'false'}
+				className={`site-header fixed inset-x-0 top-0 z-40 transition-[background-color,box-shadow] duration-300 ${
 					scrolled ? 'bg-white shadow-[0_1px_0_var(--line),0_8px_24px_-16px_rgba(35,37,31,0.25)]' : 'bg-transparent'
 				}`}
 			>
 				<div className='mx-auto flex h-18 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-10'>
-					<Logo tone={light ? 'light' : 'dark'} />
+					<Logo tone='header' />
 
 					<nav aria-label='Main' className='hidden lg:block'>
 						<ul className='flex items-center gap-1'>
@@ -104,13 +103,9 @@ export function Header() {
 											href={item.href}
 											aria-current={active ? 'page' : undefined}
 											className={`relative rounded-pill px-3 py-2 text-[0.94rem] whitespace-nowrap transition-colors xl:px-3.5 ${
-												light
-													? active
-														? 'bg-white/15 font-medium text-white'
-														: 'text-white/90 hover:bg-white/10 hover:text-white'
-													: active
-														? 'bg-olive-tint font-medium text-olive-deep'
-														: 'text-ink hover:text-olive-deep'
+												active
+													? 'bg-[var(--hdr-active-bg)] font-medium text-[color:var(--hdr-active-fg)]'
+													: 'text-[color:var(--hdr-fg)] hover:text-[color:var(--hdr-fg-hover)]'
 											}`}
 										>
 											{item.label}
@@ -124,11 +119,9 @@ export function Header() {
 					<div className='hidden shrink-0 items-center gap-4 lg:flex'>
 						<a
 							href={site.contact.phoneHref}
-							className={`hidden items-center gap-2 text-sm font-medium whitespace-nowrap xl:inline-flex ${
-								light ? 'text-white hover:underline' : 'text-ink hover:text-olive-deep'
-							}`}
+							className='hidden items-center gap-2 text-sm font-medium whitespace-nowrap text-[color:var(--hdr-fg)] hover:text-[color:var(--hdr-fg-hover)] xl:inline-flex'
 						>
-							<Phone className={`h-4 w-4 ${light ? 'text-sun' : 'text-olive'}`} />
+							<Phone className='h-4 w-4 text-[color:var(--hdr-accent)]' />
 							{site.contact.phoneDisplay}
 						</a>
 						<ButtonLink href={primaryCta.href} className='whitespace-nowrap'>
@@ -139,9 +132,7 @@ export function Header() {
 					<button
 						ref={toggleRef}
 						type='button'
-						className={`inline-flex h-11 w-11 items-center justify-center rounded-full border lg:hidden ${
-							light ? 'border-white/50 bg-black/20 text-white backdrop-blur-sm' : 'border-line bg-white text-ink'
-						}`}
+						className='inline-flex h-11 w-11 items-center justify-center rounded-full border border-[color:var(--hdr-btn-border)] bg-[var(--hdr-btn-bg)] text-[color:var(--hdr-fg)] lg:hidden'
 						aria-expanded={open}
 						aria-controls='mobile-menu'
 						onClick={() => setOpen(true)}

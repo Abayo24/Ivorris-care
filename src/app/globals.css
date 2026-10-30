@@ -52,6 +52,30 @@
 	--radius-pill: var(--radius-pill);
 }
 
+/* Site header colours. Dark by default; light while at the top of a page
+   whose first section is a dark hero (marked data-dark-hero). Pure CSS, so the
+   header looks right from the very first paint, before any JavaScript runs. */
+.site-header {
+	--hdr-logo: var(--brand-olive);
+	--hdr-fg: var(--ink);
+	--hdr-fg-hover: var(--brand-olive-deep);
+	--hdr-active-bg: var(--brand-olive-tint);
+	--hdr-active-fg: var(--brand-olive-deep);
+	--hdr-accent: var(--brand-olive);
+	--hdr-btn-border: var(--line);
+	--hdr-btn-bg: #ffffff;
+}
+body:has([data-dark-hero]) .site-header[data-scrolled='false'] {
+	--hdr-logo: var(--brand-cream);
+	--hdr-fg: rgb(255 255 255 / 0.92);
+	--hdr-fg-hover: #ffffff;
+	--hdr-active-bg: rgb(255 255 255 / 0.15);
+	--hdr-active-fg: #ffffff;
+	--hdr-accent: var(--brand-yellow);
+	--hdr-btn-border: rgb(255 255 255 / 0.5);
+	--hdr-btn-bg: rgb(0 0 0 / 0.2);
+}
+
 @layer base {
 	html {
 		-webkit-text-size-adjust: 100%;
