@@ -25,6 +25,8 @@ const whyChoose: Photo = {
 
 export const photos = {
 	hero: intro,
+	// intro.jpg on a wider canvas, its plain background continued to the left.
+	heroWide: { ...intro, src: '/photos/intro-wide.jpg' },
 	heroInset: intro,
 	careNeedsAssessment: {
 		src: '/photos/care-needs-assessment.jpg',

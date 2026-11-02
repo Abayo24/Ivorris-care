@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { ConnectIllustration } from '@/components/illustrations/Illustrations';
-import Image from 'next/image';
+import Image, { getImageProps } from 'next/image';
 import Link from 'next/link';
 
 import { PostGrid } from '@/components/blog/PostCard';
@@ -30,6 +30,11 @@ export const metadata: Metadata = {
 	title: { absolute: 'Home-Based Care & Home Nursing in Nairobi | Ivorris Care' },
 };
 
+const { props: narrowHero } = getImageProps({ src: photos.hero.src, alt: '', width: 1800, height: 2700, sizes: '100vw' });
+const {
+	props: { srcSet: wideHero },
+} = getImageProps({ src: photos.heroWide.src, alt: '', width: 2400, height: 1600, sizes: '66vw' });
+
 export default async function HomePage() {
 	const posts = await getLatestPosts(3);
 
@@ -39,29 +44,52 @@ export default async function HomePage() {
 			<section>
 				<div>
 					<div data-dark-hero className='relative isolate flex flex-col overflow-hidden bg-olive-deep pt-18 lg:min-h-[800px] lg:pt-0'>
-						{/* Small screens: photo on top, fading into the olive panel below.
-						    Desktop: photo fills the right half and fades into olive; the text
-						    stays on solid olive because the photo is too pale for white text. */}
-						<div className='relative -z-20 aspect-[4/3] w-full sm:aspect-[16/9] lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:w-[46%]'>
-							<Image
-								src={photos.hero.src}
-								alt={photos.hero.alt}
-								fill
-								preload
-								fetchPriority='high'
-								loading='eager'
-								sizes='(min-width: 1024px) 46vw, 100vw'
-								className='object-cover object-[50%_58%] lg:object-center'
-							/>
-							<div
-								className='absolute inset-0 bg-gradient-to-t from-olive-deep via-olive-deep/10 via-35% to-transparent lg:hidden'
+						{/* Small screens: photo on top, melting into the olive panel along a wave.
+						    Desktop: photo fills the right two-thirds, melting into olive along a
+						    curve; the text stays on olive because the photo is too pale for white text. */}
+						<div className='relative -z-20 aspect-[4/3] w-full sm:aspect-[16/9] lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:w-[66%]'>
+							{/* One photo per layout, so each screen only downloads the one it shows. */}
+							<picture>
+								<source media='(min-width: 640px)' srcSet={wideHero} sizes='(min-width: 1024px) 66vw, 100vw' />
+								<img
+									{...narrowHero}
+									alt={photos.hero.alt}
+									fetchPriority='high'
+									loading='eager'
+									className='absolute inset-0 h-full w-full object-cover object-[50%_66%] sm:object-right'
+								/>
+							</picture>
+							<svg
+								viewBox='0 0 100 100'
+								preserveAspectRatio='none'
+								className='absolute inset-x-0 top-0 h-[calc(100%+2px)] w-full text-olive-deep lg:hidden'
 								aria-hidden='true'
-							/>
+								focusable='false'
+							>
+								<defs>
+									<filter id='hero-melt-sm' x='-10%' y='-20%' width='120%' height='140%'>
+										<feGaussianBlur stdDeviation='2.5' />
+									</filter>
+								</defs>
+								<path fill='currentColor' opacity='0.45' filter='url(#hero-melt-sm)' d='M-10 110 V80 C14 70 30 92 52 84 C72 77 86 68 110 76 V110 Z' />
+								<path fill='currentColor' filter='url(#hero-melt-sm)' d='M-10 110 V90 C14 82 30 100 52 94 C72 88 86 82 110 88 V110 Z' />
+							</svg>
 						</div>
-						<div
-							className='absolute inset-0 -z-10 hidden bg-gradient-to-r from-olive-deep from-55% to-transparent to-63% lg:block'
+						<svg
+							viewBox='0 0 100 100'
+							preserveAspectRatio='none'
+							className='absolute inset-0 -z-10 hidden h-full w-full text-olive-deep lg:block'
 							aria-hidden='true'
-						/>
+							focusable='false'
+						>
+							<defs>
+								<filter id='hero-melt' x='-10%' y='-10%' width='120%' height='120%'>
+									<feGaussianBlur stdDeviation='1.4' />
+								</filter>
+							</defs>
+							<path fill='currentColor' opacity='0.4' filter='url(#hero-melt)' d='M-10 -10 H52 C60 8 62 28 59 46 C57 60 50 68 54 82 C56 92 52 102 50 110 H-10 Z' />
+							<path fill='currentColor' filter='url(#hero-melt)' d='M-10 -10 H47 C54 8 56 28 54 46 C52 60 45 68 49 82 C51 92 47 102 45 110 H-10 Z' />
+						</svg>
 						{/* Top shade keeps the transparent header's white links readable over the pale photo. */}
 						<div
 							className='absolute inset-x-0 top-0 -z-10 hidden h-40 bg-gradient-to-b from-black/75 via-black/55 via-50% to-transparent lg:block'
@@ -70,9 +98,9 @@ export default async function HomePage() {
 
 						{/* Text lines up with the header's logo via the same container width. */}
 						<div className='mx-auto -mt-10 flex w-full max-w-7xl flex-1 flex-col px-4 pb-8 sm:-mt-16 sm:px-6 sm:pb-10 lg:mt-0 lg:justify-center lg:px-10 lg:pt-32 lg:pb-20'>
-							<div className='hero-in max-w-2xl lg:max-w-[min(42rem,50vw)]'>
+							<div className='hero-in max-w-2xl lg:max-w-[min(36rem,42vw)]'>
 								<Eyebrow tone='light'>Nurse-led care navigation · {site.contact.city}</Eyebrow>
-								<h1 className='mt-5 text-[2.6rem] leading-[1.05] text-white sm:text-6xl lg:text-[4.4rem]'>
+								<h1 className='mt-5 text-[2.6rem] leading-[1.05] text-white sm:text-6xl lg:text-[clamp(3rem,4.6vw,4.4rem)]'>
 									Not sure what care you need?{' '}
 									<span className='relative whitespace-nowrap'>
 										Talk to a nurse.
