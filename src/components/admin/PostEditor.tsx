@@ -175,12 +175,34 @@ export function PostEditor({
 	const bodyLabelId = useId();
 	const bodyErrorId = useId();
 
-	// Warn before leaving with unsaved changes.
+	// Warn before leaving with unsaved changes. beforeunload covers closing or
+	// reloading the tab; in-site links and Sign out never fire it, so they're
+	// caught here before Next.js handles them.
 	useEffect(() => {
 		if (!dirty) return;
 		const warn = (e: BeforeUnloadEvent) => e.preventDefault();
+		const stopUnlessConfirmed = (e: Event) => {
+			if (window.confirm('You have unsaved changes. Leave this page without saving?')) return;
+			e.preventDefault();
+			e.stopPropagation();
+		};
+		const onClick = (e: MouseEvent) => {
+			if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button !== 0) return;
+			const link = (e.target as Element).closest?.('a[href]');
+			// Links inside the article being written, or opening in a new tab, don't leave the page.
+			if (!(link instanceof HTMLAnchorElement) || link.target === '_blank' || link.isContentEditable) return;
+			if (link.pathname === location.pathname && link.search === location.search) return;
+			stopUnlessConfirmed(e);
+		};
 		window.addEventListener('beforeunload', warn);
-		return () => window.removeEventListener('beforeunload', warn);
+		window.addEventListener('click', onClick, true);
+		// The editor has no form of its own, so any submit here is Sign out.
+		window.addEventListener('submit', stopUnlessConfirmed, true);
+		return () => {
+			window.removeEventListener('beforeunload', warn);
+			window.removeEventListener('click', onClick, true);
+			window.removeEventListener('submit', stopUnlessConfirmed, true);
+		};
 	}, [dirty]);
 
 	function update(patch: Partial<PostInput>) {

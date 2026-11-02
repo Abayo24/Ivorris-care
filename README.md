@@ -57,7 +57,7 @@ src/
     sitemap.ts, robots.ts, opengraph-image.tsx, icon.png, apple-icon.png
   components/          brand/, layout/, ui/, sections/, blog/, forms/, seo/, admin/
   content/             Business copy and configuration (site, services, home, connect, equipment,
-                       photos: every photo path + alt text, with Pexels credits)
+                       photos: every photo path + alt text)
   lib/                 seo.ts (metadata + JSON-LD), contact.ts (shared validation), format.ts
     blog/                types, storage (Blob or local disk), public queries, rich-text sanitising
     admin/               session auth, slugs

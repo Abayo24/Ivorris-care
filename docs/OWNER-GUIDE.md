@@ -158,5 +158,5 @@ These items need the owner's confirmation. Each one is easy to change.
 | Service and FAQ wording | `src/content/services.ts`, `src/content/home.ts`, `src/app/(site)/connect-and-coordinate/page.tsx` | Please review with your clinical lead |
 | Equipment list, lease terms and rent-to-own rules | `src/content/equipment.ts` | Carried over from the previous site; confirm stock and terms |
 | Privacy notice | `src/app/(site)/privacy/page.tsx` | Please have it reviewed against the Kenya Data Protection Act, 2019 |
-| Photography | `src/content/photos.ts`, `public/photos/` | Free Pexels stock photos (credits listed in `photos.ts`); they are not Ivorris staff or clients. To swap one, add a photo to `public/photos/` and change its path and description in `photos.ts`. Authentic photos of your own team would build more trust. |
+| Photography | `src/content/photos.ts`, `public/photos/` | Photos supplied by Ivorris, named for where they go. About and Connect & Coordinate reuse the closest match. To swap one, add a photo to `public/photos/` and change its path and description in `photos.ts`. |
 | Content removed from the previous site | — | Care packages (Basic → Platinum), antenatal, postnatal and reproductive health packages, payment options, testimonials and the AI chat assistant were removed (see the README). Tell us if any should return, with verified details. |

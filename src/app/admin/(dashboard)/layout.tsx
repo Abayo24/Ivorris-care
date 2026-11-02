@@ -19,13 +19,15 @@ export default async function DashboardLayout({ children }: { children: React.Re
 			</a>
 			<header className='sticky top-0 z-30 border-b border-line bg-white'>
 				<div className='mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6'>
-					<Link href='/admin' className='flex items-center gap-2.5 text-olive'>
-						<LogoMark className='h-7 w-auto' />
-						<span className='font-display text-xl font-semibold'>Ivorris Care</span>
+					<div className='flex items-center gap-2.5'>
+						<Link href='/' aria-label='Ivorris Care — home page' className='flex items-center gap-2.5 text-olive'>
+							<LogoMark className='h-7 w-auto' />
+							<span className='font-display text-xl font-semibold'>Ivorris Care</span>
+						</Link>
 						<span className='hidden rounded-pill bg-olive-tint px-2.5 py-0.5 text-xs font-medium text-olive-deep sm:inline'>
 							Dashboard
 						</span>
-					</Link>
+					</div>
 					<nav aria-label='Dashboard' className='flex items-center gap-1 text-sm'>
 						<Link href='/admin' className='rounded-lg px-3 py-2 hover:bg-cream'>
 							Articles

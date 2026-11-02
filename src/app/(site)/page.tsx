@@ -40,9 +40,9 @@ export default async function HomePage() {
 				<div>
 					<div data-dark-hero className='relative isolate flex flex-col overflow-hidden bg-olive-deep pt-18 lg:min-h-[800px] lg:pt-0'>
 						{/* Small screens: photo on top, fading into the olive panel below.
-						    Desktop: photo fills the right two-thirds and fades into olive
-						    behind the text. */}
-						<div className='relative -z-20 aspect-[4/3] w-full sm:aspect-[16/9] lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:w-[70%]'>
+						    Desktop: photo fills the right half and fades into olive; the text
+						    stays on solid olive because the photo is too pale for white text. */}
+						<div className='relative -z-20 aspect-[4/3] w-full sm:aspect-[16/9] lg:absolute lg:inset-y-0 lg:right-0 lg:aspect-auto lg:w-[46%]'>
 							<Image
 								src={photos.hero.src}
 								alt={photos.hero.alt}
@@ -50,8 +50,8 @@ export default async function HomePage() {
 								preload
 								fetchPriority='high'
 								loading='eager'
-								sizes='(min-width: 1024px) 70vw, 100vw'
-								className='object-cover object-[55%_25%] lg:object-center'
+								sizes='(min-width: 1024px) 46vw, 100vw'
+								className='object-cover object-[50%_58%] lg:object-center'
 							/>
 							<div
 								className='absolute inset-0 bg-gradient-to-t from-olive-deep via-olive-deep/10 via-35% to-transparent lg:hidden'
@@ -59,18 +59,18 @@ export default async function HomePage() {
 							/>
 						</div>
 						<div
-							className='absolute inset-0 -z-10 hidden bg-gradient-to-r from-olive-deep from-30% via-olive-deep/55 via-48% to-transparent to-70% lg:block'
+							className='absolute inset-0 -z-10 hidden bg-gradient-to-r from-olive-deep from-55% to-transparent to-63% lg:block'
 							aria-hidden='true'
 						/>
-						{/* Top shade keeps the transparent header's white links readable over the photo. */}
+						{/* Top shade keeps the transparent header's white links readable over the pale photo. */}
 						<div
-							className='absolute inset-x-0 top-0 -z-10 hidden h-40 bg-gradient-to-b from-black/55 to-transparent lg:block'
+							className='absolute inset-x-0 top-0 -z-10 hidden h-40 bg-gradient-to-b from-black/75 via-black/55 via-50% to-transparent lg:block'
 							aria-hidden='true'
 						/>
 
 						{/* Text lines up with the header's logo via the same container width. */}
 						<div className='mx-auto -mt-10 flex w-full max-w-7xl flex-1 flex-col px-4 pb-8 sm:-mt-16 sm:px-6 sm:pb-10 lg:mt-0 lg:justify-center lg:px-10 lg:pt-32 lg:pb-20'>
-							<div className='hero-in max-w-2xl'>
+							<div className='hero-in max-w-2xl lg:max-w-[min(42rem,50vw)]'>
 								<Eyebrow tone='light'>Nurse-led care navigation · {site.contact.city}</Eyebrow>
 								<h1 className='mt-5 text-[2.6rem] leading-[1.05] text-white sm:text-6xl lg:text-[4.4rem]'>
 									Not sure what care you need?{' '}
@@ -266,7 +266,7 @@ export default async function HomePage() {
 							alt={photos.whyFamilies.alt}
 							fill
 							sizes='(min-width: 1024px) 40vw, 100vw'
-							className='object-cover object-top'
+							className='object-cover object-[50%_70%]'
 						/>
 					</div>
 					<div>
