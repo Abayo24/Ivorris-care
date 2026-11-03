@@ -202,8 +202,8 @@ function Toolbar({ editor }: { editor: Editor }) {
 	const run = (fn: (c: ReturnType<Editor['chain']>) => ReturnType<Editor['chain']>) => fn(editor.chain().focus()).run();
 
 	return (
-		<div className='sticky top-16 z-10 rounded-t-card border-b border-line bg-white'>
-			<div role='toolbar' aria-label='Formatting' className='flex flex-wrap items-center gap-0.5 p-1.5'>
+		<div className='sticky top-14 z-10 border-b border-line bg-white'>
+			<div role='toolbar' aria-label='Formatting' className='mx-auto flex max-w-[728px] flex-wrap items-center gap-0.5 px-2 py-1.5 sm:px-4'>
 				<ToolButton label='Heading' active={s.h2} onClick={() => run((c) => c.toggleHeading({ level: 2 }))}>
 					<span className='font-semibold'>H2</span>
 				</ToolButton>
@@ -267,12 +267,15 @@ export function RichTextEditor({
 	labelledBy,
 	describedBy,
 	invalid,
+	header,
 }: {
 	value: RichTextNode;
 	onChange: (doc: RichTextNode) => void;
 	labelledBy: string;
 	describedBy?: string;
 	invalid?: boolean;
+	/** Shown between the toolbar and the writing area (the title and subtitle). */
+	header?: ReactNode;
 }) {
 	// Keep the latest onChange without recreating the editor.
 	const onChangeRef = useRef(onChange);
@@ -297,12 +300,12 @@ export function RichTextEditor({
 				},
 			}),
 			Image.configure({ allowBase64: false }),
-			Placeholder.configure({ placeholder: 'Start writing… Use H2 for section headings so the article is easy to scan.' }),
+			Placeholder.configure({ placeholder: 'Start writing…' }),
 		],
 		content: value,
 		editorProps: {
 			attributes: {
-				class: 'prose-ivorris min-h-[420px] px-5 py-6 sm:px-8 focus:outline-none',
+				class: 'prose-ivorris min-h-[50dvh] pb-32 focus:outline-none',
 				role: 'textbox',
 				'aria-multiline': 'true',
 				'aria-labelledby': labelledBy,
@@ -316,13 +319,12 @@ export function RichTextEditor({
 	});
 
 	return (
-		<div
-			className={`rounded-card border bg-white focus-within:ring-2 focus-within:ring-olive/30 ${
-				invalid ? 'border-[#a3311f]' : 'border-line focus-within:border-olive'
-			}`}
-		>
+		<>
 			{editor ? <Toolbar editor={editor} /> : <div className='h-12 border-b border-line' />}
-			<EditorContent editor={editor} className='rich-editor' />
-		</div>
+			<div className='mx-auto max-w-[728px] px-4 sm:px-6'>
+				{header}
+				<EditorContent editor={editor} className='rich-editor mt-6' />
+			</div>
+		</>
 	);
 }

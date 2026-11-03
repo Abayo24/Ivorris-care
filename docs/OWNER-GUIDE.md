@@ -74,65 +74,68 @@ Open **`https://YOUR-SITE/admin`** and sign in with the dashboard password.
 The **Articles** page lists everything you've written. Filter it by
 **Published** or **Drafts**, and click any article to edit it.
 
-### Create an article
+### Write an article
 
-1. Click **New article**.
-2. **Title** — a clear question or statement a family might search for. The
-   **web address** fills in from the title; you can edit it.
-3. **Summary** — one or two sentences shown on article cards and in Google.
-4. **Article** — write in the editor. The toolbar has headings (**H2** for
-   sections, **H3** for sub-sections), bold, italic, links, lists, quotes,
+Click **New article**. You get a clean page with nothing but your words:
+
+1. **Title** — a clear question or statement a family might search for.
+2. **Subtitle** — one or two sentences shown on the blog and in Google.
+3. **The article** — just start typing. The bar at the top has headings (**H2**
+   for sections, **H3** for sub-sections), bold, italic, links, lists, quotes,
    divider lines and images. For links to your own pages, use addresses that
-   start with `/`, such as `/services/care-needs-assessment`.
-   Every image needs a short description of what it shows.
-5. In the right-hand column:
-   - **Featured image** — upload a wide photo and describe it. Large photos are
-     resized automatically, and hidden photo data (such as phone GPS location)
-     is removed.
-   - **Details** — choose a **Category**, add **Tags**, set the
-     **Publication date** (leave it empty to use the day you publish), and
-     optionally **Feature this article** (shown large at the top of the blog).
-   - **Author & review** — who wrote it. Only fill in **Reviewed by** once a
-     qualified professional has actually reviewed the article, and only enter
-     qualifications people actually hold.
-   - **Google & sharing** — optional search title and description, with a
-     preview of how the article looks in Google results.
-6. Optional sections under the article: **Questions & answers** (shown at the
-   end, and they help the article appear in Google and AI answers) and
-   **Sources**.
+   start with `/`, such as `/services/care-needs-assessment`. Every image needs
+   a short description of what it shows.
 
-Click **Save draft** as you go. Drafts are never visible on the website, and
-you'll be warned if you try to leave the page with unsaved changes.
+Drafts **save themselves** about 20 seconds after you stop typing; the top bar
+shows "Saved". Drafts are never visible on the website, and you'll be warned if
+you try to leave before your latest changes are saved.
 
 ### Preview
 
-After saving, click **Preview** to see the article exactly as it will appear on
-the website. Preview shows the last saved version.
+Click **Preview** in the top bar to see the article exactly as it will appear
+on the website. Preview shows the last saved version.
 
 ### Publish
 
-Click **Publish**. If something is missing — title, summary, category, the
-article itself, or a featured image description — the dashboard tells you
-what to fix. The article appears on the website straight away.
+Click **Continue**. A panel opens with everything else, and you only need the
+first few:
+
+- **Featured image** — upload a wide photo and describe it. Large photos are
+  resized automatically, and hidden photo data (such as phone GPS location) is
+  removed.
+- **Category** (required), **Tags**, **Web address**, **Publication date**
+  (leave it empty to use the day you publish), and **Feature this article**
+  (shown large at the top of the blog).
+- **Author & review** — who wrote it. Only fill in **Reviewed by** once a
+  qualified professional has actually reviewed the article, and only enter
+  qualifications people actually hold.
+- **Questions & answers** and **Sources** — optional. Questions help the article
+  appear in Google and AI answers.
+- **Google & sharing** — optional search title and description, with a preview
+  of how the article looks in Google results.
+
+Then click **Publish now**. If something is missing, the panel lists what to
+fix. The article appears on the website straight away.
 
 ### Update a published article
 
-Open it, make your changes, set **Last updated** for meaningful changes, and
-click **Update live article**. If you change the web address of a published
+Open it, make your changes, and click **Update**. Published articles don't save
+themselves, so visitors never see half-finished edits. Set **Last updated** in
+the panel for meaningful changes. If you change the web address of a published
 article, the old address keeps working and forwards visitors to the new one.
 
 ### Unpublish or delete
 
-At the bottom of the publish box:
+At the bottom of the **Settings** panel:
 
 - **Unpublish** takes it off the website but keeps it as a draft.
 - **Delete article** removes it permanently, after you confirm.
 
 ### Backups
 
-Each save keeps a copy, and the last 10 copies are kept in the Blob store
-(Vercel → Storage → your Blob store → `blog/data/`). If something goes
-wrong, a developer can restore an earlier copy.
+The last 30 saves are kept in the Blob store (Vercel → Storage → your Blob store
+→ `blog/data/`). If something goes wrong, a developer can restore an earlier
+copy.
 
 ### Writing guidance
 

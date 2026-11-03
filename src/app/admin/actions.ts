@@ -135,6 +135,7 @@ export async function savePost(input: PostInput, intent: 'save' | 'publish' | 'u
 	if (!data.slug) return { ok: false, error: 'Add a web address.', fields: { slug: 'Add a web address.' } };
 
 	try {
+		let affectsSite = false;
 		const result = await updatePosts((posts): SaveResult => {
 			const existing = input.id ? posts.find((p) => p.id === input.id) : undefined;
 			if (input.id && !existing) return { ok: false, error: 'This article no longer exists.' };
@@ -153,6 +154,7 @@ export async function savePost(input: PostInput, intent: 'save' | 'publish' | 'u
 				}
 			}
 
+			affectsSite = status === 'published' || existing?.status === 'published';
 			const now = new Date().toISOString();
 			// Keep a published article's old address working after its slug changes.
 			const oldSlugs = new Set(existing?.oldSlugs ?? []);
@@ -165,7 +167,10 @@ export async function savePost(input: PostInput, intent: 'save' | 'publish' | 'u
 				id: existing?.id ?? randomUUID(),
 				status,
 				oldSlugs: [...oldSlugs],
-				publishedAt: data.publishedAt || (status === 'published' ? now : existing?.publishedAt || now),
+				// A draft has no date unless one was chosen; publishing fills it in.
+				publishedAt:
+					data.publishedAt ||
+					(status === 'published' ? (existing?.status === 'published' ? existing.publishedAt : now) : ''),
 				createdAt: existing?.createdAt ?? now,
 				savedAt: now,
 			};
@@ -174,7 +179,8 @@ export async function savePost(input: PostInput, intent: 'save' | 'publish' | 'u
 			return { ok: true, post };
 		});
 
-		if (result.ok) updateTag(BLOG_TAG);
+		// Autosaved drafts aren't on the site, so its pages needn't refresh.
+		if (result.ok && affectsSite) updateTag(BLOG_TAG);
 		return result;
 	} catch (error) {
 		console.error('[admin] save failed', error instanceof Error ? error.message : error);

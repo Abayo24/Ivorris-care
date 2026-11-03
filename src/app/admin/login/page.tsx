@@ -13,7 +13,7 @@ export default async function LoginPage() {
 	const configured = isAdminConfigured();
 
 	return (
-		<main className='grid min-h-dvh place-items-center px-4 py-12'>
+		<main className='grid min-h-dvh place-items-center bg-cream-soft px-4 py-12'>
 			<div className='w-full max-w-sm rounded-card border border-line bg-white p-8 shadow-[0_20px_60px_-30px_rgb(35_37_31/0.35)]'>
 				<Link href='/' aria-label='Ivorris Care — home page' className='flex w-fit items-center gap-2.5 text-olive'>
 					<LogoMark className='h-8 w-auto' />

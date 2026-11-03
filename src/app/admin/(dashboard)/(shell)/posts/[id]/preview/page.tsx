@@ -16,8 +16,10 @@ export default async function PreviewPage({ params }: Props) {
 	await requireAdminPage();
 	const { id } = await params;
 	const all = await readPosts();
-	const post = all.find((p) => p.id === id);
-	if (!post) notFound();
+	const found = all.find((p) => p.id === id);
+	if (!found) notFound();
+	// An unpublished draft has no date yet; show today's.
+	const post = { ...found, publishedAt: found.publishedAt || new Date().toISOString() };
 
 	return (
 		<div className='bg-white'>
@@ -29,7 +31,7 @@ export default async function PreviewPage({ params }: Props) {
 					Back to editing
 				</Link>
 			</div>
-			<div className='[&_article>header>div]:pt-10'>
+			<div className='[&_article]:pt-8'>
 				<ArticleView post={toPost(post, all)} />
 			</div>
 		</div>

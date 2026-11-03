@@ -51,41 +51,80 @@ export function PostCard({ post, headingLevel = 3 }: { post: PostCardType; headi
 	);
 }
 
-/** Large featured article with image and overlaid title, after the reference layout. */
-export function FeaturedPost({ post }: { post: PostCardType }) {
-	const src = post.mainImage?.src;
+function Byline({ post }: { post: PostCardType }) {
 	return (
-		<article className='group relative overflow-hidden rounded-[1.75rem] bg-olive-deep'>
-			<div className='relative aspect-[4/5] sm:aspect-[16/9] lg:aspect-[21/9]'>
-				{src && (
+		<p className='mt-3 flex flex-wrap items-center gap-x-1.5 text-[0.8rem] tracking-wide text-ink-muted'>
+			{post.author && (
+				<>
+					<span className='font-medium text-ink'>{post.author.name}</span>
+					<span aria-hidden='true'>·</span>
+				</>
+			)}
+			<time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+			<span aria-hidden='true'>·</span>
+			<span>{post.readingMinutes} min read</span>
+		</p>
+	);
+}
+
+/** Newsletter-style lead story: large image beside the headline. */
+export function FeaturedPost({ post }: { post: PostCardType }) {
+	return (
+		<article className='group relative grid gap-6 md:grid-cols-[1.35fr_1fr] md:items-center md:gap-10'>
+			<div className='relative aspect-[16/10] overflow-hidden rounded-lg bg-cream'>
+				{post.mainImage && (
 					<Image
-						src={src}
-						alt={post.mainImage?.alt ?? ''}
+						src={post.mainImage.src}
+						alt={post.mainImage.alt}
 						fill
 						preload
 						fetchPriority='high'
 						loading='eager'
-						sizes='(min-width: 1280px) 1200px, 100vw'
-						className='object-cover transition-transform duration-700 group-hover:scale-[1.02]'
+						sizes='(min-width: 768px) 560px, 100vw'
+						className='object-cover'
 					/>
 				)}
-				<div className='absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent' />
 			</div>
-			<div className='absolute inset-x-0 bottom-0 p-6 sm:p-10'>
-				<span className='inline-flex rounded-pill bg-sun px-3 py-1 text-xs font-semibold text-ink'>
-					Featured
-				</span>
-				<div className='mt-4'>
-					<PostMeta post={post} tone='light' />
-				</div>
-				<h2 className='mt-2 max-w-3xl text-3xl text-white sm:text-4xl'>
-					<Link href={`/blog/${post.slug}`} className='after:absolute after:inset-0'>
+			<div>
+				{post.category && <p className='text-sm font-medium text-olive-deep'>{post.category.title}</p>}
+				<h2 className='mt-2 text-3xl leading-[1.12] sm:text-[2.5rem]'>
+					<Link href={`/blog/${post.slug}`} className='after:absolute after:inset-0 group-hover:text-olive-deep'>
 						{post.title}
 					</Link>
 				</h2>
-				<p className='mt-3 hidden max-w-2xl text-cream/90 sm:block'>{post.excerpt}</p>
+				<p className='mt-3 text-lg text-ink-muted'>{post.excerpt}</p>
+				<Byline post={post} />
 			</div>
 		</article>
+	);
+}
+
+/** Newsletter-style list: headline and summary on the left, thumbnail on the right. */
+export function PostList({ posts, headingLevel = 3 }: { posts: PostCardType[]; headingLevel?: 2 | 3 }) {
+	const Heading = headingLevel === 2 ? 'h2' : 'h3';
+	return (
+		<ul className='divide-y divide-line'>
+			{posts.map((post) => (
+				<li key={post.id}>
+					<article className='group relative flex items-start justify-between gap-5 py-7 sm:gap-8'>
+						<div className='min-w-0 flex-1'>
+							<Heading className='text-[1.6rem] leading-[1.18] sm:text-[1.85rem]'>
+								<Link href={`/blog/${post.slug}`} className='after:absolute after:inset-0 group-hover:text-olive-deep'>
+									{post.title}
+								</Link>
+							</Heading>
+							<p className='mt-2 line-clamp-2 text-ink-muted'>{post.excerpt}</p>
+							<Byline post={post} />
+						</div>
+						{post.mainImage && (
+							<div className='relative mt-1 aspect-[4/3] w-24 shrink-0 overflow-hidden rounded-md bg-cream sm:w-44'>
+								<Image src={post.mainImage.src} alt='' fill sizes='(min-width: 640px) 176px, 96px' className='object-cover' />
+							</div>
+						)}
+					</article>
+				</li>
+			))}
+		</ul>
 	);
 }
 

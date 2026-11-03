@@ -27,7 +27,7 @@ const isProd = process.env.NODE_ENV === 'production';
 export const isStorageConfigured = isBlob || !isProd;
 
 const DATA_PREFIX = 'blog/data/posts-';
-const KEEP_BACKUPS = 10;
+const KEEP_BACKUPS = 30;
 
 const localDir = path.join(process.cwd(), '.data', 'blog');
 const localFile = path.join(localDir, 'posts.json');

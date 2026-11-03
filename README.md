@@ -52,7 +52,7 @@ src/
       blog/              Listing (search, category filter, pagination) + [slug] article
     admin/             Article dashboard (noindex, disallowed in robots.txt)
       login/             Password sign-in
-      (dashboard)/       Article list, editor (posts/new, posts/[id]) and preview
+      (dashboard)/       Full-page editor (posts/new, posts/[id]); (shell)/ holds the article list and preview
       actions.ts         Server actions: sign in/out, save, publish, delete, image upload
     sitemap.ts, robots.ts, opengraph-image.tsx, icon.png, apple-icon.png
   components/          brand/, layout/, ui/, sections/, blog/, forms/, seo/, admin/
@@ -69,7 +69,7 @@ docs/SEO-PLAN.md       Search keywords, AI visibility and next steps
 
 - All articles live in one JSON document in Vercel Blob. Every save writes a new
   copy with a random suffix (so drafts can't be fetched by guessing a URL) and the
-  newest copy wins; the last 10 are kept as backups (`src/lib/blog/store.ts`).
+  newest copy wins; the last 30 are kept as backups (`src/lib/blog/store.ts`).
 - Public pages read **published** articles only, through `unstable_cache` tagged
   `blog` (hourly safety refresh). Every dashboard save calls `updateTag('blog')`, so
   changes are live immediately.

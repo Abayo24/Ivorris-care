@@ -243,18 +243,18 @@ body:has([data-dark-hero]) .site-header[data-scrolled='false'] {
 /* Long-form article typography (blog posts rendered from the CMS). */
 .prose-ivorris {
 	color: var(--ink);
-	font-size: 1.0625rem;
-	line-height: 1.8;
+	font-size: 1.1875rem;
+	line-height: 1.75;
 }
 .prose-ivorris > * + * {
 	margin-top: 1.25em;
 }
 .prose-ivorris h2 {
-	font-size: 1.875rem;
+	font-size: 2.125rem;
 	margin-top: 2.2em;
 }
 .prose-ivorris h3 {
-	font-size: 1.5rem;
+	font-size: 1.625rem;
 	margin-top: 1.8em;
 }
 .prose-ivorris h4 {
@@ -295,7 +295,7 @@ body:has([data-dark-hero]) .site-header[data-scrolled='false'] {
 	font-weight: 600;
 }
 .prose-ivorris figure img {
-	border-radius: var(--radius-card);
+	border-radius: 0.5rem;
 }
 .prose-ivorris hr {
 	border: 0;
@@ -317,7 +317,7 @@ body:has([data-dark-hero]) .site-header[data-scrolled='false'] {
 	pointer-events: none;
 }
 .rich-editor img {
-	border-radius: var(--radius-card);
+	border-radius: 0.5rem;
 	max-width: 100%;
 	height: auto;
 }

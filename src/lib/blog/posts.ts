@@ -43,6 +43,7 @@ export function toCard(p: StoredPost): PostCard {
 		featured: p.featured,
 		mainImage: p.mainImage,
 		category: categoryBySlug(p.category),
+		author: p.author,
 		readingMinutes: readingMinutes(p.body),
 	};
 }
@@ -56,7 +57,6 @@ export function toPost(p: StoredPost, all: StoredPost[]): Post {
 		...toCard(p),
 		body: p.body,
 		tags: p.tags,
-		author: p.author,
 		reviewedBy: p.reviewedBy,
 		reviewedAt: p.reviewedAt,
 		savedAt: p.savedAt,

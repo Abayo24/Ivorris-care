@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import { HomeCareIllustration, SignpostIllustration } from '@/components/illustrations/Illustrations';
 import Link from 'next/link';
 
-import { FeaturedPost, PostGrid } from '@/components/blog/PostCard';
+import { FeaturedPost, PostList } from '@/components/blog/PostCard';
+import { LogoMark } from '@/components/brand/Logo';
+import { Breadcrumbs } from '@/components/sections/Breadcrumbs';
 import { CtaSection } from '@/components/sections/CtaSection';
-import { PageHero } from '@/components/sections/PageHero';
 import { ArrowRight, Search } from '@/components/ui/Icons';
-import { Container } from '@/components/ui/primitives';
 import { getCategoriesInUse, getFeaturedPost, listPosts } from '@/lib/blog/posts';
 import { pageMetadata } from '@/lib/seo';
 
@@ -80,30 +80,32 @@ export default async function BlogPage({ searchParams }: Props) {
 
 	return (
 		<>
-			<PageHero
-				crumbs={[{ name: 'Resources', href: '/blog' }]}
-				eyebrow='Resources for families'
-				title='Understand your situation. Ask better questions.'
-				intro={
-					<p>
-						Plain-language guides about care needs, home nursing, coming home from hospital and finding the
-						right support. They&apos;re general information — for advice about your situation,{' '}
+			<div className='mx-auto w-full max-w-[1000px] px-4 pt-24 pb-16 sm:px-6 sm:pt-28 sm:pb-20'>
+				<Breadcrumbs items={[{ name: 'Resources', href: '/blog' }]} />
+
+				{/* Masthead */}
+				<header className='mt-8 border-b border-line pb-8 text-center'>
+					<span className='mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-olive text-cream'>
+						<LogoMark className='h-9 w-auto' />
+					</span>
+					<h1 className='mx-auto mt-5 max-w-2xl text-4xl sm:text-5xl'>Understand your situation. Ask better questions.</h1>
+					<p className='mx-auto mt-3 max-w-xl text-lg text-ink-muted'>
+						Plain-language guides for families from Ivorris Care. They&apos;re general information — for advice about
+						your situation,{' '}
 						<Link href='/contact' className='text-olive-deep underline underline-offset-4'>
 							talk to us
 						</Link>
 						.
 					</p>
-				}
-			/>
+				</header>
 
-			<Container className='py-14 sm:py-16'>
 				{nothingPublished ? (
-					<div className='rounded-card border border-dashed border-line bg-cream-soft px-6 py-16 text-center'>
+					<div className='py-16 text-center'>
 						<HomeCareIllustration className='mx-auto mb-6 h-40 w-auto text-olive' />
 						<h2 className='text-3xl'>Articles are on their way</h2>
 						<p className='mx-auto mt-3 max-w-lg text-ink-muted'>
-							We&apos;re preparing helpful guides for families. In the meantime, you&apos;re welcome to ask us
-							your question directly.
+							We&apos;re preparing helpful guides for families. In the meantime, you&apos;re welcome to ask us your
+							question directly.
 						</p>
 						<Link
 							href='/contact'
@@ -114,14 +116,10 @@ export default async function BlogPage({ searchParams }: Props) {
 					</div>
 				) : (
 					<>
-						{featured && <FeaturedPost post={featured} />}
-
-						{/* Filters */}
-						<div
-							className={`${featured ? 'mt-14' : ''} flex flex-col gap-5 border-b border-line pb-6 lg:flex-row lg:items-center lg:justify-between`}
-						>
-							<nav aria-label='Article categories' className='-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0'>
-								<ul className='flex gap-2 whitespace-nowrap'>
+						{/* Topics and search */}
+						<div className='flex flex-col gap-3 border-b border-line lg:flex-row lg:items-center lg:justify-between lg:gap-8'>
+							<nav aria-label='Article categories' className='-mx-4 overflow-x-auto overflow-y-hidden px-4 sm:mx-0 sm:px-0'>
+								<ul className='flex gap-6 whitespace-nowrap'>
 									{[{ title: 'All', slug: '' }, ...categories].map((c) => {
 										const active = c.slug === (currentCategory ? category : '');
 										return (
@@ -129,10 +127,10 @@ export default async function BlogPage({ searchParams }: Props) {
 												<Link
 													href={blogHref({ category: c.slug, q })}
 													aria-current={active ? 'page' : undefined}
-													className={`inline-flex min-h-10 items-center rounded-pill border px-4 text-sm transition-colors ${
+													className={`inline-flex min-h-12 items-center border-b-2 text-sm ${
 														active
-															? 'border-olive bg-olive text-white'
-															: 'border-line bg-white text-ink hover:border-olive'
+															? 'border-ink font-medium text-ink'
+															: 'border-transparent text-ink-muted hover:text-ink'
 													}`}
 												>
 													{c.title}
@@ -142,7 +140,7 @@ export default async function BlogPage({ searchParams }: Props) {
 									})}
 								</ul>
 							</nav>
-							<form role='search' action='/blog' className='relative w-full lg:max-w-xs'>
+							<form role='search' action='/blog' className='relative mb-3 w-full shrink-0 lg:mb-0 lg:w-56'>
 								{currentCategory && <input type='hidden' name='category' value={category} />}
 								<label htmlFor='blog-search' className='sr-only'>
 									Search articles
@@ -152,12 +150,12 @@ export default async function BlogPage({ searchParams }: Props) {
 									name='q'
 									type='search'
 									defaultValue={q}
-									placeholder='Search articles'
-									className='block min-h-11 w-full rounded-pill border border-line bg-white py-2 pr-12 pl-5 text-base focus:border-olive focus:ring-2 focus:ring-olive/30 focus:outline-none'
+									placeholder='Search'
+									className='block min-h-10 w-full rounded-lg bg-cream-soft py-1.5 pr-10 pl-3 text-base focus:ring-2 focus:ring-olive/30 focus:outline-none lg:text-sm'
 								/>
 								<button
 									type='submit'
-									className='absolute top-1 right-1 grid h-9 w-9 place-items-center rounded-full bg-olive text-white hover:bg-olive-deep'
+									className='absolute top-0 right-0 grid h-10 w-10 place-items-center text-ink-muted hover:text-ink'
 								>
 									<Search className='h-4 w-4' />
 									<span className='sr-only'>Search</span>
@@ -165,13 +163,17 @@ export default async function BlogPage({ searchParams }: Props) {
 							</form>
 						</div>
 
-						<div className='mt-10'>
-							<h2 className='sr-only'>
-								{currentCategory ? currentCategory.title : 'Latest articles'}
-							</h2>
-							{(isFiltered || currentCategory?.description) && (
-								<p className='mb-8 text-ink-muted' aria-live='polite'>
-									{q && (
+						{featured && (
+							<div className='border-b border-line py-10'>
+								<FeaturedPost post={featured} />
+							</div>
+						)}
+
+						<div className='mx-auto max-w-[760px]'>
+							<h2 className='sr-only'>{currentCategory ? currentCategory.title : 'Latest articles'}</h2>
+							{(q || currentCategory?.description) && (
+								<p className='pt-8 text-ink-muted' aria-live='polite'>
+									{q ? (
 										<>
 											{total} {total === 1 ? 'result' : 'results'} for &ldquo;{q}&rdquo;
 											{currentCategory ? ` in ${currentCategory.title}` : ''}.{' '}
@@ -182,69 +184,72 @@ export default async function BlogPage({ searchParams }: Props) {
 												Clear search
 											</Link>
 										</>
+									) : (
+										currentCategory?.description
 									)}
-									{!q && currentCategory?.description}
 								</p>
 							)}
 
 							{posts.length > 0 ? (
-								<PostGrid posts={posts} />
+								<PostList posts={posts} />
 							) : (
-								<div className='rounded-card bg-cream-soft px-6 py-14 text-center'>
-									<SignpostIllustration className='mx-auto mb-4 h-32 w-auto text-olive' />
-									<p className='font-display text-2xl'>No articles found</p>
-									<p className='mt-2 text-ink-muted'>
-										Try a different search or{' '}
-										<Link href='/blog' className='text-olive-deep underline underline-offset-4'>
-											view all articles
+								!featured && (
+									<div className='py-14 text-center'>
+										<SignpostIllustration className='mx-auto mb-4 h-32 w-auto text-olive' />
+										<p className='font-display text-2xl'>No articles found</p>
+										<p className='mt-2 text-ink-muted'>
+											Try a different search or{' '}
+											<Link href='/blog' className='text-olive-deep underline underline-offset-4'>
+												view all articles
+											</Link>
+											.
+										</p>
+									</div>
+								)
+							)}
+
+							{totalPages > 1 && (
+								<nav aria-label='Pagination' className='mt-8 flex items-center justify-center gap-2'>
+									{page > 1 && (
+										<Link
+											href={blogHref({ category, q, page: page - 1 })}
+											rel='prev'
+											className='inline-flex min-h-10 items-center rounded-pill border border-line px-4 text-sm hover:border-olive'
+										>
+											Previous
 										</Link>
-										.
-									</p>
-								</div>
+									)}
+									<ul className='flex gap-1'>
+										{Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+											<li key={n}>
+												<Link
+													href={blogHref({ category, q, page: n })}
+													aria-current={n === page ? 'page' : undefined}
+													aria-label={`Page ${n}`}
+													className={`grid h-10 w-10 place-items-center rounded-full text-sm ${
+														n === page ? 'bg-olive text-white' : 'hover:bg-cream'
+													}`}
+												>
+													{n}
+												</Link>
+											</li>
+										))}
+									</ul>
+									{page < totalPages && (
+										<Link
+											href={blogHref({ category, q, page: page + 1 })}
+											rel='next'
+											className='inline-flex min-h-10 items-center rounded-pill border border-line px-4 text-sm hover:border-olive'
+										>
+											Next
+										</Link>
+									)}
+								</nav>
 							)}
 						</div>
-
-						{totalPages > 1 && (
-							<nav aria-label='Pagination' className='mt-14 flex items-center justify-center gap-2'>
-								{page > 1 && (
-									<Link
-										href={blogHref({ category, q, page: page - 1 })}
-										rel='prev'
-										className='inline-flex min-h-10 items-center rounded-pill border border-line px-4 text-sm hover:border-olive'
-									>
-										Previous
-									</Link>
-								)}
-								<ul className='flex gap-1'>
-									{Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
-										<li key={n}>
-											<Link
-												href={blogHref({ category, q, page: n })}
-												aria-current={n === page ? 'page' : undefined}
-												aria-label={`Page ${n}`}
-												className={`grid h-10 w-10 place-items-center rounded-full text-sm ${
-													n === page ? 'bg-olive text-white' : 'hover:bg-cream'
-												}`}
-											>
-												{n}
-											</Link>
-										</li>
-									))}
-								</ul>
-								{page < totalPages && (
-									<Link
-										href={blogHref({ category, q, page: page + 1 })}
-										rel='next'
-										className='inline-flex min-h-10 items-center rounded-pill border border-line px-4 text-sm hover:border-olive'
-									>
-										Next
-									</Link>
-								)}
-							</nav>
-						)}
 					</>
 				)}
-			</Container>
+			</div>
 
 			<CtaSection />
 		</>

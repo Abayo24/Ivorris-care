@@ -59,13 +59,13 @@ export type PostCard = {
 	featured: boolean;
 	mainImage?: BlogImage;
 	category?: Category;
+	author?: Person;
 	readingMinutes: number;
 };
 
 export type Post = PostCard & {
 	body: RichTextNode;
 	tags: string[];
-	author?: Person;
 	reviewedBy?: Person;
 	reviewedAt?: string;
 	savedAt: string;
